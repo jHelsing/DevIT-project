@@ -1,2 +1,4 @@
 Vi valde API version 15 av Android (4.0.3) då den är tillräckligt ny och vi når ut till en stor del utav de mobiltelefoner
 och surfplator som har Android (vi ner ca 94% av dem).
+
+Vi blev sedan tvugna att öka till 16 för att lättare kunna starta bakgrundsaktiviteter.

@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +27,11 @@ public class ElectricityBackend extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        try {
+            electricityConnect();
+        } catch (NoConnectionException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isConnectedToInternet() {
@@ -71,6 +78,11 @@ public class ElectricityBackend extends Activity {
                 response.append(inputLine);
             }
             in.close();
+
+            Log.d("SERVER:","The response is: " + response.toString());
+            Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show();
+
+
             System.out.println(response.toString());
 
         } catch (MalformedURLException e) {
