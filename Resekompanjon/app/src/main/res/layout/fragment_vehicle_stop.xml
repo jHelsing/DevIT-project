@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="se.chalmers.student.devit.resekompanjon.VehicleStopFragment"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="HÅLLPLATS"
+        android:id="@+id/textViewNextStopName"
+        android:layout_weight="0.34" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="131dp"
+        android:id="@+id/imageButtonStopAtLocation"
+        android:layout_weight="0.34" />
+</LinearLayout>
