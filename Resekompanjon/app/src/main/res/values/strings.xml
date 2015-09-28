@@ -11,4 +11,15 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+
+<!-- Strings for the SearchBox fragment -->
+    <string name="trip_start_location">Från</string>
+    <string name="trip_end_location">Till</string>
+    <string name="trip_date">Datum</string>
+    <string name="trip_time">Klockan</string>
+    <string name="leave_by">Avgå</string>
+    <string name="at_location_latest">Framme senast</string>
+    <string name="trip_search">Sök Resa</string>
+    <string name="tourist_info">Turist Information</string>
+
 </resources>
