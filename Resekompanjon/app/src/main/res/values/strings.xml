@@ -12,14 +12,24 @@
 
     <string name="action_settings">Settings</string>
 
-<!-- Strings for the SearchBox fragment -->
-    <string name="trip_start_location">Från</string>
-    <string name="trip_end_location">Till</string>
-    <string name="trip_date">Datum</string>
-    <string name="trip_time">Klockan</string>
-    <string name="leave_by">Avgå</string>
-    <string name="at_location_latest">Framme senast</string>
-    <string name="trip_search">Sök Resa</string>
     <string name="tourist_info">Turist Information</string>
+
+
+<!-- Strings for the SearchBox fragment -->
+    <string name="searchbox_trip_start_location">Från</string>
+    <string name="searchbox_trip_end_location">Till</string>
+    <string name="searchbox_trip_date">Datum</string>
+    <string name="searchbox_trip_time">Klockan</string>
+    <string name="searchbox_leave_by">Avgå</string>
+    <string name="searchbox_at_location_latest">Framme senast</string>
+    <string name="searchbox_trip_search">Sök Resa</string>
+
+<!-- Strings for Active Trip Layout -->
+
+<!-- Generic Strings -->
+    <string name="stop">Stopp</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
