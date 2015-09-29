@@ -1,6 +1,7 @@
 package se.chalmers.student.devit.resekompanjon;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,8 @@ import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
 
 public class ResekompanjonActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnFragmentInteractionListener,
+                    VehicleStopFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -109,6 +111,16 @@ public class ResekompanjonActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void OnSearchFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void OnVehicleStopFragmentInteraction(Uri uri) {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -148,5 +160,4 @@ public class ResekompanjonActivity extends AppCompatActivity
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-
 }

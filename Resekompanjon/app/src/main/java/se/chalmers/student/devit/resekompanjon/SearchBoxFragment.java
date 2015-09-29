@@ -1,6 +1,7 @@
 package se.chalmers.student.devit.resekompanjon;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -73,19 +74,24 @@ public class SearchBoxFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.OnSearchFragmentInteraction(uri);
         }
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    public void onStart() {
+        super.onStart();
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnFragmentInteractionListener) getActivity();
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException( getActivity().toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
     }
 
     @Override
@@ -106,7 +112,7 @@ public class SearchBoxFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void OnSearchFragmentInteraction(Uri uri);
     }
 
 }
