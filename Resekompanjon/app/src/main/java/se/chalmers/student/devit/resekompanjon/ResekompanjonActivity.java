@@ -19,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
+import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
+import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
 
 public class ResekompanjonActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {

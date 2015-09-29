@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -18,16 +23,18 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * @author Jonathan
+ * @author Marcus
  * @version 0.1
  */
 public class VasttrafikBackend extends Activity {
+    private static final String DEBUG_TAG = "HttpExample";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Connecting", "backend started");
         try {
-            vasttrafikConnect();
+            VastTrafikConnect();
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }
@@ -37,60 +44,73 @@ public class VasttrafikBackend extends Activity {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        } else {
-            //if no connection to internet exists.
-            return false;
-        }
+        return networkInfo != null && networkInfo.isConnected();
     }
 
 
-    public void vasttrafikConnect() throws NoConnectionException {
-        if(!isConnectedToInternet())
+    public void VastTrafikConnect() throws NoConnectionException {
+
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?" +
+                "authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&" +
+                "jsonpCallback=processJSON&input=kungsports";
+
+        if (isConnectedToInternet()) {
+            new DownloadApiData().execute(url);
+        } else {
             throw new NoConnectionException();
-        long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * 120);
+        }
+    }
 
-        StringBuffer response = new StringBuffer();
-        String key =  "83cdc6c1-0614-453e-97ec-4b0158227330";
-        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/"
-                + t1 + "&t2=" + t2;
+    // Reads an InputStream and converts it to a String.
+    public String readIt(InputStream stream) throws IOException {
+        int len = 500;
+        Reader reader = null;
+        reader = new InputStreamReader(stream, "UTF-8");
+        char[] buffer = new char[len];
+        reader.read(buffer);
+        return new String(buffer);
+    }
 
-        URL requestURL = null;
+    private String downloadApiInformation(String myUrl, String key) throws IOException {
+        InputStream inputStream = null;
+
         try {
-            requestURL = new URL(url);
-            HttpsURLConnection con = (HttpsURLConnection) requestURL.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", key);
+            URL url = new URL(myUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", key);
+            conn.setDoInput(true);
+            conn.connect();
+            int response = conn.getResponseCode();
+            Log.d(DEBUG_TAG, "The response is: " + response);
+            inputStream = conn.getInputStream();
 
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
+            String contentAsString = readIt(inputStream);
+            return contentAsString;
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-
-            String inputLine;
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
             }
-            in.close();
+        }
+    }
 
-            Log.d("SERVER:","The response is: " + response.toString());
-            Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show();
+    private class DownloadApiData extends AsyncTask<String, Void, String> {
+        private String key = "83cdc6c1-0614-453e-97ec-4b0158227330";
 
-
-            System.out.println(response.toString());
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                return downloadApiInformation(urls[0], key);
+            } catch (IOException e) {
+                return "Unable to retrieve information, URL may be invalid";
+            }
         }
 
+        protected void onPostExecute(String result) {
+            Log.d("result:", result);
+        }
     }
 }
