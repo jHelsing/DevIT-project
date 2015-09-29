@@ -1,5 +1,6 @@
 package se.chalmers.student.devit.resekompanjon;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -21,6 +22,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
+import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -246,12 +250,10 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         if (item.getItemId() == R.id.action_example) {
             Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

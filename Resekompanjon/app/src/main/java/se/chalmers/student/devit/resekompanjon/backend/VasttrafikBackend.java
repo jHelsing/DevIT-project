@@ -26,29 +26,16 @@ import javax.net.ssl.HttpsURLConnection;
  * @author Marcus
  * @version 0.1
  */
-public class VasttrafikBackend extends Activity {
+public class VasttrafikBackend {
     private static final String DEBUG_TAG = "HttpExample";
+    ConnectivityManager connMgr;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d("Connecting", "backend started");
-        try {
-            VastTrafikConnect();
-        } catch (NoConnectionException e) {
-            e.printStackTrace();
-        }
+    public VasttrafikBackend(Context context){
+        connMgr = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    private boolean isConnectedToInternet() {
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
-    }
-
-
-    public void VastTrafikConnect() throws NoConnectionException {
+    public void vastTrafikConnect() throws NoConnectionException {
 
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?" +
                 "authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&" +
@@ -60,6 +47,13 @@ public class VasttrafikBackend extends Activity {
             throw new NoConnectionException();
         }
     }
+
+    private boolean isConnectedToInternet() {
+        Log.i("Backend" , "Connected to interwebs");
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
 
     // Reads an InputStream and converts it to a String.
     public String readIt(InputStream stream) throws IOException {
