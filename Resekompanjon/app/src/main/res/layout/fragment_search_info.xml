@@ -14,9 +14,54 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/searchbox_trip_start_location"
-            android:id="@+id/fromLabel"
-            android:layout_column="24"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin" />
+            android:id="@+id/fromLabel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/tripStartLocation"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/searchbox_trip_end_location"
+            android:id="@+id/ToLabel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/tripEndLocation"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/time"
+            android:id="@+id/timeLabel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/selectedTime"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
     </TableRow>
 </TableLayout>
