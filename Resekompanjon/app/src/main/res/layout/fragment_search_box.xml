@@ -10,7 +10,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textViewTripStartLocation"
-            android:text="@string/searchbox_trip_start_location" />
+            android:text="@string/searchbox_trip_start_location"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
         <EditText
             android:layout_width="278dp"
@@ -27,7 +28,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textViewTripEndLocation"
-            android:text="@string/searchbox_trip_end_location" />
+            android:text="@string/searchbox_trip_end_location"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
         <EditText
             android:layout_width="278dp"
@@ -47,7 +49,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textViewTripDate"
-                android:text="@string/searchbox_trip_date" />
+                android:text="@string/searchbox_trip_date"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -65,7 +68,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textViewTripTime"
-            android:text="@string/searchbox_trip_time" />
+            android:text="@string/searchbox_trip_time"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
         <EditText
             android:layout_width="wrap_content"
