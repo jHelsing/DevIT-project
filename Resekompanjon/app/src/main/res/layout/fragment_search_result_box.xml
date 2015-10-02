@@ -6,16 +6,25 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:minHeight="1dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/departure"
+            android:layout_column="1"
             android:id="@+id/departureLabel"
             android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
@@ -24,8 +33,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="XX:XX"
-            android:layout_column="1"
-            android:id="@+id/tripDeparture"
+            android:layout_column="2"
+            android:id="@+id/departure"
             android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
         <TextView
@@ -34,15 +43,82 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/arrival"
             android:id="@+id/arrivalLabel"
-            android:layout_column="2" />
+            android:layout_column="3" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="XX:XX"
-            android:id="@+id/tripArrival"
-            android:layout_column="3"
+            android:id="@+id/arrival"
+            android:layout_column="4"
             android:layout_marginLeft="@dimen/activity_horizontal_margin" />
     </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/activity_vertical_margin" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/travel_time"
+            android:layout_column="1"
+            android:id="@+id/travelTimeLabel"
+            android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="XX:XX"
+            android:layout_column="2"
+            android:id="@+id/travelTime"
+            android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/delay"
+            android:id="@+id/delayLabel"
+            android:layout_column="3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="XX:XX"
+            android:id="@+id/delay"
+            android:layout_column="4"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:minHeight="1dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"></TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkboxButton"
+            android:layout_column="4" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:minHeight="1dp" />
+
 </TableLayout>

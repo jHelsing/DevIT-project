@@ -34,5 +34,7 @@
     <string name="time">Tid</string>
     <string name="departure">Avgång</string>
     <string name="arrival">Ankomst</string>
+    <string name="travel_time">Restid</string>
+    <string name="delay">Försening</string>
 
 </resources>
