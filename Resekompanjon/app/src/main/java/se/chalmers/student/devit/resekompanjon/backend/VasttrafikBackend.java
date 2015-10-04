@@ -109,4 +109,8 @@ public class VasttrafikBackend {
             Log.d("result:", result);
         }
     }
+    public String getStationbyName(String s){
+        
+        return null;
+    }
 }
