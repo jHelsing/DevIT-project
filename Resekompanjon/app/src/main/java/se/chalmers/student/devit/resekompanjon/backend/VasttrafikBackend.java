@@ -28,6 +28,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class VasttrafikBackend {
     private static final String DEBUG_TAG = "HttpExample";
+    private static final String key= "";
     ConnectivityManager connMgr;
 
     public VasttrafikBackend(Context context){
@@ -35,11 +36,9 @@ public class VasttrafikBackend {
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    public void vastTrafikConnect() throws NoConnectionException {
+    public void vastTrafikConnect(String url) throws NoConnectionException {
             //Can't have key in program as it ends up publically on github
             //TODO: Figure out a way to read api-key? or we have to enter it manually before running
-            String url = "";
-
         if (isConnectedToInternet()) {
             new DownloadApiData().execute(url);
         } else {
@@ -109,8 +108,17 @@ public class VasttrafikBackend {
             Log.d("result:", result);
         }
     }
-    public String getStationbyName(String s){
-
+    public String getStationbyName(String stop) throws NoConnectionException {
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + key + "&format=json&jsonpCallback=processJSON&input=" + stop;
+        vastTrafikConnect(url);
+        return null;
+    }
+    public String getAllStops() throws NoConnectionException {
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.allstops?authKey=" + key + "&format=json&jsonpCallback=processJSON";
+        vastTrafikConnect(url);
+        return null;
+    }
+    public String getTrip(String origin, String destination) {
         return null;
     }
 }
