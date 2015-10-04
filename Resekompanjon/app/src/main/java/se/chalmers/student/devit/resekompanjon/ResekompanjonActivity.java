@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,11 +22,12 @@ import android.widget.TextView;
 
 import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
+import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
 
 public class ResekompanjonActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnFragmentInteractionListener,
-                    VehicleStopFragment.OnFragmentInteractionListener {
+                    VehicleStopFragment.OnFragmentInteractionListener, OnTaskCompleted {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -37,9 +39,12 @@ public class ResekompanjonActivity extends AppCompatActivity
      */
     private CharSequence mTitle;
 
+    VasttrafikBackend vb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_resekompanjon);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -105,6 +110,14 @@ public class ResekompanjonActivity extends AppCompatActivity
     @Override
     public void OnVehicleStopFragmentInteraction(Uri uri) {
 
+    }
+
+    /**
+     * Needed to listen for changes in the backend
+     */
+    @Override
+    public void onTaskCompleted() {
+        Log.d("Task completed", vb.getApiData());
     }
 
     /**

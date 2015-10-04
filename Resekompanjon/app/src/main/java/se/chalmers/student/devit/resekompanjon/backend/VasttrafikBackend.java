@@ -28,26 +28,28 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class VasttrafikBackend {
     private static final String DEBUG_TAG = "HttpExample";
-    private static final String key= "";
+    //Can't have key in program as it ends up publically on github
+    //TODO: Figure out a way to read api-key? or we have to enter it manually before running
+    private static final String key= "83cdc6c1-0614-453e-97ec-4b0158227330";
     ConnectivityManager connMgr;
+    String apiData;
+    OnTaskCompleted listener;
 
-    public VasttrafikBackend(Context context){
+    public VasttrafikBackend(Context context, OnTaskCompleted listener){
+        this.listener = listener;
         connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    public void vastTrafikConnect(String url) throws NoConnectionException {
-            //Can't have key in program as it ends up publically on github
-            //TODO: Figure out a way to read api-key? or we have to enter it manually before running
+    public void vastTrafikConnect(String url, OnTaskCompleted listener) throws NoConnectionException {
         if (isConnectedToInternet()) {
-            new DownloadApiData().execute(url);
+            new DownloadApiData(listener).execute(url);
         } else {
             throw new NoConnectionException();
         }
     }
 
     private boolean isConnectedToInternet() {
-        Log.i("Backend" , "Connected to interwebs");
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
@@ -76,9 +78,10 @@ public class VasttrafikBackend {
             conn.setDoInput(true);
             conn.connect();
             int response = conn.getResponseCode();
-            Log.d(DEBUG_TAG, "The response is: " + response);
+            Log.d(DEBUG_TAG, "The response is: " + response); // DEBUG
             inputStream = conn.getInputStream();
 
+            //Not sure if needed? We want the JSON
             String contentAsString = readIt(inputStream);
             return contentAsString;
 
@@ -90,10 +93,14 @@ public class VasttrafikBackend {
     }
 
     private class DownloadApiData extends AsyncTask<String, Void, String> {
+        private OnTaskCompleted listener;
+
+        public DownloadApiData(OnTaskCompleted listener){
+            this.listener = listener;
+        }
 
         //Can't have key in program as it ends up publically on github
         //TODO: Figure out a way to read api-key? or we have to enter it manually before running
-        private String key = "";
 
         @Override
         protected String doInBackground(String... urls) {
@@ -105,20 +112,35 @@ public class VasttrafikBackend {
         }
 
         protected void onPostExecute(String result) {
-            Log.d("result:", result);
+            super.onPostExecute(result);
+            apiData = result;
+            listener.onTaskCompleted();
+            //Log.d("result:", result);
+
         }
     }
-    public String getStationbyName(String stop) throws NoConnectionException {
+    public String getStationbyName(String stop) {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + key + "&format=json&jsonpCallback=processJSON&input=" + stop;
-        vastTrafikConnect(url);
+        try {
+            vastTrafikConnect(url, listener);
+        } catch (NoConnectionException e) {
+            e.printStackTrace();
+        }
         return null;
     }
-    public String getAllStops() throws NoConnectionException {
+    public String getAllStops()  {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.allstops?authKey=" + key + "&format=json&jsonpCallback=processJSON";
-        vastTrafikConnect(url);
+        try {
+            vastTrafikConnect(url, listener);
+        } catch (NoConnectionException e) {
+            e.printStackTrace();
+        }
         return null;
     }
     public String getTrip(String origin, String destination) {
         return null;
+    }
+    public String getApiData(){
+        return apiData;
     }
 }
