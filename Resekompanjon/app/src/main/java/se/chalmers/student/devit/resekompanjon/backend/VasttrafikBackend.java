@@ -119,26 +119,46 @@ public class VasttrafikBackend {
 
         }
     }
-    public String getStationbyName(String stop) {
+    public void getStationbyName(String stop) {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + key + "&format=json&jsonpCallback=processJSON&input=" + stop;
         try {
             vastTrafikConnect(url, listener);
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }
-        return null;
     }
-    public String getAllStops()  {
+    public void getAllStops()  {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.allstops?authKey=" + key + "&format=json&jsonpCallback=processJSON";
         try {
             vastTrafikConnect(url, listener);
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }
-        return null;
     }
-    public String getTrip(String origin, String destination) {
-        return null;
+
+    /**
+     * Not sure if Origin and dest should be strings, ints or doubles?
+     * @param origin
+     * @param dest
+     */
+    public void getTripID(String origin, String dest) {
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON" + "&originId=" +
+                origin + "&destId=" + dest;
+        try {
+            vastTrafikConnect(url, listener);
+        } catch (NoConnectionException e) {
+            e.printStackTrace();
+        }
+    }
+    public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName){
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey="+ key + "&format=json&jsonpCallback=processJSON&originCoordLat=" + originLat +
+                "&originCoordLong=" + originLong + " &originCoordName=" + originName + "&destCoordLat=" + destLat + "&destCoordLong=" + destLong + "&destCoordName=" +
+                destName;
+        try {
+            vastTrafikConnect(url, listener);
+        } catch (NoConnectionException e) {
+            e.printStackTrace();
+        }
     }
     public String getApiData(){
         return apiData;
