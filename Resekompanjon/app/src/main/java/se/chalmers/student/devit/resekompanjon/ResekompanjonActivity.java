@@ -39,7 +39,7 @@ public class ResekompanjonActivity extends AppCompatActivity
      */
     private CharSequence mTitle;
 
-    VasttrafikBackend vb;
+    VasttrafikBackend vb; //REMOVE ?!
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,10 @@ public class ResekompanjonActivity extends AppCompatActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
+        //TODO: REMOVEE!!!!!!!
+        vb = new VasttrafikBackend(this, this);
+        vb.getTripID( "9021014004090000" , "9021014081038000");
+        
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,

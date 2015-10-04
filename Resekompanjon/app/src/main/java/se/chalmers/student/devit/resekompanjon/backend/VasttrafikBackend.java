@@ -32,7 +32,7 @@ public class VasttrafikBackend {
     //TODO: Figure out a way to read api-key? or we have to enter it manually before running
     private static final String key= "83cdc6c1-0614-453e-97ec-4b0158227330";
     ConnectivityManager connMgr;
-    String apiData;
+    private String apiData;
     OnTaskCompleted listener;
 
     public VasttrafikBackend(Context context, OnTaskCompleted listener){
@@ -113,10 +113,9 @@ public class VasttrafikBackend {
 
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            Log.d("result:", result); // For Debug
             apiData = result;
             listener.onTaskCompleted();
-            //Log.d("result:", result);
-
         }
     }
     public void getStationbyName(String stop) {
