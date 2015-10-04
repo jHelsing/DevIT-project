@@ -32,8 +32,8 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="time">Tid</string>
-    <string name="departure">Avgång</string>
-    <string name="arrival">Ankomst</string>
+    <string name="departure">&#160;Avgång</string>
+    <string name="arrival">&#160;&#160;Ankomst</string>
     <string name="travel_time">Restid</string>
     <string name="delay">Försening</string>
 
