@@ -1,127 +1,131 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="se.chalmers.student.devit.resekompanjon.search_result_box"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#000000"
-    android:padding="1dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp">
-
-    <LinearLayout
-        android:layout_width="fill_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/background_light">
-
-        <!-- 1st row -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/departure"
-                android:id="@+id/departureLabel"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="XX:XX"
-                android:id="@+id/departure"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/arrival"
-                android:id="@+id/arrivalLabel"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="XX:XX"
-                android:id="@+id/arrival"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
-        </LinearLayout>
-
-        <!-- 2nd row -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/travel_time"
-                android:id="@+id/travelTimeLabel"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="XX:XX"
-                android:id="@+id/travelTime"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/delay"
-                android:id="@+id/delayLabel" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="XX:XX"
-                android:id="@+id/delay"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin" />
-
-        </LinearLayout>
+        android:background="#000000"
+        android:padding="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:orientation="horizontal"
-            android:background="#000000"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"></LinearLayout>
-
-        <!-- 3rd row -->
-        <LinearLayout
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="right"
-            android:layout_marginRight="@dimen/activity_horizontal_margin">
+            android:orientation="vertical"
+            android:background="@android:color/background_light">
 
-            <ImageButton
+            <!-- 1st row -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkboxButton"/>
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/departure"
+                    android:id="@+id/departureLabel"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="XX:XX"
+                    android:id="@+id/departure"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/arrival"
+                    android:id="@+id/arrivalLabel"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="XX:XX"
+                    android:id="@+id/arrival"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+            </LinearLayout>
+
+            <!-- 2nd row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/travel_time"
+                    android:id="@+id/travelTimeLabel"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="XX:XX"
+                    android:id="@+id/travelTime"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/delay"
+                    android:id="@+id/delayLabel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="XX:XX"
+                    android:id="@+id/delay"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                android:background="#000000"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"></LinearLayout>
+
+            <!-- 3rd row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkboxButton"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-</FrameLayout>
+    </FrameLayout>
+</LinearLayout>
