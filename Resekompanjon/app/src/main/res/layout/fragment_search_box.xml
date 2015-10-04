@@ -1,96 +1,101 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="se.chalmers.student.devit.resekompanjon.SearchBoxFragment">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="se.chalmers.student.devit.resekompanjon.SearchBoxFragment"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textViewTripStartLocation"
-            android:text="@string/searchbox_trip_start_location"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
-
-        <EditText
-            android:layout_width="278dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextTipStartLocation"
-            android:text="@string/searchbox_trip_start_location"
-            android:inputType="text"
-            android:editable="true" />
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textViewTripEndLocation"
-            android:text="@string/searchbox_trip_end_location"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
-
-        <EditText
-            android:layout_width="278dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextTipEndLocation"
-            android:text="@string/searchbox_trip_end_location"
-            android:inputType="text"
-            android:editable="true" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
+    <TableLayout  android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewTripStartLocation"
+                android:text="@string/searchbox_trip_start_location"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+
+            <EditText
+                android:layout_width="278dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextTipStartLocation"
+                android:text="@string/searchbox_trip_start_location"
+                android:inputType="text"
+                android:editable="true" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewTripEndLocation"
+                android:text="@string/searchbox_trip_end_location"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+
+            <EditText
+                android:layout_width="278dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextTipEndLocation"
+                android:text="@string/searchbox_trip_end_location"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textViewTripDate"
                 android:text="@string/searchbox_trip_date"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+                android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            android:id="@+id/editTextTravelDate"
-            android:layout_column="1" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/editTextTravelDate"
+                android:layout_column="1" />
 
-    </TableRow>
+        </TableRow>
 
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textViewTripTime"
-            android:text="@string/searchbox_trip_time"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewTripTime"
+                android:text="@string/searchbox_trip_time"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="datetime"
-            android:ems="10"
-            android:id="@+id/editTextTravelTime"
-            android:layout_column="1" />
-    </TableRow>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="datetime"
+                android:ems="10"
+                android:id="@+id/editTextTravelTime"
+                android:layout_column="1" />
+        </TableRow>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/searchbox_trip_search"
-            android:id="@+id/buttonSearchTrip"
-            android:layout_column="1"
-            style="@style/Widget.AppCompat.Button.Colored" />
-    </TableRow>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/searchbox_trip_search"
+                android:id="@+id/buttonSearchTrip"
+                android:layout_column="1"
+                style="@style/Widget.AppCompat.Button.Colored" />
+        </TableRow>
 
-</TableLayout>
+    </TableLayout>
+
+
+</FrameLayout>
