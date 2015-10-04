@@ -30,7 +30,7 @@ public class VasttrafikBackend {
     private static final String DEBUG_TAG = "HttpExample";
     //Can't have key in program as it ends up publically on github
     //TODO: Figure out a way to read api-key? or we have to enter it manually before running
-    private static final String key= "83cdc6c1-0614-453e-97ec-4b0158227330";
+    private static final String key= "";
     ConnectivityManager connMgr;
     private String apiData;
     OnTaskCompleted listener;
