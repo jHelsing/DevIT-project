@@ -110,7 +110,7 @@ public class VasttrafikBackend {
         }
     }
     public String getStationbyName(String s){
-        
+
         return null;
     }
 }
