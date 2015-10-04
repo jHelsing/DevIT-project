@@ -36,10 +36,9 @@ public class VasttrafikBackend {
     }
 
     public void vastTrafikConnect() throws NoConnectionException {
-
-        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?" +
-                "authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&" +
-                "jsonpCallback=processJSON&input=kungsports";
+            //Can't have key in program as it ends up publically on github
+            //TODO: Figure out a way to read api-key? or we have to enter it manually before running
+            String url = "";
 
         if (isConnectedToInternet()) {
             new DownloadApiData().execute(url);
@@ -92,7 +91,10 @@ public class VasttrafikBackend {
     }
 
     private class DownloadApiData extends AsyncTask<String, Void, String> {
-        private String key = "83cdc6c1-0614-453e-97ec-4b0158227330";
+
+        //Can't have key in program as it ends up publically on github
+        //TODO: Figure out a way to read api-key? or we have to enter it manually before running
+        private String key = "";
 
         @Override
         protected String doInBackground(String... urls) {

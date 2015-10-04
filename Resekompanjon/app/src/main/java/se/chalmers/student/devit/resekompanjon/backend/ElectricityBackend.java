@@ -54,7 +54,9 @@ public class ElectricityBackend extends Activity {
         long t1 = t2 - (1000 * 120);
 
         StringBuffer response = new StringBuffer();
-        String key = "Z3JwMTE6UEtQSnhIWlc0ag==";
+        //Can't have key in program as it ends up publically on github
+        //TODO: Figure out a way to read api-key? or we have to enter it manually before running
+        String key = "";
         String url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_001&sensorSpec=Ericsson$Next_Stop&t1="
                 + t1 + "&t2=" + t2;
 
