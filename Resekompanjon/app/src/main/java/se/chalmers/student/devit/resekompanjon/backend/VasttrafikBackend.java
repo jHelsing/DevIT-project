@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -95,14 +96,15 @@ public class VasttrafikBackend {
 
             //UGLY FIX
             //TODO: FIgure out a way to remove unnecessary characters some other way
-            JsonElement root = new JsonParser().parse(contentAsString.substring(13, contentAsString.length()-2));
+            JsonElement root = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
 
             JsonObject rootobj = root.getAsJsonObject();
+            JsonObject data = rootobj.get("LocationList").getAsJsonObject();
 
             Log.d("http:", myUrl);
 
             //return contentAsString;
-            return rootobj.toString();
+            return data.get("serverdate").toString();
 
         } finally {
             if (inputStream != null) {
