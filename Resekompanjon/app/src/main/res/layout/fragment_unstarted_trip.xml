@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="se.chalmers.student.devit.resekompanjon.UnstartedTripFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewUnvisitedStop"
+        android:src="@drawable/unvisited_stop"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:padding="1dp"
+        android:background="#000000"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:background="@android:color/background_light"
+            android:gravity="right"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp">
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
