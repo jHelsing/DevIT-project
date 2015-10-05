@@ -16,9 +16,9 @@
 
 
 <!-- Strings for the SearchBox fragment -->
-    <string name="searchbox_trip_start_location">Från</string>
-    <string name="searchbox_trip_end_location">Till</string>
-    <string name="searchbox_trip_date">Datum</string>
+    <string name="searchbox_trip_start_location">Från&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="searchbox_trip_end_location">Till&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="searchbox_trip_date">Datum&#160;&#160;</string>
     <string name="searchbox_trip_time">Klockan</string>
     <string name="searchbox_leave_by">Avgå</string>
     <string name="searchbox_at_location_latest">Framme senast</string>
@@ -31,5 +31,10 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="time">Tid</string>
+    <string name="departure">&#160;Avgång</string>
+    <string name="arrival">&#160;&#160;Ankomst</string>
+    <string name="travel_time">Restid</string>
+    <string name="delay">Försening</string>
 
 </resources>

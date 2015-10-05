@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,11 +22,12 @@ import android.widget.TextView;
 
 import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
+import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
 
 public class ResekompanjonActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnFragmentInteractionListener,
-                    VehicleStopFragment.OnFragmentInteractionListener {
+                    VehicleStopFragment.OnFragmentInteractionListener, OnTaskCompleted {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -37,15 +39,22 @@ public class ResekompanjonActivity extends AppCompatActivity
      */
     private CharSequence mTitle;
 
+    VasttrafikBackend vb; //REMOVE ?!
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_resekompanjon);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
+        //TODO: REMOVEE!!!!!!!
+        vb = new VasttrafikBackend(this, this);
+        vb.getTripID( "9021014004090000" , "9021014081038000");
+        
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
@@ -82,20 +91,6 @@ public class ResekompanjonActivity extends AppCompatActivity
         actionBar.setTitle(mTitle);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.resekompanjon, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -119,6 +114,14 @@ public class ResekompanjonActivity extends AppCompatActivity
     @Override
     public void OnVehicleStopFragmentInteraction(Uri uri) {
 
+    }
+
+    /**
+     * Needed to listen for changes in the backend
+     */
+    @Override
+    public void onTaskCompleted() {
+        Log.d("Task completed", vb.getApiData());
     }
 
     /**
