@@ -53,7 +53,7 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         //TODO: REMOVEE!!!!!!!
         vb = new VasttrafikBackend(this, this);
-        vb.getTripID( "9021014004090000" , "9021014081038000");
+        vb.getStationbyName("Kungsportsplatsen");
         
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -121,7 +121,8 @@ public class ResekompanjonActivity extends AppCompatActivity
      */
     @Override
     public void onTaskCompleted() {
-        Log.d("Task completed", vb.getApiData());
+        TextView tv = (TextView)findViewById(R.id.debugText);
+        tv.setText(vb.getApiData());
     }
 
     /**

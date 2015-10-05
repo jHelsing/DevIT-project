@@ -9,6 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +36,7 @@ public class VasttrafikBackend {
     private static final String DEBUG_TAG = "HttpExample";
     //Can't have key in program as it ends up publically on github
     //TODO: Figure out a way to read api-key? or we have to enter it manually before running
-    private static final String key= "";
+    private static final String key= "83cdc6c1-0614-453e-97ec-4b0158227330";
     ConnectivityManager connMgr;
     private String apiData;
     OnTaskCompleted listener;
@@ -57,12 +63,13 @@ public class VasttrafikBackend {
 
     // Reads an InputStream and converts it to a String.
     public String readIt(InputStream stream) throws IOException {
-        int len = 500;
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        reader.read(buffer);
-        return new String(buffer);
+        int len;
+        Reader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        StringBuffer buffer = new StringBuffer();
+        char[] chars = new char[1024];
+        while ((len = reader.read(chars)) != -1)
+            buffer.append(chars,0,len);
+        return buffer.toString();
     }
 
     private String downloadApiInformation(String myUrl, String key) throws IOException {
@@ -77,13 +84,25 @@ public class VasttrafikBackend {
             conn.setRequestProperty("Authorization", key);
             conn.setDoInput(true);
             conn.connect();
+
             int response = conn.getResponseCode();
             Log.d(DEBUG_TAG, "The response is: " + response); // DEBUG
-            inputStream = conn.getInputStream();
 
-            //Not sure if needed? We want the JSON
+
+            inputStream = conn.getInputStream();
             String contentAsString = readIt(inputStream);
-            return contentAsString;
+            Log.d("char", contentAsString.length()+"");
+
+            //UGLY FIX
+            //TODO: FIgure out a way to remove unnecessary characters some other way
+            JsonElement root = new JsonParser().parse(contentAsString.substring(13, contentAsString.length()-2));
+
+            JsonObject rootobj = root.getAsJsonObject();
+
+            Log.d("http:", myUrl);
+
+            //return contentAsString;
+            return rootobj.toString();
 
         } finally {
             if (inputStream != null) {
