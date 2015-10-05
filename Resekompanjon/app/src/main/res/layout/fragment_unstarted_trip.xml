@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewUnvisitedStop"
-        android:src="@drawable/unvisited_stop"/>
+        android:src="@drawable/unstarted_trip"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -17,7 +17,7 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin">
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="32dp"
             android:orientation="horizontal"
             android:background="@android:color/background_light"
             android:gravity="right"
