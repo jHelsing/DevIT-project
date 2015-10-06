@@ -7,9 +7,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:weightSum="1"
+        android:layout_weight="1.50">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -38,7 +40,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="2dp">
+            android:layout_marginTop="2dp"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,7 +65,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="2dp">
+            android:textAlignment="gravity"
+            android:gravity="bottom"
+            android:layout_weight="12"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,20 +83,28 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/selectedTime"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:maxWidth="235dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+                <ImageButton
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/favouriteButton"
+                   android:background="@android:color/background_light"
+                   android:src="@drawable/favourite_untoggled"
+                    android:layout_gravity="top" />
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <ImageButton
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:id="@+id/favouriteButton"
-       android:background="@android:color/background_light"
-       android:src="@drawable/favourite_untoggled"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_gravity="right" />
 
     <LinearLayout
         android:layout_width="fill_parent"
