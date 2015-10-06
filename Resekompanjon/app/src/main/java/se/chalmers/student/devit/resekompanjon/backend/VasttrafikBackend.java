@@ -100,7 +100,7 @@ public class VasttrafikBackend {
             JsonObject data = rootobj.get("LocationList").getAsJsonObject();
 
             Log.d("http:", myUrl);
-            
+
             return data.get("serverdate").toString();
 
         } finally {
