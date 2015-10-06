@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link search_info.OnFragmentInteractionListener} interface
+ * {@link TripDetailsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link search_info#newInstance} factory method to
+ * Use the {@link TripDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class search_info extends Fragment {
+public class TripDetailsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,11 +35,11 @@ public class search_info extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment search_info.
+     * @return A new instance of fragment TripDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static search_info newInstance(String param1, String param2) {
-        search_info fragment = new search_info();
+    public static TripDetailsFragment newInstance(String param1, String param2) {
+        TripDetailsFragment fragment = new TripDetailsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -47,7 +47,7 @@ public class search_info extends Fragment {
         return fragment;
     }
 
-    public search_info() {
+    public TripDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -64,7 +64,7 @@ public class search_info extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_info, container, false);
+        return inflater.inflate(R.layout.fragment_trip_details, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

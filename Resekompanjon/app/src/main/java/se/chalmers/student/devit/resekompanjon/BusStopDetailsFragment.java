@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link search_result_box.OnFragmentInteractionListener} interface
+ * {@link BusStopDetailsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link search_result_box#newInstance} factory method to
+ * Use the {@link BusStopDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class search_result_box extends Fragment {
+public class BusStopDetailsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,11 +35,11 @@ public class search_result_box extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment search_result_box.
+     * @return A new instance of fragment BusStopDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static search_result_box newInstance(String param1, String param2) {
-        search_result_box fragment = new search_result_box();
+    public static BusStopDetailsFragment newInstance(String param1, String param2) {
+        BusStopDetailsFragment fragment = new BusStopDetailsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -47,7 +47,7 @@ public class search_result_box extends Fragment {
         return fragment;
     }
 
-    public search_result_box() {
+    public BusStopDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -64,7 +64,7 @@ public class search_result_box extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_result_box, container, false);
+        return inflater.inflate(R.layout.fragment_details_bus_stop, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

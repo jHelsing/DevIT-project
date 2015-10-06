@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link favourite_trip.OnFragmentInteractionListener} interface
+ * {@link SearchInfoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link favourite_trip#newInstance} factory method to
+ * Use the {@link SearchInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class favourite_trip extends Fragment {
+public class SearchInfoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,11 +35,11 @@ public class favourite_trip extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment favourite_trip.
+     * @return A new instance of fragment SearchInfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static favourite_trip newInstance(String param1, String param2) {
-        favourite_trip fragment = new favourite_trip();
+    public static SearchInfoFragment newInstance(String param1, String param2) {
+        SearchInfoFragment fragment = new SearchInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -47,7 +47,7 @@ public class favourite_trip extends Fragment {
         return fragment;
     }
 
-    public favourite_trip() {
+    public SearchInfoFragment() {
         // Required empty public constructor
     }
 
@@ -64,7 +64,7 @@ public class favourite_trip extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favourite_trip, container, false);
+        return inflater.inflate(R.layout.fragment_search_info, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
