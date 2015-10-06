@@ -37,7 +37,7 @@ public class VasttrafikBackend {
     //TODO: Figure out a way to read api-key? or we have to enter it manually before running
     private static final String key= "83cdc6c1-0614-453e-97ec-4b0158227330";
     ConnectivityManager connMgr;
-    private String apiData;
+    private JsonObject apiData;
     OnTaskCompleted listener;
 
     public VasttrafikBackend(Context context, OnTaskCompleted listener){
@@ -96,12 +96,12 @@ public class VasttrafikBackend {
             //TODO: FIgure out a way to remove unnecessary characters some other way
             JsonElement root = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
 
-            JsonObject rootobj = root.getAsJsonObject();
-            JsonObject data = rootobj.get("LocationList").getAsJsonObject();
+            apiData = root.getAsJsonObject();
+            JsonObject data = apiData.get("LocationList").getAsJsonObject();
 
             Log.d("http:", myUrl);
 
-            return data.get("serverdate").toString();
+            return "Success ApiData downloaded";
 
         } finally {
             if (inputStream != null) {
@@ -131,8 +131,6 @@ public class VasttrafikBackend {
 
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d("result:", result); // For Debug
-            apiData = result;
             listener.onTaskCompleted();
         }
     }
@@ -177,7 +175,7 @@ public class VasttrafikBackend {
             e.printStackTrace();
         }
     }
-    public String getApiData(){
+    public JsonObject getApiData(){
         return apiData;
     }
 }

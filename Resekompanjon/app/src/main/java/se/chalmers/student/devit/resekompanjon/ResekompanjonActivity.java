@@ -20,6 +20,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+
 import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
@@ -119,10 +121,12 @@ public class ResekompanjonActivity extends AppCompatActivity
     /**
      * Needed to listen for changes in the backend
      */
+    //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
         TextView tv = (TextView)findViewById(R.id.debugText);
-        tv.setText(vb.getApiData());
+        JsonObject data = vb.getApiData().get("LocationList").getAsJsonObject();
+        tv.setText(data.get("servertime").toString());
     }
 
     /**
