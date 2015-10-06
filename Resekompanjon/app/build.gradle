@@ -23,4 +23,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile files('C:/Users/Marcus/Documents/GitHub/DevIT-project/Resekompanjon/.idea/libraries/gson-2.4.jar')
+    compile files('C:/Users/Marcus/AndroidStudioProjects/DevIT-project/Resekompanjon/.idea/libraries/gson-2.4.jar')
 }

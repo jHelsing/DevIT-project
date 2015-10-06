@@ -27,8 +27,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
-
 /**
  * @author Marcus
  * @version 0.1
@@ -102,8 +100,7 @@ public class VasttrafikBackend {
             JsonObject data = rootobj.get("LocationList").getAsJsonObject();
 
             Log.d("http:", myUrl);
-
-            //return contentAsString;
+            
             return data.get("serverdate").toString();
 
         } finally {
