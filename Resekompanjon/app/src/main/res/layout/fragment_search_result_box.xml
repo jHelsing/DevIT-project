@@ -121,7 +121,9 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkboxButton"/>
+                    android:id="@+id/checkboxButton"
+                    android:src="@drawable/checkbox_untoggled"
+                    android:background="@android:color/background_light" />
 
             </LinearLayout>
 
