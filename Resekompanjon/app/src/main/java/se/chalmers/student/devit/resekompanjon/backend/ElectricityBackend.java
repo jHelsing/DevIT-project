@@ -73,8 +73,8 @@ public class ElectricityBackend  {
         try {
             URL url = new URL(myUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
+            //conn.setReadTimeout(10000 /* milliseconds */);
+            //conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", key);
             conn.setDoInput(true);
@@ -87,11 +87,13 @@ public class ElectricityBackend  {
             String contentAsString = readInputStream(inputStream);
             Log.d("char", contentAsString.length() + "");
 
-            //UGLY FIX
+            //UGLY FIX, DOES NOT SEEM TO BE NEEDED FOR ELECTRICITY
             //TODO: Figure out a way to remove unnecessary characters some other way
             //JsonElement root = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
+            JsonElement jsonResponse = new JsonParser().parse(contentAsString);
 
-            //apiData = root.getAsJsonObject();
+
+            apiData = jsonResponse.getAsJsonObject();
 
             Log.d("http:", myUrl);
 

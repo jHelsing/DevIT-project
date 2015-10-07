@@ -85,9 +85,9 @@ public class VasttrafikBackend {
 
             //UGLY FIX
             //TODO: FIgure out a way to remove unnecessary characters some other way
-            JsonElement root = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
+            JsonElement jsonResponse = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
 
-            apiData = root.getAsJsonObject();
+            apiData = jsonResponse.getAsJsonObject();
 
             Log.d("http:", myUrl);
 
