@@ -1,5 +1,8 @@
 package se.chalmers.student.devit.resekompanjon.backend;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 /**
  * Created by emmafahlen on 2015-10-06.
  */
@@ -21,12 +24,12 @@ public class VehicleInfo {
     private final String bgColor;
     private final String stroke;
     private final String accessibility;
-    private final String journeydetailref;
+    private final JsonObject JourneyDetailRef;
 
     public VehicleInfo(String name, String sname, String type, String stopid, String stop,
                        String time, String date, String journeyid, String direction,
                        String track, String rtTime, String stDate, String fgColor,
-                       String bgColor, String stroke, String accessibility, String journeydetailref){
+                       String bgColor, String stroke, String accessibility, JsonObject JourneyDetailRef){
 
         this.name = name;
         this.sname = sname;
@@ -44,7 +47,7 @@ public class VehicleInfo {
         this.bgColor = bgColor;
         this.stroke = stroke;
         this.accessibility = accessibility;
-        this.journeydetailref = journeydetailref;
+        this.JourneyDetailRef = JourneyDetailRef;
     }
     public String getName() {
         return name;
@@ -111,6 +114,7 @@ public class VehicleInfo {
     }
 
     public String getJourneydetailref() {
-        return journeydetailref;
+        return JourneyDetailRef.get("ref").getAsString();
+
     }
 }

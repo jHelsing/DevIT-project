@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class JsonInfoExtract {
 JsonObject json;
 ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
+    ArrayList<StopsFromString> sfsArrayList = new ArrayList<>();
+    ArrayList<StopsNearby> snArrayList = new ArrayList<>();
 
     public JsonInfoExtract(JsonObject jobj){
         this.json = jobj;
@@ -23,6 +25,9 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
      //   this.json.getAsJsonObject("TripList").
     //}
 
+    //Gets all vehicles that departs from a specific busstop, converts them to VehicleInfo objects,
+    // puts them in an arrayList. All the info about the vehicles can be found in the getters in VehicleInfo.
+    //OBS! The different vehicles API for their unic route can be found by calling getJourneydetailref().
     public ArrayList<VehicleInfo> getAllVehiclesFromThisStop(){
         Gson gson = new Gson();
         JsonArray array = this.json.get("Departure").getAsJsonArray();
@@ -31,6 +36,34 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         }
         return viArrayList;
     }
+
+    //Gets all the stops that match a specific string, converts into StopsFromString objects, puts them in an arrayList.
+    // All the info about the vehicles can be found in the getters in StopsFromString.
+    public ArrayList<StopsFromString> getStopsFromSearchString(){
+        Gson gson = new Gson();
+        JsonArray array = this.json.get("StopLocation").getAsJsonArray();
+        for(int i=0; i<array.size(); i++){
+            sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
+        }
+        return sfsArrayList;
+    }
+
+    public ArrayList<StopsNearby> getStopsNearby(){
+        Gson gson = new Gson();
+        JsonArray array = this.json.get("StopLocation").getAsJsonArray();
+        for(int i=0; i<array.size(); i++){
+            snArrayList.add(gson.fromJson(array.get(i), StopsNearby.class));
+        }
+        return snArrayList;
+    }
+
+    public AdressNearby getAdressNearby(){
+        Gson gson = new Gson();
+        JsonObject obj = this.json.get("CoordLocation").getAsJsonObject();
+        return gson.fromJson(obj, AdressNearby.class);
+    }
+
+
 
     //hämta alla busstop längst vägen
     //hämta alla tider längst vägen
