@@ -24,8 +24,6 @@ import java.net.URL;
  */
 public class VasttrafikBackend {
     private static final String DEBUG_TAG = "HttpExample";
-    //Can't have key in program as it ends up publically on github
-    //TODO: Figure out a way to read api-key? or we have to enter it manually before running
     private static String key;
     ConnectivityManager connMgr;
     private JsonObject apiData;
@@ -51,7 +49,6 @@ public class VasttrafikBackend {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
-
 
     // Reads an InputStream and converts it to a String.
     public String readInputStream(InputStream stream) throws IOException {
@@ -79,7 +76,6 @@ public class VasttrafikBackend {
 
             int response = conn.getResponseCode();
             Log.d(DEBUG_TAG, "The response is: " + response); // DEBUG
-
 
             inputStream = conn.getInputStream();
             String contentAsString = readInputStream(inputStream);
@@ -135,10 +131,13 @@ public class VasttrafikBackend {
         }
     }
 
+
     /**
-     * Not sure if Origin and dest should be strings, ints or doubles?
-     * @param origin
-     * @param dest
+     *
+     * @param origin Either name of bustop or ID
+     * @param dest Either name of bustop or ID
+     * @param date needs to be on format [YYYY-MM-DD]
+     * @param time needs to be on format [XX:XX]
      */
     public void getTripID(String origin, String dest, String date, String time) {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON";
