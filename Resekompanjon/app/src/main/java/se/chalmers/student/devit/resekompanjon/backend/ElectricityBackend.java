@@ -36,7 +36,7 @@ public class ElectricityBackend  {
     ConnectivityManager connMgr;
     private JsonArray apiData;
     OnTaskCompleted listener;
-    private static final String key = "Basic Z3JwMTE6UEtQSnhIWlc0ag==";
+    private static final String key = "";
 
     public ElectricityBackend(Context context, OnTaskCompleted listener){
         this.listener = listener;
