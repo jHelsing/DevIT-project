@@ -113,7 +113,9 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     @Override
     public void onSearchButtonClick(String startLocation, String endLocation, String date, String time) {
-        
+        setContentView(R.layout.loading_layout);
+        TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
+        loadingView.setText(R.string.loading_search_result);
     }
 
     @Override
