@@ -124,16 +124,22 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
         Resources res = this.getResources();
         String currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":"
                 + Calendar.getInstance().get(Calendar.MINUTE);
-        TextView tv = (TextView) view.findViewById(R.id.editTextTravelTime);
-        tv.setText(currentTime);
+        TextView tvTime = (TextView) getView().findViewById(R.id.editTextTravelTime);
+        tvTime.setText(currentTime);
+
+        String currentDate = Calendar.getInstance().get(Calendar.YEAR) + ":"
+                + Calendar.getInstance().get(Calendar.MONTH) + ":"
+                + Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        TextView tvDate = (TextView) getView().findViewById(R.id.editTextTravelDate);
+        tvDate.setText(currentDate);
 
         String currentLocation = res.getString(R.string.current_location);
-        tv = (TextView) view.findViewById(R.id.editTextTipStartLocation);
-        tv.setHint(currentLocation);
+        tvTime = (TextView) view.findViewById(R.id.editTextTipStartLocation);
+        tvTime.setHint(currentLocation);
 
         String endLocation = res.getString(R.string.default_end_location);
-        tv = (TextView) view.findViewById(R.id.editTextTipEndLocation);
-        tv.setHint(endLocation);
+        tvTime = (TextView) view.findViewById(R.id.editTextTipEndLocation);
+        tvTime.setHint(endLocation);
 
     }
 
