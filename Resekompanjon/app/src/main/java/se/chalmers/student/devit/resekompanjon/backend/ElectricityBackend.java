@@ -36,12 +36,14 @@ public class ElectricityBackend  {
     ConnectivityManager connMgr;
     private JsonArray apiData;
     OnTaskCompleted listener;
-    private static final String key = "";
+    private static String key;
 
     public ElectricityBackend(Context context, OnTaskCompleted listener){
         this.listener = listener;
         connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        AssetsPropertyReader p = new AssetsPropertyReader(context);
+        key = p.getPassword("electricityPassword");
     }
 
     private boolean isConnectedToInternet() {

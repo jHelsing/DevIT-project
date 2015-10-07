@@ -26,7 +26,7 @@ public class VasttrafikBackend {
     private static final String DEBUG_TAG = "HttpExample";
     //Can't have key in program as it ends up publically on github
     //TODO: Figure out a way to read api-key? or we have to enter it manually before running
-    private static final String key= "";
+    private static String key;
     ConnectivityManager connMgr;
     private JsonObject apiData;
     OnTaskCompleted listener;
@@ -35,6 +35,8 @@ public class VasttrafikBackend {
         this.listener = listener;
         connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        AssetsPropertyReader p = new AssetsPropertyReader(context);
+        key = p.getPassword("vasttrafikPassword");
     }
 
     public void vastTrafikConnect(String url) throws NoConnectionException {
