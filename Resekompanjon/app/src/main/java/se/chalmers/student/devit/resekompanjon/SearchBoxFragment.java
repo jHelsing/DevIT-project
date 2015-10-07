@@ -111,6 +111,7 @@ public class SearchBoxFragment extends Fragment {
         Resources res = this.getResources();
         String currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":"
                 + Calendar.getInstance().get(Calendar.MINUTE);
+        /*
         tv.setText(currentTime);
 
         String currentLocation = res.getString(R.string.current_location);
@@ -120,6 +121,7 @@ public class SearchBoxFragment extends Fragment {
         String endLocation = res.getString(R.string.default_end_location);
         tv = (TextView) view.findViewById(R.id.editTextTipEndLocation);
         tv.setHint(endLocation);
+        */
 
     }
 

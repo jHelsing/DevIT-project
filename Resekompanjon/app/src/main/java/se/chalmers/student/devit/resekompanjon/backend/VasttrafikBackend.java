@@ -175,9 +175,13 @@ public class VasttrafikBackend {
             e.printStackTrace();
         }
     }
-    public void getAllVehicles(){
-        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&id=9021014004090000";
-
+    public void getAllVehiclesFromStop(int id){
+            String url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=" + key + "&format=json&jsonpCallback=processJSON&id=+ " + id ;
+        try {
+            vastTrafikConnect(url, listener);
+        } catch (NoConnectionException e) {
+            e.printStackTrace();
+        }
     }
 
     public JsonObject getApiData(){
