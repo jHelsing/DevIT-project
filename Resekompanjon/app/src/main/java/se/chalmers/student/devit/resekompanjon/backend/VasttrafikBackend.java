@@ -1,30 +1,21 @@
 package se.chalmers.student.devit.resekompanjon.backend;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 /**
@@ -46,9 +37,9 @@ public class VasttrafikBackend {
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    public void vastTrafikConnect(String url, OnTaskCompleted listener) throws NoConnectionException {
+    public void vastTrafikConnect(String url) throws NoConnectionException {
         if (isConnectedToInternet()) {
-            new DownloadApiData(listener).execute(url);
+            new DownloadApiData().execute(url);
         } else {
             throw new NoConnectionException();
         }
@@ -61,7 +52,7 @@ public class VasttrafikBackend {
 
 
     // Reads an InputStream and converts it to a String.
-    public String readIt(InputStream stream) throws IOException {
+    public String readInputStream(InputStream stream) throws IOException {
         int len;
         Reader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         StringBuffer buffer = new StringBuffer();
@@ -89,7 +80,7 @@ public class VasttrafikBackend {
 
 
             inputStream = conn.getInputStream();
-            String contentAsString = readIt(inputStream);
+            String contentAsString = readInputStream(inputStream);
             Log.d("char", contentAsString.length()+"");
 
             //UGLY FIX
@@ -97,7 +88,6 @@ public class VasttrafikBackend {
             JsonElement root = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
 
             apiData = root.getAsJsonObject();
-            JsonObject data = apiData.get("LocationList").getAsJsonObject();
 
             Log.d("http:", myUrl);
 
@@ -111,15 +101,6 @@ public class VasttrafikBackend {
     }
 
     private class DownloadApiData extends AsyncTask<String, Void, String> {
-        private OnTaskCompleted listener;
-
-        public DownloadApiData(OnTaskCompleted listener){
-            this.listener = listener;
-        }
-
-        //Can't have key in program as it ends up publically on github
-        //TODO: Figure out a way to read api-key? or we have to enter it manually before running
-
         @Override
         protected String doInBackground(String... urls) {
             try {
@@ -128,16 +109,17 @@ public class VasttrafikBackend {
                 return "Unable to retrieve information, URL may be invalid";
             }
         }
-
+        @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             listener.onTaskCompleted();
         }
     }
+
     public void getStationbyName(String stop) {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + key + "&format=json&jsonpCallback=processJSON&input=" + stop;
         try {
-            vastTrafikConnect(url, listener);
+            vastTrafikConnect(url);
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }
@@ -145,7 +127,7 @@ public class VasttrafikBackend {
     public void getAllStops()  {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.allstops?authKey=" + key + "&format=json&jsonpCallback=processJSON";
         try {
-            vastTrafikConnect(url, listener);
+            vastTrafikConnect(url);
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }
@@ -160,7 +142,7 @@ public class VasttrafikBackend {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON" + "&originId=" +
                 origin + "&destId=" + dest;
         try {
-            vastTrafikConnect(url, listener);
+            vastTrafikConnect(url);
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }
@@ -170,7 +152,7 @@ public class VasttrafikBackend {
                 "&originCoordLong=" + originLong + " &originCoordName=" + originName + "&destCoordLat=" + destLat + "&destCoordLong=" + destLong + "&destCoordName=" +
                 destName;
         try {
-            vastTrafikConnect(url, listener);
+            vastTrafikConnect(url);
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }
@@ -178,7 +160,7 @@ public class VasttrafikBackend {
     public void getAllVehiclesFromStop(int id){
             String url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=" + key + "&format=json&jsonpCallback=processJSON&id=+ " + id ;
         try {
-            vastTrafikConnect(url, listener);
+            vastTrafikConnect(url);
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }

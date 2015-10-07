@@ -9,9 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -22,79 +29,113 @@ import javax.net.ssl.HttpsURLConnection;
  * @author Jonathan
  * @version 0.1
  */
-public class ElectricityBackend extends Activity {
+public class ElectricityBackend  {
 
+    private static final String DEBUG_TAG = "HttpExample";
+    ConnectivityManager connMgr;
+    private JsonObject apiData;
+    OnTaskCompleted listener;
+    private static final String key = "Z3JwMTE6UEtQSnhIWlc0ag==";
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        try {
-            electricityConnect();
-        } catch (NoConnectionException e) {
-            e.printStackTrace();
-        }
+    public ElectricityBackend(Context context, OnTaskCompleted listener){
+        this.listener = listener;
+        connMgr = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     private boolean isConnectedToInternet() {
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    public void electricityConnect(String url) throws NoConnectionException {
+        if (isConnectedToInternet()) {
+            new DownloadApiData().execute(url);
         } else {
-            //if no connection to internet exists.
-            return false;
+            throw new NoConnectionException();
+        }
+    }
+
+    // Reads an InputStream and converts it to a String.
+    public String readInputStream(InputStream stream) throws IOException {
+        int len;
+        Reader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        StringBuffer buffer = new StringBuffer();
+        char[] chars = new char[1024];
+        while ((len = reader.read(chars)) != -1)
+            buffer.append(chars,0,len);
+        return buffer.toString();
+    }
+
+    private String downloadApiInformation(String myUrl, String key) throws IOException {
+        InputStream inputStream = null;
+
+        try {
+            URL url = new URL(myUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", key);
+            conn.setDoInput(true);
+            conn.connect();
+
+            int response = conn.getResponseCode();
+            Log.d(DEBUG_TAG, "The response is: " + response); // DEBUG
+
+            inputStream = conn.getInputStream();
+            String contentAsString = readInputStream(inputStream);
+            Log.d("char", contentAsString.length() + "");
+
+            //UGLY FIX
+            //TODO: Figure out a way to remove unnecessary characters some other way
+            //JsonElement root = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
+
+            //apiData = root.getAsJsonObject();
+
+            Log.d("http:", myUrl);
+
+            return "Success ApiData downloaded";
+
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
     }
 
 
-    public void electricityConnect() throws NoConnectionException {
-        if(!isConnectedToInternet())
-            throw new NoConnectionException();
+    private class DownloadApiData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                return downloadApiInformation(urls[0], key);
+            } catch (IOException e) {
+                return "Unable to retrieve information, URL may be invalid";
+            }
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            listener.onTaskCompleted();
+        }
+    }
+
+    public JsonObject getApiData(){
+        return apiData;
+    }
+
+    public void getInformation(){
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 120);
-
-        StringBuffer response = new StringBuffer();
-        //Can't have key in program as it ends up publically on github
-        //TODO: Figure out a way to read api-key? or we have to enter it manually before running
-        String key = "";
         String url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_001&sensorSpec=Ericsson$Next_Stop&t1="
                 + t1 + "&t2=" + t2;
-
-        URL requestURL = null;
+        Log.d("Connection", "Attempting to connect to" + url);
         try {
-            requestURL = new URL(url);
-            HttpsURLConnection con = (HttpsURLConnection) requestURL.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", key);
-
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-
-            String inputLine;
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            Log.d("SERVER:","The response is: " + response.toString());
-            Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show();
-
-
-            System.out.println(response.toString());
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            electricityConnect(url);
+        } catch (NoConnectionException e) {
             e.printStackTrace();
         }
-
     }
 }
