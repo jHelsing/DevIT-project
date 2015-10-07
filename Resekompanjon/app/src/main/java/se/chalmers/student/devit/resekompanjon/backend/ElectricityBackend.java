@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -33,9 +34,9 @@ public class ElectricityBackend  {
 
     private static final String DEBUG_TAG = "HttpExample";
     ConnectivityManager connMgr;
-    private JsonObject apiData;
+    private JsonArray apiData;
     OnTaskCompleted listener;
-    private static final String key = "Z3JwMTE6UEtQSnhIWlc0ag==";
+    private static final String key = "Basic Z3JwMTE6UEtQSnhIWlc0ag==";
 
     public ElectricityBackend(Context context, OnTaskCompleted listener){
         this.listener = listener;
@@ -76,7 +77,7 @@ public class ElectricityBackend  {
             //conn.setReadTimeout(10000 /* milliseconds */);
             //conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("Authorization", key);
+            conn.setRequestProperty("Authorization ", key);
             conn.setDoInput(true);
             conn.connect();
 
@@ -93,7 +94,7 @@ public class ElectricityBackend  {
             JsonElement jsonResponse = new JsonParser().parse(contentAsString);
 
 
-            apiData = jsonResponse.getAsJsonObject();
+            apiData = jsonResponse.getAsJsonArray();
 
             Log.d("http:", myUrl);
 
@@ -124,7 +125,7 @@ public class ElectricityBackend  {
         }
     }
 
-    public JsonObject getApiData(){
+    public JsonArray getApiData(){
         return apiData;
     }
 
