@@ -24,6 +24,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class ElectricityBackend extends Activity {
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
