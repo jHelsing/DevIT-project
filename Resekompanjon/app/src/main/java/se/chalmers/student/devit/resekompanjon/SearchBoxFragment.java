@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,6 +53,9 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
 
     private DatePickerDialog travelDatePicker;
     private SimpleDateFormat travelDateFormatter;
+
+    private TimePickerDialog travelTimePicker;
+    private SimpleDateFormat travelTimeFormatter;
 
 
     /**
@@ -112,6 +116,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
             mListener = (OnFragmentInteractionListener) getActivity();
             initDefaultValues();
             initDatePicker();
+            initTimePicker();
 
         } catch (ClassCastException e) {
             throw new ClassCastException( getActivity().toString()
@@ -158,6 +163,26 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
 
     }
 
+    private void initTimePicker(){
+        travelTimeFormatter = new SimpleDateFormat("HH:mm");
+
+        final EditText editTime = (EditText) this.getView().findViewById(R.id.editTextTravelTime);
+        editTime.setInputType(InputType.TYPE_NULL);
+
+        editTime.setOnClickListener(this);
+
+        final Calendar calendar = Calendar.getInstance();
+        travelTimePicker = new TimePickerDialog(this.getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Calendar newTime = Calendar.getInstance();
+                newTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                newTime.set(Calendar.MINUTE, minute);
+                editTime.setText(travelTimeFormatter.format(newTime.getTime()));
+            }
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),true);
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -168,6 +193,8 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         if(v == this.getView().findViewById(R.id.editTextTravelDate)){
             travelDatePicker.show();
+        } else if(v == this.getView().findViewById(R.id.editTextTravelTime)){
+            travelTimePicker.show();
         }
     }
 
