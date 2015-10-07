@@ -140,9 +140,11 @@ public class VasttrafikBackend {
      * @param origin
      * @param dest
      */
-    public void getTripID(String origin, String dest) {
-        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON" + "&originId=" +
-                origin + "&destId=" + dest;
+    public void getTripID(String origin, String dest, String date, String time) {
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON";
+        if (date != null){ url = url +  "&date=" + date;}
+        if (time != null){ url = url + "&time=" + time; }
+        url = url + "&originId=" + origin + "&destId=" + dest;
         try {
             vastTrafikConnect(url);
         } catch (NoConnectionException e) {
@@ -150,7 +152,7 @@ public class VasttrafikBackend {
         }
     }
     public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName){
-        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey="+ key + "&format=json&jsonpCallback=processJSON&originCoordLat=" + originLat +
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON&originCoordLat=" + originLat +
                 "&originCoordLong=" + originLong + " &originCoordName=" + originName + "&destCoordLat=" + destLat + "&destCoordLong=" + destLong + "&destCoordName=" +
                 destName;
         try {

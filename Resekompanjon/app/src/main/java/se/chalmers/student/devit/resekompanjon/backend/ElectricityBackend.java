@@ -109,7 +109,6 @@ public class ElectricityBackend  {
         }
     }
 
-
     private class DownloadApiData extends AsyncTask<String, Void, String> {
 
         @Override

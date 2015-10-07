@@ -43,7 +43,6 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     //TODO: REMOVE! ONLY FOR DEBUG PURPOSES
     VasttrafikBackend vb; //REMOVE ?!
-    ElectricityBackend eb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +54,10 @@ public class ResekompanjonActivity extends AppCompatActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        /*
+
         //TODO: REMOVEE!!!!!!!
         vb = new VasttrafikBackend(this, this);
-        vb.getStationbyName("Kungsportsplatsen");
-        */
-
-        eb = new ElectricityBackend(this, this);
-        eb.getInformation();
+        vb.getTripID("Kungsportsplatsen", "Brunnsparken", "2015-10-09", "08.18");
 
 
         // Set up the drawer.
@@ -133,11 +128,10 @@ public class ResekompanjonActivity extends AppCompatActivity
     @Override
     public void onTaskCompleted() {
         TextView tv = (TextView)findViewById(R.id.debugText);
-        /*
-        JsonObject data = vb.getApiData().get("LocationList").getAsJsonObject();
-        tv.setText(data.get("servertime").toString());
-        */
-        //tv.setText(eb.getApiData().toString());
+
+        //JsonObject data = vb.getApiData().get("LocationList").getAsJsonObject();
+        tv.setText(vb.getApiData().toString());
+
     }
 
     /**
