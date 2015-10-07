@@ -116,6 +116,8 @@ public class ResekompanjonActivity extends AppCompatActivity
         setContentView(R.layout.loading_layout);
         TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
         loadingView.setText(R.string.loading_search_result);
+
+        vb.getTripID(startLocation, endLocation, date, time);
     }
 
     @Override
@@ -129,6 +131,8 @@ public class ResekompanjonActivity extends AppCompatActivity
     //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
+        JsonObject test = vb.getApiData();
+
         TextView tv = (TextView)findViewById(R.id.debugText);
 
         //JsonObject data = vb.getApiData().get("LocationList").getAsJsonObject();
