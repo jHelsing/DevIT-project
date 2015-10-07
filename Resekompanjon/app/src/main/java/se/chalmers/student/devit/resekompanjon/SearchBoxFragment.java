@@ -1,7 +1,10 @@
 package se.chalmers.student.devit.resekompanjon;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,13 +12,18 @@ import android.app.Fragment;
 import android.os.SystemClock;
 import android.provider.CalendarContract;
 import android.support.v4.util.TimeUtils;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -26,10 +34,10 @@ import java.util.Date;
  * Use the {@link SearchBoxFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
- * @author Jonathan
+ * @author Jonathan. Revisited by Amar.
  * @version 0.1
  */
-public class SearchBoxFragment extends Fragment {
+public class SearchBoxFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,6 +49,10 @@ public class SearchBoxFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private DatePickerDialog travelDatePicker;
+    private SimpleDateFormat travelDateFormatter;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -99,6 +111,8 @@ public class SearchBoxFragment extends Fragment {
         try {
             mListener = (OnFragmentInteractionListener) getActivity();
             initDefaultValues();
+            initDatePicker();
+
         } catch (ClassCastException e) {
             throw new ClassCastException( getActivity().toString()
                     + " must implement OnFragmentInteractionListener");
@@ -124,10 +138,37 @@ public class SearchBoxFragment extends Fragment {
 
     }
 
+    private void initDatePicker(){
+        travelDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        final EditText editDate = (EditText) this.getView().findViewById(R.id.editTextTravelDate);
+        editDate.setInputType(InputType.TYPE_NULL);
+
+        editDate.setOnClickListener(this);
+
+        Calendar calendar = Calendar.getInstance();
+        travelDatePicker = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year,monthOfYear,dayOfMonth);
+                editDate.setText(travelDateFormatter.format(newDate.getTime()));
+            }
+        },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == this.getView().findViewById(R.id.editTextTravelDate)){
+            travelDatePicker.show();
+        }
     }
 
     /**
