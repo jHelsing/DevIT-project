@@ -2,12 +2,20 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.SystemClock;
+import android.provider.CalendarContract;
+import android.support.v4.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -26,6 +34,7 @@ public class SearchBoxFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -58,10 +67,12 @@ public class SearchBoxFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -87,10 +98,28 @@ public class SearchBoxFragment extends Fragment {
         super.onStart();
         try {
             mListener = (OnFragmentInteractionListener) getActivity();
+            initDefaultValues();
         } catch (ClassCastException e) {
             throw new ClassCastException( getActivity().toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+    }
+
+    private void initDefaultValues() {
+        View view = this.getView();
+        Resources res = this.getResources();
+        String currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":"
+                + Calendar.getInstance().get(Calendar.MINUTE);
+        tv.setText(currentTime);
+
+        String currentLocation = res.getString(R.string.current_location);
+        tv = (TextView) view.findViewById(R.id.editTextTipStartLocation);
+        tv.setText(currentLocation);
+
+        String endLocation = res.getString(R.string.default_end_location);
+        tv = (TextView) view.findViewById(R.id.editTextTipEndLocation);
+        tv.setHint(endLocation);
 
     }
 

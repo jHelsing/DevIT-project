@@ -36,5 +36,7 @@
     <string name="arrival">&#160;&#160;Ankomst</string>
     <string name="travel_time">Restid</string>
     <string name="delay">Försening</string>
+    <string name="current_location">Nuvarande Position</string>
+    <string name="default_end_location">Ange slutplats</string>
 
 </resources>
