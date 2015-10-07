@@ -30,7 +30,7 @@ import java.util.Locale;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SearchBoxFragment.OnFragmentInteractionListener} interface
+ * {@link se.chalmers.student.devit.resekompanjon.SearchBoxFragment.OnSearchFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link SearchBoxFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -49,7 +49,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnSearchFragmentInteractionListener mListener;
 
     private DatePickerDialog travelDatePicker;
     private SimpleDateFormat travelDateFormatter;
@@ -98,13 +98,6 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
         return inflater.inflate(R.layout.fragment_search_box, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.OnSearchFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -113,10 +106,11 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
     public void onStart() {
         super.onStart();
         try {
-            mListener = (OnFragmentInteractionListener) getActivity();
+            mListener = (OnSearchFragmentInteractionListener) getActivity();
             initDefaultValues();
             initDatePicker();
             initTimePicker();
+            this.getView().findViewById(R.id.buttonSearchTrip).setOnClickListener(this);
 
         } catch (ClassCastException e) {
             throw new ClassCastException( getActivity().toString()
@@ -191,10 +185,22 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if(v == this.getView().findViewById(R.id.editTextTravelDate)){
-            travelDatePicker.show();
+        if(v == this.getView().findViewById(R.id.buttonSearchTrip)){
+            String startLocation = ((EditText) this.getView().findViewById(R.id.editTextTipStartLocation))
+                    .getText().toString();
+            String endLocation = ((EditText) this.getView().findViewById(R.id.editTextTipEndLocation))
+                    .getText().toString();
+            String date = ((EditText)this.getView().findViewById(R.id.editTextTravelDate))
+                    .getText().toString();
+            String time = ((EditText) this.getView().findViewById(R.id.editTextTravelTime))
+                    .getText().toString();
+
+            mListener.onSearchButtonClick(startLocation, endLocation, date, time);
+            
         } else if(v == this.getView().findViewById(R.id.editTextTravelTime)){
             travelTimePicker.show();
+        } else if(v == this.getView().findViewById(R.id.editTextTravelDate)){
+            travelDatePicker.show();
         }
     }
 
@@ -208,9 +214,8 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void OnSearchFragmentInteraction(Uri uri);
+    public interface OnSearchFragmentInteractionListener {
+        public void onSearchButtonClick(String startLocation, String endLocation, String date, String time);
     }
 
 }
