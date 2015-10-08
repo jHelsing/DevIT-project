@@ -58,12 +58,6 @@ public class ResekompanjonActivity extends AppCompatActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-
-        //TODO: REMOVEE!!!!!!!
-        vb = new VasttrafikBackend(this, this);
-        vb.getTripID("Kungsportsplatsen", "Brunnsparken", "2015-10-09", "08.18");
-
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
@@ -140,11 +134,6 @@ public class ResekompanjonActivity extends AppCompatActivity
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
         SearchResult searchResult = new SearchResult(searchedTrips);
         searchResult.startActivity(getIntent());
-
-        TextView tv = (TextView)findViewById(R.id.debugText);
-
-        //JsonObject data = vb.getApiData().get("LocationList").getAsJsonObject();
-        //tv.setText(vb.getApiData().toString());
 
     }
 

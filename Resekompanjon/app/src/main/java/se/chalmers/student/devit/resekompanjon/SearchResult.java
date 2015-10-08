@@ -25,8 +25,16 @@ public class SearchResult extends ListActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.search_result_layout);
+        initSearchInfo();
+    }
 
-
+    private void initSearchInfo(){
+        String startLocation = searchResultTrips.get(0).getOriginName();
+        String endLocation = searchResultTrips.get(0).getDestinationName();
+        String time = searchResultTrips.get(0).getOriginDate() + ", " + searchResultTrips.get(0)
+                .getOriginTime();
+        SearchInfoFragment searchInfo = SearchInfoFragment.newInstance(startLocation, endLocation, time);
+        searchInfo.startActivity(getIntent());
     }
 
 }

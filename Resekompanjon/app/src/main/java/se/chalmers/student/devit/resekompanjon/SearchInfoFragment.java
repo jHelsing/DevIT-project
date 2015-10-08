@@ -20,12 +20,14 @@ import android.view.ViewGroup;
 public class SearchInfoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_STARTLOCATION = "startlocation";
+    private static final String ARG_ENDLOCATION = "endlocation";
+    private static final String ARG_TIME = "time";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mStartLocation;
+    private String mEndLocation;
+    private String mTime;
 
     private OnFragmentInteractionListener mListener;
 
@@ -33,16 +35,18 @@ public class SearchInfoFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param startLocation This is the startpoint of the search.
+     * @param endLocation This is the endpoint of the search.
+     * @param time This is the date and time of the search.
      * @return A new instance of fragment SearchInfoFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static SearchInfoFragment newInstance(String param1, String param2) {
+    public static SearchInfoFragment newInstance(String startLocation, String endLocation
+                                                 ,String time) {
         SearchInfoFragment fragment = new SearchInfoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_STARTLOCATION, startLocation);
+        args.putString(ARG_ENDLOCATION, endLocation);
+        args.putString(ARG_TIME,time);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,8 +59,9 @@ public class SearchInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mStartLocation = getArguments().getString(ARG_STARTLOCATION);
+            mEndLocation = getArguments().getString(ARG_ENDLOCATION);
+            mTime = getArguments().getString(ARG_TIME);
         }
     }
 
