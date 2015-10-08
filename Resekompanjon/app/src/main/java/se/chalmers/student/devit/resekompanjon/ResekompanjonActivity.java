@@ -62,6 +62,8 @@ public class ResekompanjonActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        vb = new VasttrafikBackend(getApplicationContext(), this);
     }
 
     @Override
