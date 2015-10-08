@@ -38,5 +38,6 @@
     <string name="delay">Försening</string>
     <string name="current_location">Nuvarande Position</string>
     <string name="default_end_location">Ange slutplats</string>
+    <string name="loading_search_result">Laddar sökresultat</string>
 
 </resources>

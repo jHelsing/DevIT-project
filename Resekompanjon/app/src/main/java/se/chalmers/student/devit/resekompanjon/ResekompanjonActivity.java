@@ -28,7 +28,7 @@ import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
 
 public class ResekompanjonActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnFragmentInteractionListener,
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnSearchFragmentInteractionListener,
                     VehicleStopFragment.OnFragmentInteractionListener, OnTaskCompleted {
 
     /**
@@ -112,8 +112,10 @@ public class ResekompanjonActivity extends AppCompatActivity
     }
 
     @Override
-    public void OnSearchFragmentInteraction(Uri uri) {
-
+    public void onSearchButtonClick(String startLocation, String endLocation, String date, String time) {
+        setContentView(R.layout.loading_layout);
+        TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
+        loadingView.setText(R.string.loading_search_result);
     }
 
     @Override
