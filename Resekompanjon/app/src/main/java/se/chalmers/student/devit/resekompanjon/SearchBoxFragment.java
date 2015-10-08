@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -199,7 +200,27 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
             String time = ((EditText) this.getView().findViewById(R.id.editTextTravelTime))
                     .getText().toString();
 
-            mListener.onSearchButtonClick(startLocation, endLocation, date, time);
+            boolean canSearch = true;
+
+            if(startLocation.isEmpty() || startLocation.equals(null)){
+                EditText editTextStartLocation = ((EditText) this.getView().findViewById(R.id.editTextTipStartLocation));
+                editTextStartLocation.getBackground().setColorFilter(getResources().getColor(R.color.redwarning)
+                        , PorterDuff.Mode.SRC_ATOP);
+
+                canSearch = false;
+            }
+
+            if(endLocation.isEmpty() || endLocation.equals(null)){
+                EditText editTextEndLocation = ((EditText) this.getView().findViewById(R.id.editTextTipEndLocation));
+                editTextEndLocation.getBackground().setColorFilter(getResources().getColor(R.color.redwarning)
+                        , PorterDuff.Mode.SRC_ATOP);
+
+                canSearch = false;
+            }
+
+            if(canSearch){
+                mListener.onSearchButtonClick(startLocation, endLocation, date, time);
+            }
             
         } else if(v == this.getView().findViewById(R.id.editTextTravelTime)){
             travelTimePicker.show();
