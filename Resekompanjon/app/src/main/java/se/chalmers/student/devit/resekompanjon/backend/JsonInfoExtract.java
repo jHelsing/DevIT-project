@@ -17,6 +17,8 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     ArrayList<StopsFromString> sfsArrayList = new ArrayList<>();
     ArrayList<StopsNearby> snArrayList = new ArrayList<>();
     ArrayList<SearchResaultTrips> srtArrayList = new ArrayList<>();
+    ArrayList<EntireTripRoute> etrArrayList = new ArrayList<>();
+
 
 
     public JsonInfoExtract(JsonObject jobj){
@@ -73,6 +75,17 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
             }
         }
         return srtArrayList;
+    }
+
+    //Gets all stops on the entire trip route, creates EntireTripRoute objects and puts them in an arrayList.
+    //All the information about the objectes(stops) can be reached with getters in EntireTripRoute.
+    public ArrayList<EntireTripRoute> getEntireTripRoute(){
+        Gson gson = new Gson();
+        JsonArray array = this.json.get("Stop").getAsJsonArray();
+        for(int i=0; i<array.size(); i++){
+            etrArrayList.add(gson.fromJson(array.get(i), EntireTripRoute.class));
+        }
+        return etrArrayList;
     }
 
 

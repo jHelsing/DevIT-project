@@ -45,6 +45,10 @@ public class backendtest {
         ArrayList<SearchResaultTrips> tripList = trips.getTripAdvice();
         System.out.println(tripList.get(0).getName());
         System.out.println(tripList.get(0).getOriginName());
+        JsonObject route = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/journeyDetail?ref=294603%2F99224%2F961286%2F382455%2F80%3Fdate%3D2015-10-08%26station_evaId%3D4090004%26station_type%3Ddep%26authKey%3D83cdc6c1-0614-453e-97ec-4b0158227330%26format%3Djson%26jsonpCallback%3DprocessJSON%26","83cdc6c1-0614-453e-97ec-4b0158227330","JourneyDetail");
+        JsonInfoExtract routes = new JsonInfoExtract(route);
+        ArrayList<EntireTripRoute> routeList = routes.getEntireTripRoute();
+        System.out.println(routeList.get(0).getName());
     }
 
     private static JsonObject downloadApiInformation(String myUrl, String key, String json) throws IOException {
