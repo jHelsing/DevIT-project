@@ -51,9 +51,11 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
 
     private OnSearchFragmentInteractionListener mListener;
 
+    private Calendar newDate;
     private DatePickerDialog travelDatePicker;
     private SimpleDateFormat travelDateFormatter;
 
+    private  Calendar newTime;
     private TimePickerDialog travelTimePicker;
     private SimpleDateFormat travelTimeFormatter;
 
@@ -107,9 +109,9 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
         super.onStart();
         try {
             mListener = (OnSearchFragmentInteractionListener) getActivity();
-            initDefaultValues();
             initDatePicker();
             initTimePicker();
+            initDefaultValues();
             this.getView().findViewById(R.id.buttonSearchTrip).setOnClickListener(this);
 
         } catch (ClassCastException e) {
@@ -122,24 +124,20 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
     private void initDefaultValues() {
         View view = this.getView();
         Resources res = this.getResources();
-        String currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":"
-                + Calendar.getInstance().get(Calendar.MINUTE);
-        TextView tvTime = (TextView) getView().findViewById(R.id.editTextTravelTime);
-        tvTime.setText(currentTime);
 
-        String currentDate = Calendar.getInstance().get(Calendar.YEAR) + ":"
-                + Calendar.getInstance().get(Calendar.MONTH) + ":"
-                + Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        TextView tvDate = (TextView) getView().findViewById(R.id.editTextTravelDate);
-        tvDate.setText(currentDate);
+        EditText eT= (EditText) getView().findViewById(R.id.editTextTravelTime);
+        eT.setText(travelTimeFormatter.format(newTime.getTime()));
+
+        eT = (EditText) getView().findViewById(R.id.editTextTravelDate);
+        eT.setText(travelDateFormatter.format(newDate.getTime()));
 
         String currentLocation = res.getString(R.string.current_location);
-        tvTime = (TextView) view.findViewById(R.id.editTextTipStartLocation);
-        tvTime.setHint(currentLocation);
+        eT = (EditText) view.findViewById(R.id.editTextTipStartLocation);
+        eT.setHint(currentLocation);
 
         String endLocation = res.getString(R.string.default_end_location);
-        tvTime = (TextView) view.findViewById(R.id.editTextTipEndLocation);
-        tvTime.setHint(endLocation);
+        eT = (EditText) view.findViewById(R.id.editTextTipEndLocation);
+        eT.setHint(endLocation);
 
     }
 
@@ -151,15 +149,15 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
 
         editDate.setOnClickListener(this);
 
-        Calendar calendar = Calendar.getInstance();
+        newDate = Calendar.getInstance();
+
         travelDatePicker = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
                 newDate.set(year,monthOfYear,dayOfMonth);
                 editDate.setText(travelDateFormatter.format(newDate.getTime()));
             }
-        },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        },newDate.get(Calendar.YEAR),newDate.get(Calendar.MONTH),newDate.get(Calendar.DAY_OF_MONTH));
 
     }
 
@@ -171,16 +169,16 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
 
         editTime.setOnClickListener(this);
 
-        final Calendar calendar = Calendar.getInstance();
+        newTime = Calendar.getInstance();
+
         travelTimePicker = new TimePickerDialog(this.getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Calendar newTime = Calendar.getInstance();
                 newTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 newTime.set(Calendar.MINUTE, minute);
                 editTime.setText(travelTimeFormatter.format(newTime.getTime()));
             }
-        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),true);
+        }, newTime.get(Calendar.HOUR_OF_DAY), newTime.get(Calendar.MINUTE),true);
     }
 
     @Override

@@ -136,7 +136,7 @@ public class ResekompanjonActivity extends AppCompatActivity
         TextView tv = (TextView)findViewById(R.id.debugText);
 
         //JsonObject data = vb.getApiData().get("LocationList").getAsJsonObject();
-        tv.setText(vb.getApiData().toString());
+        //tv.setText(vb.getApiData().toString());
 
     }
 
