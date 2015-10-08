@@ -22,9 +22,13 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+
 import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
+import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
+import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
 
 public class ResekompanjonActivity extends AppCompatActivity
@@ -53,12 +57,6 @@ public class ResekompanjonActivity extends AppCompatActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
-
-        //TODO: REMOVEE!!!!!!!
-        vb = new VasttrafikBackend(this, this);
-        vb.getTripID("Kungsportsplatsen", "Brunnsparken", "2015-10-09", "08.18");
-
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -131,12 +129,11 @@ public class ResekompanjonActivity extends AppCompatActivity
     //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
-        JsonObject test = vb.getApiData();
-
-        TextView tv = (TextView)findViewById(R.id.debugText);
-
-        //JsonObject data = vb.getApiData().get("LocationList").getAsJsonObject();
-        //tv.setText(vb.getApiData().toString());
+        JsonObject fromAPI= vb.getApiData();
+        JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
+        ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
+        SearchResult searchResult = new SearchResult(searchedTrips);
+        searchResult.startActivity(getIntent());
 
     }
 
