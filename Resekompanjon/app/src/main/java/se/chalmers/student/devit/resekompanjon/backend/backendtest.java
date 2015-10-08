@@ -40,7 +40,7 @@ public class backendtest {
         System.out.println(stopList.get(0).getName());
         System.out.println(nearList.get(0).getId());
         System.out.println(adressNear.getName());
-        JsonObject trip = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&date=2015-10-09&time=08.18&originId=Kungsportsplatsen&destId=Brunnsparken","83cdc6c1-0614-453e-97ec-4b0158227330","TripList");
+        JsonObject trip = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&date=2015-10-08&time=19:07&originId=kungs&destId=kors","83cdc6c1-0614-453e-97ec-4b0158227330","TripList");
         JsonInfoExtract trips = new JsonInfoExtract(trip);
         ArrayList<SearchResaultTrips> tripList = trips.getTripAdvice();
         System.out.println(tripList.get(0).getName());

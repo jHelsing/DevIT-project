@@ -85,7 +85,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     //getters in SearchResaultTrips.
     public ArrayList<SearchResaultTrips> getTripAdvice(){
         Gson gson = new Gson();
-        JsonArray array = this.json.get("Trip").getAsJsonArray();
+        JsonArray array = this.json.get("TripList").getAsJsonObject().get("Trip").getAsJsonArray();
         if(array == null) {
             System.out.println("Wrong URL for this method");
         }
