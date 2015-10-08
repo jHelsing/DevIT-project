@@ -16,6 +16,8 @@ JsonObject json;
 ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     ArrayList<StopsFromString> sfsArrayList = new ArrayList<>();
     ArrayList<StopsNearby> snArrayList = new ArrayList<>();
+    ArrayList<SearchResaultTrips> srtArrayList = new ArrayList<>();
+
 
     public JsonInfoExtract(JsonObject jobj){
         this.json = jobj;
@@ -61,6 +63,15 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         Gson gson = new Gson();
         JsonObject obj = this.json.get("CoordLocation").getAsJsonObject();
         return gson.fromJson(obj, AdressNearby.class);
+    }
+
+    public ArrayList<SearchResaultTrips> getTripAdvice(){
+        Gson gson = new Gson();
+        JsonArray array = this.json.get("Trip").getAsJsonArray();
+        for(int i=0; i<array.size(); i++){
+            srtArrayList.add(gson.fromJson(array.get(i), SearchResaultTrips.class));
+        }
+        return srtArrayList;
     }
 
 
