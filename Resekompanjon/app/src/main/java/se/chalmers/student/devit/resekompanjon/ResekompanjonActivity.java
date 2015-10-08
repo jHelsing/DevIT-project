@@ -22,9 +22,13 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+
 import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
+import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
+import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
 
 public class ResekompanjonActivity extends AppCompatActivity
@@ -131,7 +135,11 @@ public class ResekompanjonActivity extends AppCompatActivity
     //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
-        JsonObject test = vb.getApiData();
+        JsonObject fromAPI= vb.getApiData();
+        JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
+        ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
+        SearchResult searchResult = new SearchResult(searchedTrips);
+        searchResult.startActivity(getIntent());
 
         TextView tv = (TextView)findViewById(R.id.debugText);
 
