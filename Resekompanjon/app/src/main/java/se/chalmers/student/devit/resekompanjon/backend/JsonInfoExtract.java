@@ -34,6 +34,9 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     public ArrayList<VehicleInfo> getAllVehiclesFromThisStop(){
         Gson gson = new Gson();
         JsonArray array = this.json.get("Departure").getAsJsonArray();
+        if(array == null) {
+            System.out.println("Wrong URL for this method");
+        }
         for(int i=0; i<array.size(); i++){
             viArrayList.add(gson.fromJson(array.get(i), VehicleInfo.class));
         }
@@ -45,16 +48,23 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     public ArrayList<StopsFromString> getStopsFromSearchString(){
         Gson gson = new Gson();
         JsonArray array = this.json.get("StopLocation").getAsJsonArray();
-        for(int i=0; i<array.size(); i++){
+        if(array == null) {
+            System.out.println("Wrong URL for this method");
+        }
+        for (int i = 0; i < array.size(); i++) {
             sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
         }
         return sfsArrayList;
+
     }
 
     //Checks whats stops are nearby
     public ArrayList<StopsNearby> getStopsNearby(){
         Gson gson = new Gson();
         JsonArray array = this.json.get("StopLocation").getAsJsonArray();
+        if(array == null) {
+            System.out.println("Wrong URL for this method");
+        }
         for(int i=0; i<array.size(); i++){
             snArrayList.add(gson.fromJson(array.get(i), StopsNearby.class));
         }
@@ -65,6 +75,9 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     public AdressNearby getAdressNearby(){
         Gson gson = new Gson();
         JsonObject obj = this.json.get("CoordLocation").getAsJsonObject();
+        if(obj == null) {
+            System.out.println("Wrong URL for this method");
+        }
         return gson.fromJson(obj, AdressNearby.class);
     }
 
@@ -73,6 +86,9 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     public ArrayList<SearchResaultTrips> getTripAdvice(){
         Gson gson = new Gson();
         JsonArray array = this.json.get("Trip").getAsJsonArray();
+        if(array == null) {
+            System.out.println("Wrong URL for this method");
+        }
         for(int i=0; i<array.size(); i++){
             JsonArray ar = array.get(i).getAsJsonObject().getAsJsonArray("Leg");
             for(int j=0; j<ar.size(); j++){
@@ -87,6 +103,9 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     public ArrayList<EntireTripRoute> getEntireTripRoute(){
         Gson gson = new Gson();
         JsonArray array = this.json.get("Stop").getAsJsonArray();
+        if(array == null) {
+            System.out.println("Wrong URL for this method");
+        }
         for(int i=0; i<array.size(); i++){
             etrArrayList.add(gson.fromJson(array.get(i), EntireTripRoute.class));
         }
@@ -118,6 +137,9 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     public ArrayList<GeometryRef> getGeometryRef() {
         Gson gson = new Gson();
         JsonArray array = this.json.get("Points").getAsJsonObject().get("Point").getAsJsonArray();
+        if(array == null) {
+            System.out.println("Wrong URL for this method");
+        }
         for(int i=0; i<array.size(); i++){
             grArrayList.add(gson.fromJson(array.get(i), GeometryRef.class));
         }
