@@ -2,6 +2,7 @@ package se.chalmers.student.devit.resekompanjon.backend;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -18,6 +19,8 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     ArrayList<StopsNearby> snArrayList = new ArrayList<>();
     ArrayList<SearchResaultTrips> srtArrayList = new ArrayList<>();
     ArrayList<EntireTripRoute> etrArrayList = new ArrayList<>();
+    ArrayList<AdditionalInfoRoute> airArrayList = new ArrayList<>();
+    ArrayList<GeometryRef> grArrayList = new ArrayList<>();
 
 
 
@@ -48,6 +51,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         return sfsArrayList;
     }
 
+    //Checks whats stops are nearby
     public ArrayList<StopsNearby> getStopsNearby(){
         Gson gson = new Gson();
         JsonArray array = this.json.get("StopLocation").getAsJsonArray();
@@ -57,6 +61,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         return snArrayList;
     }
 
+    //Checks adress nearby
     public AdressNearby getAdressNearby(){
         Gson gson = new Gson();
         JsonObject obj = this.json.get("CoordLocation").getAsJsonObject();
@@ -88,10 +93,34 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         return etrArrayList;
     }
 
+    //Additional info to getEntireTripRoute (from same URL). Ugly code. Creates an arrayList of
+    //AdditionalInfoRoutes objects. Color has get(0), GeometryRef has get(1) and so on. Will do something
+    //about that later. All the info can be reached with getters and setters in AdditionalInfoRoutes.
+    //OBS! GeometryRef is an URL with a list of longs and lats. To get those, use method getGeometryRef.
+    public ArrayList<AdditionalInfoRoute> getAdditionalInfoRoute(){
+        Gson gson = new Gson();
+        JsonElement Color = this.json.get("Color");
+        JsonElement GeometryRef = this.json.get("GeometryRef");
+        JsonElement JourneyName = this.json.get("JourneyName");
+        JsonElement JourneyType = this.json.get("JourneyType");
+        JsonElement JourneyId = this.json.get("JourneyId");
+        JsonElement Direction = this.json.get("Direction");
+        airArrayList.add(gson.fromJson(Color, AdditionalInfoRoute.class));
+        airArrayList.add(gson.fromJson(GeometryRef, AdditionalInfoRoute.class));
+        airArrayList.add(gson.fromJson(JourneyName, AdditionalInfoRoute.class));
+        airArrayList.add(gson.fromJson(JourneyType, AdditionalInfoRoute.class));
+        airArrayList.add(gson.fromJson(JourneyId, AdditionalInfoRoute.class));
+        airArrayList.add(gson.fromJson(Direction, AdditionalInfoRoute.class));
+        return airArrayList;
+    }
 
-
-    //hämta alla busstop längst vägen
-    //hämta alla tider längst vägen
-    //hämta en specifik hållplats
-    //
+    //Gets longs and lats from a specific trip. Get info by using getters in GeometryRef.
+    public ArrayList<GeometryRef> getGeometryRef() {
+        Gson gson = new Gson();
+        JsonArray array = this.json.get("Points").getAsJsonObject().get("Point").getAsJsonArray();
+        for(int i=0; i<array.size(); i++){
+            grArrayList.add(gson.fromJson(array.get(i), GeometryRef.class));
+        }
+        return grArrayList;
+    }
 }
