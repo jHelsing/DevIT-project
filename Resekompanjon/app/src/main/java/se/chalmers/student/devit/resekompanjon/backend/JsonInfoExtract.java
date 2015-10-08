@@ -23,10 +23,6 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         this.json = jobj;
     }
 
-    //public String getSpecificBusstop(){
-     //   this.json.getAsJsonObject("TripList").
-    //}
-
     //Gets all vehicles that departs from a specific busstop, converts them to VehicleInfo objects,
     // puts them in an arrayList. All the info about the vehicles can be found in the getters in VehicleInfo.
     //OBS! The different vehicles API for their unic route can be found by calling getJourneydetailref().
@@ -65,6 +61,8 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         return gson.fromJson(obj, AdressNearby.class);
     }
 
+    //Use when user search for a trip (origin-dest). All information can be reached with
+    //getters in SearchResaultTrips.
     public ArrayList<SearchResaultTrips> getTripAdvice(){
         Gson gson = new Gson();
         JsonArray array = this.json.get("Trip").getAsJsonArray();
