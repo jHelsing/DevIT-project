@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class backendtest {
 
     public static void main(String[] args) throws IOException {
-        /*JsonObject object = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&id=9021014004090000","83cdc6c1-0614-453e-97ec-4b0158227330", "DepartureBoard");
+        JsonObject object = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&id=9021014004090000","83cdc6c1-0614-453e-97ec-4b0158227330", "DepartureBoard");
         JsonObject searchString = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&input=kungsports","83cdc6c1-0614-453e-97ec-4b0158227330", "LocationList");
         JsonObject stopsNear = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/location.nearbystops?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&originCoordLat=57.703834&originCoordLong=11.966404&maxNo=30","83cdc6c1-0614-453e-97ec-4b0158227330","LocationList");
         JsonObject adress = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/location.nearbyaddress?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&originCoordLat=57.703834&originCoordLong=11.966404","83cdc6c1-0614-453e-97ec-4b0158227330","LocationList");
@@ -39,11 +39,12 @@ public class backendtest {
         System.out.println(vehiclelist.get(0).getJourneydetailref());
         System.out.println(stopList.get(0).getName());
         System.out.println(nearList.get(0).getId());
-        System.out.println(adressNear.getName());*/
+        System.out.println(adressNear.getName());
         JsonObject trip = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&date=2015-10-09&time=08.18&originId=Kungsportsplatsen&destId=Brunnsparken","83cdc6c1-0614-453e-97ec-4b0158227330","TripList");
         JsonInfoExtract trips = new JsonInfoExtract(trip);
         ArrayList<SearchResaultTrips> tripList = trips.getTripAdvice();
         System.out.println(tripList.get(0).getName());
+        System.out.println(tripList.get(0).getOriginName());
     }
 
     private static JsonObject downloadApiInformation(String myUrl, String key, String json) throws IOException {

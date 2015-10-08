@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
  * Created by emmafahlen on 2015-10-07.
  */
 public class SearchResaultTrips {
-    /*String name;
+    String name;
     String type;
     String sname;
     String id;
@@ -18,10 +18,10 @@ public class SearchResaultTrips {
     String accessibility;
     JsonObject Origin;
     JsonObject Destination;
-    JsonObject JourneyDetailRef;*/
-    JsonObject Leg;
+    JsonObject JourneyDetailRef;
+    //JsonObject Leg;
 
-    /*public SearchResaultTrips(String name, String type, String sname, String id, String direction,
+    public SearchResaultTrips(String name, String type, String sname, String id, String direction,
                               String fgColor, String bgColor, String stroke, String accessibility,
                               JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef){
         this.name = name;
@@ -57,18 +57,18 @@ public class SearchResaultTrips {
     public SearchResaultTrips(String name, String type) {
         this.name = name;
         this.type = type;
-    }*/
-
-    public SearchResaultTrips(JsonObject Leg) {
-        this.Leg = Leg;
     }
+
+    //public SearchResaultTrips(JsonObject Leg) {
+    //    this.Leg = Leg;
+    //}
 
 
     public String getName() {
-        return Leg.get("name").getAsString();
+        return name;
     }
 
-    /*public String getType() {
+    public String getType() {
         return type;
     }
 
@@ -81,7 +81,7 @@ public class SearchResaultTrips {
     }
 
     public String getOriginName(){
-        return Origin.get("Leg").getAsJsonArray().get("name").getAsString();
+        return Origin.get("name").getAsString();
     }
     public String getOriginType(){
         return Origin.get("type").getAsString();
@@ -139,10 +139,5 @@ public class SearchResaultTrips {
     }
     public String getDestinationId(){
         return Destination.get("id").getAsString();
-    }*/
-
-
-
-
-
+    }
 }

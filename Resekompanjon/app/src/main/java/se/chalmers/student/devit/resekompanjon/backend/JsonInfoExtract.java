@@ -69,7 +69,10 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         Gson gson = new Gson();
         JsonArray array = this.json.get("Trip").getAsJsonArray();
         for(int i=0; i<array.size(); i++){
-            srtArrayList.add(gson.fromJson(array.get(i), SearchResaultTrips.class));
+            JsonArray ar = array.get(i).getAsJsonObject().getAsJsonArray("Leg");
+            for(int j=0; j<ar.size(); j++){
+                srtArrayList.add(gson.fromJson(ar.get(j), SearchResaultTrips.class));
+            }
         }
         return srtArrayList;
     }
