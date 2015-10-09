@@ -60,6 +60,7 @@ public class ResekompanjonActivity extends AppCompatActivity
         //TODO: remove, only for debug
         FavoriteHandler fav = new FavoriteHandler(getApplicationContext());
         fav.getFavoriteTrips();
+        fav.clearFavorites();
         fav.addToFavoriteTrips("Does this work?");
         fav.getFavoriteTrips();
     }

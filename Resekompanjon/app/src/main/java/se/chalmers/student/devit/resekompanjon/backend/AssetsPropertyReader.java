@@ -44,7 +44,6 @@ public class AssetsPropertyReader {
             // TODO Auto-generated catch block
             Log.e("AssetsPropertyReader", e.toString());
         }
-        Log.i("Properties", prop+" ");
         return prop;
     }
     public String getPassword(String s){

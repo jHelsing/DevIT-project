@@ -5,10 +5,17 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 /**
  * Created by Marcus on 2015-10-09.
@@ -24,32 +31,65 @@ public class FavoriteHandler {
 
     //TODO: Figure out what to return
     public void getFavoriteTrips() {
-        AssetManager  assets = cont.getResources().getAssets();
-        InputStream is;
-        byte[] b = new byte[0];
-        try {
-            is = assets.open("favorites.txt");
-            b = new byte[is.available()];
-            is.read(b);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        result = new String(b);
+        String filePath = cont.getFilesDir().getPath().toString() + "/favorites.txt";
+        File file = new File(filePath);
 
-        Log.i("result: ", result);
-        //return result;
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            InputStream inputStream = cont.openFileInput("favorites.txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString).append("\n");
+                }
+
+                inputStream.close();
+                result = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        Log.d("result" , result);
     }
     public void addToFavoriteTrips(String s){
         try {
-            FileOutputStream out = cont.openFileOutput("favorites.txt", cont.MODE_APPEND);
-            out.write(s.getBytes());
-            Log.d("Trying to write", s);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput("favorites.txt", Context.MODE_APPEND));
+            outputStreamWriter.write(s);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+    //Mostly added for testing but might be useful
+    public void clearFavorites(){
+
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput("favorites.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+    //Remove a single favorite
+    public void removeFavorite(int i){
+
     }
 }
