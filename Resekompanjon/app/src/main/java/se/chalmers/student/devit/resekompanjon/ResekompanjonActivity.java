@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
 
-<<<<<<< Updated upstream
+
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
-=======
->>>>>>> Stashed changes
+
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
