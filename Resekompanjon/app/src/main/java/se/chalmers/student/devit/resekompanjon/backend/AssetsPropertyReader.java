@@ -23,7 +23,6 @@ public class AssetsPropertyReader {
     }
     private Properties getProperties(String FileName) {
 
-        Log.i("dar", res + "");
         try {
             /**
              * getAssets() Return an AssetManager instance for your

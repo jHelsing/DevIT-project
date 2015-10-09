@@ -17,8 +17,8 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
+import se.chalmers.student.devit.resekompanjon.backend.FavoriteHandler;
 import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
-
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
@@ -56,6 +56,12 @@ public class ResekompanjonActivity extends AppCompatActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         vb = new VasttrafikBackend(getApplicationContext(), this);
+
+        //TODO: remove, only for debug
+        FavoriteHandler fav = new FavoriteHandler(getApplicationContext());
+        fav.getFavoriteTrips();
+        fav.addToFavoriteTrips("Does this work?");
+        fav.getFavoriteTrips();
     }
 
     @Override
