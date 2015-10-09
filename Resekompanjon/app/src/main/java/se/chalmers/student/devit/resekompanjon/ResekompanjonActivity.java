@@ -6,20 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+<<<<<<< Updated upstream
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -27,6 +22,8 @@ import java.util.ArrayList;
 import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
+=======
+>>>>>>> Stashed changes
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
@@ -164,12 +161,6 @@ public class ResekompanjonActivity extends AppCompatActivity
         public PlaceholderFragment() {
         }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_resekompanjon, container, false);
-            return rootView;
-        }
 
         @Override
         public void onAttach(Activity activity) {
