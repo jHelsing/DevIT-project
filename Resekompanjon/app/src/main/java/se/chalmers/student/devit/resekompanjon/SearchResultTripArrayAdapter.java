@@ -39,13 +39,13 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResaultTrip
         TextView arrival = (TextView) rowView.findViewById(R.id.arrival);
         TextView travelTime = (TextView) rowView.findViewById(R.id.travelTime);
         TextView delay = (TextView) rowView.findViewById(R.id.delay);
-        /*
+
         Calendar cal = Calendar.getInstance();
 
-        int departureHour = Integer.parseInt(timeFormatter.format(trip.getOriginTime()).substring(0, 2));
-        int departureMin = Integer.parseInt(timeFormatter.format(trip.getOriginTime()).substring(3, 5));
-        int arrivalHour = Integer.parseInt(timeFormatter.format(trip.getDestinationTime()).substring(0, 2));
-        int arrivalMin = Integer.parseInt(timeFormatter.format(trip.getDestinationTime()).substring(3,5));
+        int departureHour = Integer.parseInt(trip.getOriginTime().substring(0, 2));
+        int departureMin = Integer.parseInt(trip.getOriginTime().substring(3));
+        int arrivalHour = Integer.parseInt(trip.getDestinationTime().substring(0, 2));
+        int arrivalMin = Integer.parseInt(trip.getDestinationTime().substring(3));
 
         cal.set(Calendar.HOUR_OF_DAY, departureHour);
         cal.set(Calendar.MINUTE, departureMin);
@@ -66,11 +66,8 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResaultTrip
         cal.set(Calendar.MINUTE, travelMin);
         String totalTravelTime = timeFormatter.format(cal.getTime());
         travelTime.setText(totalTravelTime);
-        */
-        arrival.setText("XX:XX");
-        departure.setText("XX:XX");
+
         delay.setText("XX:XX");
-        travelTime.setText("XX:XX");
 
         return rowView;
     }
