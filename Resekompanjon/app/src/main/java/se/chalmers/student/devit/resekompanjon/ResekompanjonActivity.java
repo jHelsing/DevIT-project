@@ -1,6 +1,7 @@
 package se.chalmers.student.devit.resekompanjon;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -125,8 +126,9 @@ public class ResekompanjonActivity extends AppCompatActivity
         JsonObject fromAPI= vb.getApiData();
         JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
-        SearchResultListActivity searchResultListActivity = new SearchResultListActivity(searchedTrips);
-        searchResultListActivity.startActivity(getIntent());
+        SearchResultListActivity.setTrips(searchedTrips);
+        startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
+
 
     }
 
