@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,7 +13,8 @@ import java.util.Calendar;
 import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
 
 /**
- * Created by jonat on 10/10/2015.
+ * @author Jonathan
+ * @version 1.0
  */
 public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResaultTrips> {
 
@@ -40,13 +40,12 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResaultTrip
         TextView travelTime = (TextView) rowView.findViewById(R.id.travelTime);
         TextView delay = (TextView) rowView.findViewById(R.id.delay);
 
-        Calendar cal = Calendar.getInstance();
-
         int departureHour = Integer.parseInt(trip.getOriginTime().substring(0, 2));
         int departureMin = Integer.parseInt(trip.getOriginTime().substring(3));
         int arrivalHour = Integer.parseInt(trip.getDestinationTime().substring(0, 2));
         int arrivalMin = Integer.parseInt(trip.getDestinationTime().substring(3));
 
+        Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, departureHour);
         cal.set(Calendar.MINUTE, departureMin);
         departure.setText(timeFormatter.format(cal.getTime()));
@@ -55,7 +54,8 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResaultTrip
         arrival.setText(timeFormatter.format(cal.getTime()));
 
         int travelHour = arrivalHour-departureHour;
-        if(travelHour < 0) travelHour = travelHour+24;
+        if(travelHour < 0)
+            travelHour = travelHour+24;
         int travelMin = arrivalMin-departureMin;
         if(travelMin < 0) {
             travelHour = travelHour-1;
@@ -66,9 +66,7 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResaultTrip
         cal.set(Calendar.MINUTE, travelMin);
         String totalTravelTime = timeFormatter.format(cal.getTime());
         travelTime.setText(totalTravelTime);
-
         delay.setText("XX:XX");
-
         return rowView;
     }
 
