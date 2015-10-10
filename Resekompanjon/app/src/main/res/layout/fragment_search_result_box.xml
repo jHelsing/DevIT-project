@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="XX:XX"
-                    android:id="@+id/departure"
+                    android:id="@+id/depa11rture"
                     android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
                 <TextView

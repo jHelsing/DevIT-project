@@ -7,10 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
 
@@ -19,9 +16,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
-import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
-import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
 
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
@@ -130,8 +125,8 @@ public class ResekompanjonActivity extends AppCompatActivity
         JsonObject fromAPI= vb.getApiData();
         JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
-        SearchResult searchResult = new SearchResult(searchedTrips);
-        searchResult.startActivity(getIntent());
+        SearchResultListActivity searchResultListActivity = new SearchResultListActivity(searchedTrips);
+        searchResultListActivity.startActivity(getIntent());
 
     }
 
