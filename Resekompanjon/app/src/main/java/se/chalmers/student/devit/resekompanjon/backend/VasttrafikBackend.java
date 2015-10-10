@@ -15,8 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * @author Marcus
@@ -66,6 +68,8 @@ public class VasttrafikBackend {
 
         try {
             URL url = new URL(myUrl);
+            Log.i("url=", url.toString());
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000 /* milliseconds */);
             conn.setConnectTimeout(15000 /* milliseconds */);
@@ -76,18 +80,19 @@ public class VasttrafikBackend {
 
             int response = conn.getResponseCode();
             Log.d(DEBUG_TAG, "The response is: " + response); // DEBUG
+            if (response != 500){
+                inputStream = conn.getInputStream();
+            } else{
+                inputStream = conn.getErrorStream();
+            }
 
-            inputStream = conn.getInputStream();
             String contentAsString = readInputStream(inputStream);
-            Log.d("char", contentAsString.length()+"");
 
             //UGLY FIX
-            //TODO: FIgure out a way to remove unnecessary characters some other way
+            //TODO: Figure out a way to remove unnecessary characters some other way
             JsonElement jsonResponse = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
 
             apiData = jsonResponse.getAsJsonObject();
-
-            Log.d("http:", myUrl);
 
             return "Success ApiData downloaded";
 
@@ -143,7 +148,14 @@ public class VasttrafikBackend {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON";
         if (date != null){ url = url +  "&date=" + date;}
         if (time != null){ url = url + "&time=" + time; }
-        url = url + "&originId=" + origin + "&destId=" + dest;
+
+        String destUrl = url + "&originId=" + origin + "&destId=" + dest;
+        try {
+            url = url + URLEncoder.encode(destUrl, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         try {
             vastTrafikConnect(url);
         } catch (NoConnectionException e) {

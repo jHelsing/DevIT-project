@@ -36,8 +36,7 @@ public class ResekompanjonActivity extends AppCompatActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
-    //TODO: REMOVE! ONLY FOR DEBUG PURPOSES
+    
     VasttrafikBackend vb; //REMOVE ?!
 
     @Override
@@ -57,12 +56,6 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         vb = new VasttrafikBackend(getApplicationContext(), this);
 
-        //TODO: remove, only for debug
-        FavoriteHandler fav = new FavoriteHandler(getApplicationContext());
-        fav.getFavoriteTrips();
-        fav.clearFavorites();
-        fav.addToFavoriteTrips("Does this work?");
-        fav.getFavoriteTrips();
     }
 
     @Override
@@ -130,6 +123,7 @@ public class ResekompanjonActivity extends AppCompatActivity
     //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
+
         JsonObject fromAPI= vb.getApiData();
         JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
