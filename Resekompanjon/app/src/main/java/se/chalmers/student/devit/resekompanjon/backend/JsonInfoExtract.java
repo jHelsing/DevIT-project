@@ -33,7 +33,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     //OBS! The different vehicles API for their unic route can be found by calling getJourneydetailref().
     public ArrayList<VehicleInfo> getAllVehiclesFromThisStop(){
         Gson gson = new Gson();
-        JsonArray array = this.json.get("Departure").getAsJsonArray();
+        JsonArray array = this.json.get("DepartureBoard").getAsJsonObject().get("Departure").getAsJsonArray();
         if(array == null) {
             System.out.println("Wrong URL for this method");
         }
@@ -47,7 +47,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     // All the info about the vehicles can be found in the getters in StopsFromString.
     public ArrayList<StopsFromString> getStopsFromSearchString(){
         Gson gson = new Gson();
-        JsonArray array = this.json.get("StopLocation").getAsJsonArray();
+        JsonArray array = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonArray();
         if(array == null) {
             System.out.println("Wrong URL for this method");
         }
@@ -61,7 +61,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     //Checks whats stops are nearby
     public ArrayList<StopsNearby> getStopsNearby(){
         Gson gson = new Gson();
-        JsonArray array = this.json.get("StopLocation").getAsJsonArray();
+        JsonArray array = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonArray();
         if(array == null) {
             System.out.println("Wrong URL for this method");
         }
@@ -74,7 +74,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     //Checks adress nearby
     public AdressNearby getAdressNearby(){
         Gson gson = new Gson();
-        JsonObject obj = this.json.get("CoordLocation").getAsJsonObject();
+        JsonObject obj = this.json.get("LocationList").getAsJsonObject().get("CoordLocation").getAsJsonObject();
         if(obj == null) {
             System.out.println("Wrong URL for this method");
         }
@@ -90,7 +90,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
             System.out.println("Wrong URL for this method");
         }
         for(int i=0; i<array.size(); i++){
-            JsonArray ar = array.get(i).getAsJsonObject().getAsJsonArray("Leg");
+            JsonArray ar = array.get(i).getAsJsonObject().get("Leg").getAsJsonArray();
             for(int j=0; j<ar.size(); j++){
                 srtArrayList.add(gson.fromJson(ar.get(j), SearchResaultTrips.class));
             }
@@ -102,7 +102,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     //All the information about the objectes(stops) can be reached with getters in EntireTripRoute.
     public ArrayList<EntireTripRoute> getEntireTripRoute(){
         Gson gson = new Gson();
-        JsonArray array = this.json.get("Stop").getAsJsonArray();
+        JsonArray array = this.json.get("JourneyDetail").getAsJsonObject().get("Stop").getAsJsonArray();
         if(array == null) {
             System.out.println("Wrong URL for this method");
         }
@@ -118,12 +118,12 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     //OBS! GeometryRef is an URL with a list of longs and lats. To get those, use method getGeometryRef.
     public ArrayList<AdditionalInfoRoute> getAdditionalInfoRoute(){
         Gson gson = new Gson();
-        JsonElement Color = this.json.get("Color");
-        JsonElement GeometryRef = this.json.get("GeometryRef");
-        JsonElement JourneyName = this.json.get("JourneyName");
-        JsonElement JourneyType = this.json.get("JourneyType");
-        JsonElement JourneyId = this.json.get("JourneyId");
-        JsonElement Direction = this.json.get("Direction");
+        JsonElement Color = this.json.get("JourneyDetail").getAsJsonObject().get("Color");
+        JsonElement GeometryRef = this.json.get("JourneyDetail").getAsJsonObject().get("GeometryRef");
+        JsonElement JourneyName = this.json.get("JourneyDetail").getAsJsonObject().get("JourneyName");
+        JsonElement JourneyType = this.json.get("JourneyDetail").getAsJsonObject().get("JourneyType");
+        JsonElement JourneyId = this.json.get("JourneyDetail").getAsJsonObject().get("JourneyId");
+        JsonElement Direction = this.json.get("JourneyDetail").getAsJsonObject().get("Direction");
         airArrayList.add(gson.fromJson(Color, AdditionalInfoRoute.class));
         airArrayList.add(gson.fromJson(GeometryRef, AdditionalInfoRoute.class));
         airArrayList.add(gson.fromJson(JourneyName, AdditionalInfoRoute.class));
@@ -136,7 +136,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     //Gets longs and lats from a specific trip. Get info by using getters in GeometryRef.
     public ArrayList<GeometryRef> getGeometryRef() {
         Gson gson = new Gson();
-        JsonArray array = this.json.get("Points").getAsJsonObject().get("Point").getAsJsonArray();
+        JsonArray array = this.json.get("Geometry").getAsJsonObject().get("Points").getAsJsonObject().get("Point").getAsJsonArray();
         if(array == null) {
             System.out.println("Wrong URL for this method");
         }
