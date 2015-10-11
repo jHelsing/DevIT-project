@@ -136,11 +136,10 @@ public class VasttrafikBackend {
         }
     }
 
-
     /**
      *
-     * @param origin Either name of bustop or ID
-     * @param dest Either name of bustop or ID
+     * @param origin Either name of bus stop or ID
+     * @param dest Either name of bus stop or ID
      * @param date needs to be on format [YYYY-MM-DD]
      * @param time needs to be on format [XX:XX]
      */

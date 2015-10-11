@@ -56,6 +56,13 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         vb = new VasttrafikBackend(getApplicationContext(), this);
 
+        //TODO: REMOVE
+        FavoriteHandler fav = new FavoriteHandler(getApplicationContext());
+        fav.clearFavorites();
+        fav.getFavoriteTrips();
+        fav.addToFavoriteTrips("Kungsports", "123141243", "Brunns", "12314154123");
+        fav.getFavoriteTrips();
+
     }
 
     @Override

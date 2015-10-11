@@ -88,7 +88,7 @@ public class FavoriteHandler {
 
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput("favorites.txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(tripArray.getAsString());
+            outputStreamWriter.write(tripArray.toString());
             outputStreamWriter.close();
         }
         catch (IOException e) {
