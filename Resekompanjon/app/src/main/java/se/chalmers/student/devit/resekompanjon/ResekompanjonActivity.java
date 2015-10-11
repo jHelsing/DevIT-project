@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
-import se.chalmers.student.devit.resekompanjon.backend.FavoriteHandler;
 import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
@@ -56,23 +54,6 @@ public class ResekompanjonActivity extends AppCompatActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         vb = new VasttrafikBackend(getApplicationContext(), this);
-
-        //TODO: REMOVE
-        FavoriteHandler fav = new FavoriteHandler(getApplicationContext());
-        //fav.clearFavorites();
-        fav.addToFavoriteTrips("1", "2", "3", "4");
-        Log.d("json: ", fav.getTripArrayAsJson().toString());
-        Log.d("json: ", fav.getNumbOfFavorites() + "");
-        fav.addToFavoriteTrips("5", "6", "7", "8");
-        Log.d("json: ", fav.getTripArrayAsJson().toString());
-        Log.d("json: ", fav.getNumbOfFavorites() + "");
-        fav.addToFavoriteTrips("1", "2", "3", "4");
-        Log.d("json: ", fav.getTripArrayAsJson().toString());
-        Log.d("json: ", fav.getNumbOfFavorites() + "");
-
-        fav.removeFavorite(1);
-        Log.d("json: ", fav.getTripArrayAsJson().toString());
-        Log.d("json: ", fav.getNumbOfFavorites() + "");
 
     }
 

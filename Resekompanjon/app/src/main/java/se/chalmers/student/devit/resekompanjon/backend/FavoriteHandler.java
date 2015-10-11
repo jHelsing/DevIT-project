@@ -1,8 +1,7 @@
 package se.chalmers.student.devit.resekompanjon.backend;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
+
 import android.util.Log;
 
 import com.google.gson.JsonArray;
@@ -10,15 +9,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import org.json.JSONArray;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -74,9 +68,13 @@ public class FavoriteHandler {
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
-
-        JsonElement jElement = new JsonParser().parse(result);
-        tripArray = jElement.getAsJsonArray();
+        try { //If the file is wrong format clear file and start anew
+            JsonElement jElement = new JsonParser().parse(result);
+            tripArray = jElement.getAsJsonArray();
+        } catch (IllegalStateException e) {
+            Log.e("ERROR", "Failed to read JSON from file, clearing");
+            clearFavorites();
+        }
 
     }
     public void addToFavoriteTrips(String originName, String originID, String endName, String endID){
