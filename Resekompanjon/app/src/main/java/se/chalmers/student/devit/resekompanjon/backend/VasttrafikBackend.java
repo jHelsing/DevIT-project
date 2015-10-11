@@ -136,11 +136,11 @@ public class VasttrafikBackend {
         }
     }
 
-
     /**
+     * Using ID is preferred in ALL cases as the name of bus stop isn't working
      *
-     * @param origin Either name of bustop or ID
-     * @param dest Either name of bustop or ID
+     * @param origin Either name of bus stop or ID
+     * @param dest Either name of bus stop or ID
      * @param date needs to be on format [YYYY-MM-DD]
      * @param time needs to be on format [XX:XX]
      */
@@ -149,6 +149,7 @@ public class VasttrafikBackend {
         if (date != null){ url = url +  "&date=" + date;}
         if (time != null){ url = url + "&time=" + time; }
 
+        //Added as we had issues with swedish letters, time to remove?
         String destUrl = "&originId=" + origin + "&destId=" + dest;
         try {
             url = url + URLEncoder.encode(destUrl, "UTF-8");

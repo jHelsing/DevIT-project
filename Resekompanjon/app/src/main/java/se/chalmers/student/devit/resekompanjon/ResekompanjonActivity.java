@@ -17,7 +17,6 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
-import se.chalmers.student.devit.resekompanjon.backend.FavoriteHandler;
 import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
