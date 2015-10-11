@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
@@ -58,10 +59,20 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         //TODO: REMOVE
         FavoriteHandler fav = new FavoriteHandler(getApplicationContext());
-        fav.clearFavorites();
-        fav.getFavoriteTrips();
-        fav.addToFavoriteTrips("Kungsports", "123141243", "Brunns", "12314154123");
-        fav.getFavoriteTrips();
+        //fav.clearFavorites();
+        fav.addToFavoriteTrips("1", "2", "3", "4");
+        Log.d("json: ", fav.getTripArrayAsJson().toString());
+        Log.d("json: ", fav.getNumbOfFavorites() + "");
+        fav.addToFavoriteTrips("5", "6", "7", "8");
+        Log.d("json: ", fav.getTripArrayAsJson().toString());
+        Log.d("json: ", fav.getNumbOfFavorites() + "");
+        fav.addToFavoriteTrips("1", "2", "3", "4");
+        Log.d("json: ", fav.getTripArrayAsJson().toString());
+        Log.d("json: ", fav.getNumbOfFavorites() + "");
+
+        fav.removeFavorite(1);
+        Log.d("json: ", fav.getTripArrayAsJson().toString());
+        Log.d("json: ", fav.getNumbOfFavorites() + "");
 
     }
 

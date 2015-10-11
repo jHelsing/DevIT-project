@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 /**
  * Created by Marcus on 2015-10-09.
@@ -41,14 +42,16 @@ public class FavoriteHandler {
         if (!file.exists()){
             try {
                 file.createNewFile();
+                Log.d("File not found", "Creating file for saving favorites");
                 clearFavorites();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        readFavoriteTrips();
     }
     //TODO: Figure out what to return
-    public void getFavoriteTrips() {
+    private void readFavoriteTrips() {
         try {
             InputStream inputStream = cont.openFileInput("favorites.txt");
 
@@ -75,9 +78,9 @@ public class FavoriteHandler {
         JsonElement jElement = new JsonParser().parse(result);
         tripArray = jElement.getAsJsonArray();
 
-        Log.d("result" , result);
     }
     public void addToFavoriteTrips(String originName, String originID, String endName, String endID){
+        readFavoriteTrips();
 
         JsonObject newTripObj = new JsonObject();
         newTripObj.addProperty("originName", originName);
@@ -95,10 +98,29 @@ public class FavoriteHandler {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
+
+    /**
+     * Used to remove a single Favorite
+     * @param i int that determines what favorite to remove, index in array to remove
+     */
+    public void removeFavorite(int i){
+        readFavoriteTrips();
+        tripArray.remove(i); //Maybe i-1 depending on how what i is sent
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput("favorites.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(tripArray.toString());
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
     //Mostly added for testing but might be useful
     public void clearFavorites(){
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput("favorites.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.close();
+            outputStreamWriter = new OutputStreamWriter(cont.openFileOutput("favorites.txt", Context.MODE_PRIVATE));
             JsonArray eArray = new JsonArray();
             outputStreamWriter.write(eArray.toString());
             outputStreamWriter.close();
@@ -106,24 +128,28 @@ public class FavoriteHandler {
             e.printStackTrace();
         }
     }
-    //Remove a single favorite, i determines which one
+    public int getNumbOfFavorites(){ return tripArray.size(); }
 
-    /**
-     * Used to remove a single Favorite
-     * @param i int that determines what favorite to remove, index in array to remove
-     */
-    public void removeFavorite(int i){
-        tripArray.remove(i); //Maybe i-1 depending on how what i is sent
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput("favorites.txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(tripArray.getAsString());
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
     public JsonArray getTripArrayAsJson(){
+        readFavoriteTrips();
         return tripArray;
+    }
+
+    public ArrayList<ArrayList> getTripArrayAsStrings(){
+        readFavoriteTrips();
+        ArrayList<String> stringTrip = new ArrayList<>();
+        ArrayList<ArrayList> stringTripArray = new ArrayList<>();
+        for (int i = 0; i < tripArray.size(); i++){
+
+            JsonObject tempObj = tripArray.get(i).getAsJsonObject();
+            stringTrip.add(tempObj.get("originName").toString());
+            stringTrip.add(tempObj.get("originID").toString());
+            stringTrip.add(tempObj.get("endName").toString());
+            stringTrip.add(tempObj.get("endID").toString());
+
+            stringTripArray.add(stringTrip);
+            stringTrip.clear();
+        }
+        return stringTripArray;
     }
 }
