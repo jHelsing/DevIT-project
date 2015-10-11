@@ -149,7 +149,7 @@ public class VasttrafikBackend {
         if (date != null){ url = url +  "&date=" + date;}
         if (time != null){ url = url + "&time=" + time; }
 
-        String destUrl = url + "&originId=" + origin + "&destId=" + dest;
+        String destUrl = "&originId=" + origin + "&destId=" + dest;
         try {
             url = url + URLEncoder.encode(destUrl, "UTF-8");
         } catch (UnsupportedEncodingException e) {
