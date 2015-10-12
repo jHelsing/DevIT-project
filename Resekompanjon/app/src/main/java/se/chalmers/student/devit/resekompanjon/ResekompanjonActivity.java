@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
+import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
@@ -31,6 +32,8 @@ public class ResekompanjonActivity extends AppCompatActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
+    private ElectricityBackend eb;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -55,6 +58,7 @@ public class ResekompanjonActivity extends AppCompatActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         vb = new VasttrafikBackend(getApplicationContext(), this);
+        eb = new ElectricityBackend(getApplicationContext(), this);
 
     }
 
