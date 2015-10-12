@@ -1,4 +1,4 @@
-package se.chalmers.student.devit.resekompanjon;
+package se.chalmers.student.devit.resekompanjon.fragment;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -8,24 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import se.chalmers.student.devit.resekompanjon.R;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FavouriteTripFragment.OnFragmentInteractionListener} interface
+ * {@link SearchResultBoxFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FavouriteTripFragment#newInstance} factory method to
+ * Use the {@link SearchResultBoxFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavouriteTripFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class SearchResultBoxFragment extends Fragment {
+    private static final String ARG_TRIP = "Trip";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private SearchResaultTrips trip;
 
     private OnFragmentInteractionListener mListener;
 
@@ -33,21 +31,19 @@ public class FavouriteTripFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FavouriteTripFragment.
+     * @param trip The SearchResaultTrips instance associated with this list item.
+     * @return A new instance of fragment SearchResultBoxFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FavouriteTripFragment newInstance(String param1, String param2) {
-        FavouriteTripFragment fragment = new FavouriteTripFragment();
+    public static SearchResultBoxFragment newInstance(SearchResaultTrips trip) {
+        SearchResultBoxFragment fragment = new SearchResultBoxFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_TRIP, trip.toString());
         fragment.setArguments(args);
         return fragment;
     }
 
-    public FavouriteTripFragment() {
+    public SearchResultBoxFragment() {
         // Required empty public constructor
     }
 
@@ -55,8 +51,7 @@ public class FavouriteTripFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //trip = getArguments().getString(ARG_TRIP);
         }
     }
 
@@ -64,10 +59,10 @@ public class FavouriteTripFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favourite_trip, container, false);
+        return inflater.inflate(R.layout.fragment_search_result_box, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);

@@ -1,4 +1,4 @@
-package se.chalmers.student.devit.resekompanjon.backend;
+package se.chalmers.student.devit.resekompanjon.backend.utils.readers;
 
 import android.content.Context;
 import android.content.res.AssetManager;

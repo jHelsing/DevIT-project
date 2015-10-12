@@ -1,6 +1,5 @@
-package se.chalmers.student.devit.resekompanjon;
+package se.chalmers.student.devit.resekompanjon.fragment;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -21,10 +20,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
-import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
+import se.chalmers.student.devit.resekompanjon.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

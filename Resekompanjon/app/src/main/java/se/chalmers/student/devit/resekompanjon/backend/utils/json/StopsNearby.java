@@ -1,4 +1,4 @@
-package se.chalmers.student.devit.resekompanjon.backend;
+package se.chalmers.student.devit.resekompanjon.backend.utils.json;
 
 /**
  * Created by emmafahlen on 2015-10-07.

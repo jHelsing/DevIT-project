@@ -1,4 +1,4 @@
-package se.chalmers.student.devit.resekompanjon.backend;
+package se.chalmers.student.devit.resekompanjon.backend.utils.json;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

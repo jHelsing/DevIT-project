@@ -1,37 +1,30 @@
-package se.chalmers.student.devit.resekompanjon;
+package se.chalmers.student.devit.resekompanjon.fragment;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.SystemClock;
-import android.provider.CalendarContract;
-import android.support.v4.util.TimeUtils;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+
+import se.chalmers.student.devit.resekompanjon.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link se.chalmers.student.devit.resekompanjon.SearchBoxFragment.OnSearchFragmentInteractionListener} interface
+ * {@link SearchBoxFragment.OnSearchFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link SearchBoxFragment#newInstance} factory method to
  * create an instance of this fragment.

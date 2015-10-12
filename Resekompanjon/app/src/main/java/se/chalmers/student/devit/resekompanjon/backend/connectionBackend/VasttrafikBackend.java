@@ -1,4 +1,4 @@
-package se.chalmers.student.devit.resekompanjon.backend;
+package se.chalmers.student.devit.resekompanjon.backend.connectionBackend;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -19,6 +19,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+
+import se.chalmers.student.devit.resekompanjon.backend.utils.readers.AssetsPropertyReader;
+import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 
 /**
  * @author Marcus

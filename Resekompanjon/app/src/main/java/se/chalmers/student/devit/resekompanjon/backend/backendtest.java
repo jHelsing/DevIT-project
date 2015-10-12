@@ -1,10 +1,5 @@
 package se.chalmers.student.devit.resekompanjon.backend;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -17,6 +12,9 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
+import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
 
 /**
  * Created by emmafahlen on 2015-10-06.

@@ -1,13 +1,20 @@
-package se.chalmers.student.devit.resekompanjon.backend;
+package se.chalmers.student.devit.resekompanjon.backend.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
+
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.AdditionalInfoRoute;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.AdressNearby;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.EntireTripRoute;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.GeometryRef;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.StopsFromString;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.StopsNearby;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.VehicleInfo;
 
 /**
  * Created by emmafahlen on 2015-10-06.

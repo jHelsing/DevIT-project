@@ -17,12 +17,15 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
-import se.chalmers.student.devit.resekompanjon.backend.ElectricityBackend;
-import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
-import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
-import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
-import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
-import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
+import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
+import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.VasttrafikBackend;
+import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
+import se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment;
+import se.chalmers.student.devit.resekompanjon.fragment.VehicleStopFragment;
 
 public class ResekompanjonActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnSearchFragmentInteractionListener,

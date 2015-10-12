@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment;
 
 /**
  * @author Amar. Revisited by Jonathan

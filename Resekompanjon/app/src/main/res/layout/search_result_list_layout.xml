@@ -8,7 +8,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="se.chalmers.student.devit.resekompanjon.SearchInfoFragment"
+        android:name="se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment"
         android:id="@+id/fragment"
         android:layout_gravity="center_horizontal"
         tools:layout="@layout/fragment_search_info" />

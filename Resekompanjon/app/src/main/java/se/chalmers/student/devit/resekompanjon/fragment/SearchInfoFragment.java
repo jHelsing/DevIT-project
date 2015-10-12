@@ -1,6 +1,5 @@
-package se.chalmers.student.devit.resekompanjon;
+package se.chalmers.student.devit.resekompanjon.fragment;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -8,21 +7,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SearchResultBoxFragment.OnFragmentInteractionListener} interface
+ * {@link SearchInfoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SearchResultBoxFragment#newInstance} factory method to
+ * Use the {@link SearchInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchResultBoxFragment extends Fragment {
-    private static final String ARG_TRIP = "Trip";
+public class SearchInfoFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_STARTLOCATION = "startlocation";
+    private static final String ARG_ENDLOCATION = "endlocation";
+    private static final String ARG_TIME = "time";
 
-    private SearchResaultTrips trip;
+    // TODO: Rename and change types of parameters
+    private String mStartLocation;
+    private String mEndLocation;
+    private String mTime;
 
     private OnFragmentInteractionListener mListener;
 
@@ -30,19 +36,23 @@ public class SearchResultBoxFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param trip The SearchResaultTrips instance associated with this list item.
-     * @return A new instance of fragment SearchResultBoxFragment.
+     * @param startLocation This is the startpoint of the search.
+     * @param endLocation This is the endpoint of the search.
+     * @param time This is the date and time of the search.
+     * @return A new instance of fragment SearchInfoFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static SearchResultBoxFragment newInstance(SearchResaultTrips trip) {
-        SearchResultBoxFragment fragment = new SearchResultBoxFragment();
+    public static SearchInfoFragment newInstance(String startLocation, String endLocation
+                                                 ,String time) {
+        SearchInfoFragment fragment = new SearchInfoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_TRIP, trip.toString());
+        args.putString(ARG_STARTLOCATION, startLocation);
+        args.putString(ARG_ENDLOCATION, endLocation);
+        args.putString(ARG_TIME,time);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public SearchResultBoxFragment() {
+    public SearchInfoFragment() {
         // Required empty public constructor
     }
 
@@ -50,7 +60,9 @@ public class SearchResultBoxFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //trip = getArguments().getString(ARG_TRIP);
+            mStartLocation = getArguments().getString(ARG_STARTLOCATION);
+            mEndLocation = getArguments().getString(ARG_ENDLOCATION);
+            mTime = getArguments().getString(ARG_TIME);
         }
     }
 
@@ -58,25 +70,7 @@ public class SearchResultBoxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_result_box, container, false);
-    }
-
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+        return inflater.inflate(R.layout.fragment_search_info, container, false);
     }
 
     @Override

@@ -1,17 +1,13 @@
-package se.chalmers.student.devit.resekompanjon.backend;
+package se.chalmers.student.devit.resekompanjon.backend.connectionBackend;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
@@ -20,11 +16,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
+import se.chalmers.student.devit.resekompanjon.backend.utils.readers.AssetsPropertyReader;
+import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 
 /**
  * @author Jonathan

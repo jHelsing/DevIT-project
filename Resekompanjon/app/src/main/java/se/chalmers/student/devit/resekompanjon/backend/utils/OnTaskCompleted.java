@@ -1,4 +1,4 @@
-package se.chalmers.student.devit.resekompanjon.backend;
+package se.chalmers.student.devit.resekompanjon.backend.utils;
 
 /**
  * Created by Marcus on 2015-10-04.

@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
 
 /**
  * @author Jonathan

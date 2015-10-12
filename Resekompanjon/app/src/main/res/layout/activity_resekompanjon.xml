@@ -12,7 +12,7 @@
         <fragment
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="se.chalmers.student.devit.resekompanjon.SearchBoxFragment"
+            android:name="se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment"
             tools:layout="@layout/fragment_search_box" />
 
         <Button
@@ -45,7 +45,7 @@
     <fragment android:id="@+id/navigation_drawer"
         android:layout_width="@dimen/navigation_drawer_width" android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:name="se.chalmers.student.devit.resekompanjon.NavigationDrawerFragment"
+        android:name="se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
