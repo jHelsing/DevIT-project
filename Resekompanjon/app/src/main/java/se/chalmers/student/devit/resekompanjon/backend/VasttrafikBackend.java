@@ -119,21 +119,14 @@ public class VasttrafikBackend {
         }
     }
 
-    public void getStationbyName(String stop) {
+    public void getStationbyName(String stop) throws NoConnectionException{
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + key + "&format=json&jsonpCallback=processJSON&input=" + stop;
-        try {
-            vastTrafikConnect(url);
-        } catch (NoConnectionException e) {
-            e.printStackTrace();
-        }
+        vastTrafikConnect(url);
     }
-    public void getAllStops()  {
+    public void getAllStops() throws NoConnectionException {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.allstops?authKey=" + key + "&format=json&jsonpCallback=processJSON";
-        try {
-            vastTrafikConnect(url);
-        } catch (NoConnectionException e) {
-            e.printStackTrace();
-        }
+        vastTrafikConnect(url);
+
     }
 
     /**
@@ -144,7 +137,7 @@ public class VasttrafikBackend {
      * @param date needs to be on format [YYYY-MM-DD]
      * @param time needs to be on format [XX:XX]
      */
-    public void getTripID(String origin, String dest, String date, String time) {
+    public void getTripID(String origin, String dest, String date, String time) throws NoConnectionException{
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON";
         if (date != null){ url = url +  "&date=" + date;}
         if (time != null){ url = url + "&time=" + time; }
@@ -157,29 +150,18 @@ public class VasttrafikBackend {
             e.printStackTrace();
         }
 
-        try {
-            vastTrafikConnect(url);
-        } catch (NoConnectionException e) {
-            e.printStackTrace();
-        }
+        vastTrafikConnect(url);
     }
-    public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName){
+    public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName) throws NoConnectionException{
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON&originCoordLat=" + originLat +
                 "&originCoordLong=" + originLong + " &originCoordName=" + originName + "&destCoordLat=" + destLat + "&destCoordLong=" + destLong + "&destCoordName=" +
                 destName;
-        try {
-            vastTrafikConnect(url);
-        } catch (NoConnectionException e) {
-            e.printStackTrace();
-        }
+
+        vastTrafikConnect(url);
     }
-    public void getAllVehiclesFromStop(int id){
+    public void getAllVehiclesFromStop(int id) throws NoConnectionException{
             String url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=" + key + "&format=json&jsonpCallback=processJSON&id=+ " + id ;
-        try {
             vastTrafikConnect(url);
-        } catch (NoConnectionException e) {
-            e.printStackTrace();
-        }
     }
 
     public JsonObject getApiData(){

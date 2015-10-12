@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.JsonInfoExtract;
+import se.chalmers.student.devit.resekompanjon.backend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.SearchResaultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.VasttrafikBackend;
@@ -108,7 +109,11 @@ public class ResekompanjonActivity extends AppCompatActivity
         TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
         loadingView.setText(R.string.loading_search_result);
 
-        vb.getTripID(startLocation, endLocation, date, time);
+        try {
+            vb.getTripID(startLocation, endLocation, date, time);
+        } catch (NoConnectionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
