@@ -10,7 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.gson.JsonObject;
@@ -112,13 +114,16 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     @Override
     public void onSearchButtonClick(String startLocation, String endLocation, String date, String time) {
-        setContentView(R.layout.loading_layout);
-        TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
-        loadingView.setText(R.string.loading_search_result);
 
         try {
             vb.getTripID(startLocation, endLocation, date, time);
+            setContentView(R.layout.loading_layout);
+            TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
+            loadingView.setText(R.string.loading_search_result);
         } catch (NoConnectionException e) {
+            Toast noConectionMessage = Toast.makeText(this
+                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+            noConectionMessage.show();
             e.printStackTrace();
         }
     }
