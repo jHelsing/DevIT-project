@@ -36,10 +36,12 @@ public class ElectricityBackend  {
     ConnectivityManager connMgr;
     private JsonArray apiData;
     OnTaskCompleted listener;
+    private Context context;
     private static String key;
 
     public ElectricityBackend(Context context, OnTaskCompleted listener){
         this.listener = listener;
+        this.context = context;
         connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         AssetsPropertyReader p = new AssetsPropertyReader(context);
@@ -133,6 +135,9 @@ public class ElectricityBackend  {
         try {
             electricityConnect(url);
         } catch (NoConnectionException e) {
+            Toast noConectionMessage = Toast.makeText(context
+                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+            noConectionMessage.show();
             e.printStackTrace();
         }
     }
