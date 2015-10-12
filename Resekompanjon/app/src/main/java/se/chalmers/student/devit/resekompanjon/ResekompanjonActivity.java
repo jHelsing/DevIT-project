@@ -53,6 +53,7 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_resekompanjon);
 
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();

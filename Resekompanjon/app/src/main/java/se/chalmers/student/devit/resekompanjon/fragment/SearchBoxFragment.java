@@ -5,12 +5,14 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -32,7 +34,7 @@ import se.chalmers.student.devit.resekompanjon.R;
  * @author Jonathan. Revisited by Amar.
  * @version 0.1
  */
-public class SearchBoxFragment extends Fragment implements View.OnClickListener {
+public class SearchBoxFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -107,6 +109,8 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
             initTimePicker();
             initDefaultValues();
             this.getView().findViewById(R.id.buttonSearchTrip).setOnClickListener(this);
+            this.getView().findViewById(R.id.editTextTipStartLocation).setOnFocusChangeListener(this);
+            this.getView().findViewById(R.id.editTextTipEndLocation).setOnFocusChangeListener(this);
 
         } catch (ClassCastException e) {
             throw new ClassCastException( getActivity().toString()
@@ -219,6 +223,15 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener 
             travelTimePicker.show();
         } else if(v == this.getView().findViewById(R.id.editTextTravelDate)){
             travelDatePicker.show();
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(!hasFocus){
+            InputMethodManager iMM = (InputMethodManager)getActivity()
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            iMM.hideSoftInputFromWindow(this.getView().getWindowToken(), 0);
         }
     }
 
