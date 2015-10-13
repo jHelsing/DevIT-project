@@ -20,7 +20,6 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
@@ -55,7 +54,7 @@ public class ResekompanjonActivity extends AppCompatActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    
+
     VasttrafikBackend vb; //REMOVE ?!
 
     @Override
@@ -85,14 +84,6 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         vb = new VasttrafikBackend(getApplicationContext(), this);
         eb = new ElectricityBackend(getApplicationContext(), this);
-
-        BackendCommunicator bc = new BackendCommunicator(getApplicationContext(), this);
-        try {
-            bc.getTripByName("Utlanda", "Korsvägen", null, null);
-            bc.getTripByName("brunns", "kungs", null, null);
-        } catch (NoConnectionException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -162,7 +153,7 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     @Override
     public void onSearchButtonClick(String startLocation, String endLocation, String date, String time) {
-        /*
+
         try {
             vb.getTripID(startLocation, endLocation, date, time);
             this.mStartLocation = startLocation;
@@ -178,7 +169,7 @@ public class ResekompanjonActivity extends AppCompatActivity
             noConectionMessage.show();
             e.printStackTrace();
         }
-        */
+
     }
 
     @Override
@@ -192,14 +183,13 @@ public class ResekompanjonActivity extends AppCompatActivity
     //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
-        /*
+
         JsonObject fromAPI= vb.getApiData();
         JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
         SearchResultListActivity.setTrips(searchedTrips);
         startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
         finish();
-        */
     }
 
     /**

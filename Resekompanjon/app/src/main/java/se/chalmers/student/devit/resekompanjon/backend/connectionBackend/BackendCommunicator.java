@@ -68,6 +68,7 @@ public class BackendCommunicator implements OnTaskCompleted{
     @Override
     public void onTaskCompleted() {
         if (!severalStepsNeeded){
+            apiData = vbackend.getApiData();
             listener.onTaskCompleted();
         }else {
             try {
@@ -98,6 +99,7 @@ public class BackendCommunicator implements OnTaskCompleted{
             tempStrings.add(jsonInfoExtract.getStopsFromSearchString().get(0).getId()); //adds onto index 5
             severalStepsNeeded = false;
             vbackend.getTripID(tempStrings.get(4),tempStrings.get(5), tempStrings.get(2), tempStrings.get(3));
+            tempStrings.clear();
             apiTempOrigin = null;
             apiTempDest = null;
         }
