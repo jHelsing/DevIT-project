@@ -88,8 +88,8 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         BackendCommunicator bc = new BackendCommunicator(getApplicationContext(), this);
         try {
-            bc.getTripByName("hej", "hej", "hej", "hej");
-            bc.getTripByName("hej", "hej", "hej", "hej");
+            bc.getTripByName("Utlanda", "Korsvägen", null, null);
+            bc.getTripByName("brunns", "kungs", null, null);
         } catch (NoConnectionException e) {
             e.printStackTrace();
         }
@@ -192,13 +192,14 @@ public class ResekompanjonActivity extends AppCompatActivity
     //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
-
+        /*
         JsonObject fromAPI= vb.getApiData();
         JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
         SearchResultListActivity.setTrips(searchedTrips);
         startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
         finish();
+        */
     }
 
     /**

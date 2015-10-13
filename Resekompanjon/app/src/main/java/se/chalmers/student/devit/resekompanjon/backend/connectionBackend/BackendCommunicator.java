@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
+import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 
 /**
@@ -25,6 +26,7 @@ public class BackendCommunicator implements OnTaskCompleted{
     private JsonObject apiTempOrigin = null;
     private JsonObject apiTempDest= null;
     private ArrayList<String> tempStrings = new ArrayList<>();
+    private JsonInfoExtract jsonInfoExtract;
 
     public BackendCommunicator(Context context, OnTaskCompleted listener){
         vbackend = new VasttrafikBackend(context.getApplicationContext(), this);
@@ -67,11 +69,40 @@ public class BackendCommunicator implements OnTaskCompleted{
     public void onTaskCompleted() {
         if (!severalStepsNeeded){
             listener.onTaskCompleted();
-        }else if (severalStepsNeeded && apiTempOrigin == null){
-            apiTempOrigin = vbackend.getApiData();
+        }else {
+            try {
+                handleTripByNameSearch();
+            } catch (NoConnectionException e) {
+                e.printStackTrace();
+            }
         }
 
     }
+
+    /**
+     * Only used to keep logic out of onTaskCompleted
+     */
+    private void handleTripByNameSearch() throws NoConnectionException {
+        if (apiTempOrigin == null){
+            apiTempOrigin = vbackend.getApiData();
+            try {
+                vbackend.getStationbyName(tempStrings.get(0));
+            } catch (NoConnectionException e) {
+                e.printStackTrace();
+            }
+        } else if (apiTempDest == null){
+            apiTempDest = vbackend.getApiData();
+            jsonInfoExtract = new JsonInfoExtract(apiTempOrigin);
+            tempStrings.add(jsonInfoExtract.getStopsFromSearchString().get(0).getId()); //adds onto index 4
+            jsonInfoExtract = new JsonInfoExtract(apiTempDest);
+            tempStrings.add(jsonInfoExtract.getStopsFromSearchString().get(0).getId()); //adds onto index 5
+            severalStepsNeeded = false;
+            vbackend.getTripID(tempStrings.get(4),tempStrings.get(5), tempStrings.get(2), tempStrings.get(3));
+            apiTempOrigin = null;
+            apiTempDest = null;
+        }
+    }
+
     public JsonObject getApiData(){
         return apiData;
     }

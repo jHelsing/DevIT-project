@@ -133,18 +133,18 @@ public class VasttrafikBackend {
 
     /**
      * Using ID is preferred in ALL cases as the name of bus stop isn't working
+     * ID is only String as long is otherwise needed
      *
-     * @param origin Either name of bus stop or ID
-     * @param dest Either name of bus stop or ID
+     * @param originID ID of bus stop
+     * @param destID ID of buss top
      * @param date needs to be on format [YYYY-MM-DD]
      * @param time needs to be on format [XX:XX]
      */
-    public void getTripID(int origin, int dest, String date, String time) throws NoConnectionException{
+    public void getTripID(String originID, String destID, String date, String time) throws NoConnectionException{
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON";
         if (date != null){ url = url +  "&date=" + date;}
         if (time != null){ url = url + "&time=" + time; }
-        url = url + "&originId=" + origin + "&destId=" + dest;
-
+        url = url + "&originId=" + originID + "&destId=" + destID;
         vastTrafikConnect(url);
     }
     public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName) throws NoConnectionException{
