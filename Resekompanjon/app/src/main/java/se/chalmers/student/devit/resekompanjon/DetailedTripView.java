@@ -42,7 +42,9 @@ public class DetailedTripView extends AppCompatActivity
 
             initBasicTripInfo();
         } else{
-            
+
+            setContentView(R.layout.detailed_trip_warning_layout);
+
         }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
