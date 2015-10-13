@@ -1,5 +1,6 @@
 package se.chalmers.student.devit.resekompanjon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,13 +28,10 @@ public class DetailedTripView extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_trip_layout);
-        Bundle bundle = getIntent().getExtras();
-        // We know that this bundle will contain a key called JSON
-        // that contains the JSON object of this trip.
-        trip = new JsonParser().parse((String) bundle.get("JSON")).getAsJsonObject();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment.setmCurrentSelectedPosition(3);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -56,6 +54,8 @@ public class DetailedTripView extends AppCompatActivity
     public void onNavigationDrawerItemSelected(int position) {
         if(position == 0) {
             // return to start
+            Intent i = new Intent(DetailedTripView.this, ResekompanjonActivity.class);
+            //startActivity(i);
         } else if(position == 1) {
             // Go to planned trips
         } else if(position == 2) {

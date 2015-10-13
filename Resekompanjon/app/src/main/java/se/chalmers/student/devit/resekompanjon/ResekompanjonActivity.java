@@ -98,11 +98,21 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        if(position == 0) {
+            // return to start
+        } else if(position == 1) {
+            // Go to planned trips
+        } else if(position == 2) {
+            // Go to favourites
+        } else if(position == 3) {
+            // Go to detailed trip
+            Intent i = new Intent(ResekompanjonActivity.this, DetailedTripView.class);
+            startActivity(i);
+        } else if(position == 4) {
+            // Go to settings
+        } else if(position == 5) {
+            // Go to about
+        }
     }
 
     public void onSectionAttached(int number) {

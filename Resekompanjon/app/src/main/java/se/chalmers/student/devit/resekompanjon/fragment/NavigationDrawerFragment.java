@@ -263,6 +263,10 @@ public class NavigationDrawerFragment extends Fragment {
         return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 
+    public void setmCurrentSelectedPosition(int i) {
+        this.mCurrentSelectedPosition = i;
+    }
+
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */

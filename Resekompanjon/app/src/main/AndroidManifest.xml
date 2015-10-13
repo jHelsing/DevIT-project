@@ -26,6 +26,13 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name=".DetailedTripView"
+            android:label="Resekompanjon">
+            <intent-filter>
+                <action android:name="se.chalmers.student.devit.resekompanjon.DetailedTripView"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
