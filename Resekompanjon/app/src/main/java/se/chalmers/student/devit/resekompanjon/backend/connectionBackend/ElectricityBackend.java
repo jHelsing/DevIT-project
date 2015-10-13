@@ -124,7 +124,7 @@ public class ElectricityBackend  {
     public void getInformation() throws NoConnectionException{
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 120);
-        String url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_001&sensorSpec=Ericsson$Next_Stop&t1="
+        String url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_001&sensorSpec=Ericsson$Journey_Info&t1="
                 + t1 + "&t2=" + t2;
         Log.d("Connection", "Attempting to connect to" + url);
         electricityConnect(url);

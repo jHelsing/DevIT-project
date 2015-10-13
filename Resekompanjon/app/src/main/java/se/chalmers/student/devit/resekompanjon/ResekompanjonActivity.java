@@ -3,15 +3,12 @@ package se.chalmers.student.devit.resekompanjon;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,7 +103,7 @@ public class ResekompanjonActivity extends AppCompatActivity
             // Go to favourites
         } else if(position == 3) {
             // Go to detailed trip
-            Intent i = new Intent(ResekompanjonActivity.this, DetailedTripView.class);
+            Intent i = new Intent(ResekompanjonActivity.this, DetailedTripActivity.class);
             startActivity(i);
         } else if(position == 4) {
             // Go to settings
