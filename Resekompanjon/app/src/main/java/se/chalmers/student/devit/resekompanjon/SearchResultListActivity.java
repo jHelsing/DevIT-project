@@ -1,10 +1,6 @@
 package se.chalmers.student.devit.resekompanjon;
 
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.ListActivity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +18,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment;
 
 /**
  * @author Amar. Revisited by Jonathan
- * @version 0.2
+ * @version 0.3
  */
 public class SearchResultListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
         NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -30,6 +26,9 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
 
     private static ArrayList<SearchResaultTrips> searchResultTrips;
 
+    private ListView listView;
+
+    private SearchResultTripArrayAdapter adapter;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -46,12 +45,11 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result_list_layout);
 
-        ListView list = (ListView) findViewById(R.id.list);
-        SearchResultTripArrayAdapter adapter = new SearchResultTripArrayAdapter(this, searchResultTrips);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(this);
+        listView = (ListView) findViewById(R.id.list);
+        adapter = new SearchResultTripArrayAdapter(this, searchResultTrips);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
 
-        //TODO get NavigationFragment from parent Activity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -75,11 +73,6 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             startActivity(new Intent(SearchResultListActivity.this, ResekompanjonActivity.class));
@@ -97,7 +90,19 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-
+        if(position == 0) {
+            // return to start
+        } else if(position == 1) {
+            // Go to planned trips
+        } else if(position == 2) {
+            // Go to favourites
+        } else if(position == 3) {
+            // Go to detailed trip
+        } else if(position == 4) {
+            // Go to settings
+        } else if(position == 5) {
+            // Go to about
+        }
     }
 
     /**
@@ -115,6 +120,14 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    /**
+     * When interaction with the Search Info Fragment happens, this method will run.
+     */
+    @Override
+    public void onSearchInfoInteraction() {
 
     }
 }
