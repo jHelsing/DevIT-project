@@ -41,6 +41,15 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     private ElectricityBackend eb;
 
+    private final static String STATE_START_LOCATION = "startLocation";
+    private final static String STATE_END_LOCATION = "endLocation";
+    private final static String STATE_DATE= "date";
+    private final static String STATE_TIME = "time";
+
+    private String mStartLocation;
+    private String mEndLocation;
+    private String mDate;
+    private String mTime;
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -54,6 +63,15 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_resekompanjon);
 
+        if(savedInstanceState != null){
+             SearchBoxFragment searchBoxFragment = (SearchBoxFragment)this.getFragmentManager()
+                     .findFragmentById(R.id.search_box_fragment);
+            this.mStartLocation = savedInstanceState.getString(STATE_START_LOCATION);
+            this.mEndLocation = savedInstanceState.getString(STATE_END_LOCATION);
+            this.mDate = savedInstanceState.getString(STATE_DATE);
+            this.mTime = savedInstanceState.getString(STATE_TIME);
+            searchBoxFragment.initSavedValues(mStartLocation, mEndLocation, mDate, mTime);
+        }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -67,6 +85,15 @@ public class ResekompanjonActivity extends AppCompatActivity
         vb = new VasttrafikBackend(getApplicationContext(), this);
         eb = new ElectricityBackend(getApplicationContext(), this);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(STATE_START_LOCATION, mStartLocation);
+        savedInstanceState.putString(STATE_END_LOCATION, mEndLocation);
+        savedInstanceState.putString(STATE_DATE, mDate);
+        savedInstanceState.putString(STATE_TIME, mTime);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -119,6 +146,10 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         try {
             vb.getTripID(startLocation, endLocation, date, time);
+            this.mStartLocation = startLocation;
+            this.mEndLocation = endLocation;
+            this.mDate = date;
+            this.mTime = time;
             setContentView(R.layout.loading_layout);
             TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
             loadingView.setText(R.string.loading_search_result);
@@ -147,8 +178,7 @@ public class ResekompanjonActivity extends AppCompatActivity
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
         SearchResultListActivity.setTrips(searchedTrips);
         startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
-
-
+        finish();
     }
 
     /**

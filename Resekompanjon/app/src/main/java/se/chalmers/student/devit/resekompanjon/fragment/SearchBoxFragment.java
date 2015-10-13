@@ -123,10 +123,10 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
         View view = this.getView();
         Resources res = this.getResources();
 
-        EditText eT= (EditText) getView().findViewById(R.id.editTextTravelTime);
+        EditText eT= (EditText) view.findViewById(R.id.editTextTravelTime);
         eT.setText(travelTimeFormatter.format(newTime.getTime()));
 
-        eT = (EditText) getView().findViewById(R.id.editTextTravelDate);
+        eT = (EditText) view.findViewById(R.id.editTextTravelDate);
         eT.setText(travelDateFormatter.format(newDate.getTime()));
 
         String currentLocation = res.getString(R.string.current_location);
@@ -177,6 +177,22 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
                 editTime.setText(travelTimeFormatter.format(newTime.getTime()));
             }
         }, newTime.get(Calendar.HOUR_OF_DAY), newTime.get(Calendar.MINUTE),true);
+    }
+
+    public void initSavedValues(String startLocation,String endLocation, String date, String time){
+        View view = this.getView();
+
+        EditText eT= (EditText) view.findViewById(R.id.editTextTravelTime);
+        eT.setText(time);
+
+        eT = (EditText) view.findViewById(R.id.editTextTravelDate);
+        eT.setText(date);
+
+        eT = (EditText) view.findViewById(R.id.editTextTipStartLocation);
+        eT.setText(startLocation);
+
+        eT = (EditText) view.findViewById(R.id.editTextTipEndLocation);
+        eT.setText(endLocation);
     }
 
     @Override

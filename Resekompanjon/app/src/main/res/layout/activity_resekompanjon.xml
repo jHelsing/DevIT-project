@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:name="se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment"
-            tools:layout="@layout/fragment_search_box" />
+            tools:layout="@layout/fragment_search_box"
+            android:id="@+id/search_box_fragment" />
 
         <Button
             android:layout_width="fill_parent"
