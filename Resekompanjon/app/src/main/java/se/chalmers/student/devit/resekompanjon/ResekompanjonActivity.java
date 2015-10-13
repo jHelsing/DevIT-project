@@ -62,7 +62,7 @@ public class ResekompanjonActivity extends AppCompatActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                (DrawerLayout) findViewById(R.id.main_drawer_layout));
 
         vb = new VasttrafikBackend(getApplicationContext(), this);
         eb = new ElectricityBackend(getApplicationContext(), this);
