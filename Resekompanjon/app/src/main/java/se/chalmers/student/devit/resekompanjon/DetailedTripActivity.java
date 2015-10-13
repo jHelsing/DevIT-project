@@ -133,21 +133,19 @@ public class DetailedTripActivity extends AppCompatActivity
             jsObj = jsArray.get(i).getAsJsonObject();
             if(jsObj.get("resourceSpec").getAsString().equals("Destination_Value")){
                 condition = false;
-            }
-            else{
+            } else {
                 i++;
             }
         }
-        TextView busNmrTextview = (TextView) findViewById(R.id.busNumber);
-        busNmrTextview.setText(jsObj.get("value").getAsString());
+        TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
+        busNbrTextview.setText(jsObj.get("value").getAsString());
         condition = true;
         i = 0;
         while(condition){
             jsObj = jsArray.get(i).getAsJsonObject();
             if(jsObj.get("resourceSpec").getAsString().equals("Journey_Name_Value")){
                 condition = false;
-            }
-            else{
+            } else {
                 i++;
             }
         }
