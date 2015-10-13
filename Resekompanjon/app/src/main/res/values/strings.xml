@@ -8,8 +8,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
-
     <string name="action_settings">Settings</string>
 
     <string name="tourist_info">Turist Information</string>
@@ -24,13 +22,16 @@
     <string name="searchbox_at_location_latest">Framme senast</string>
     <string name="searchbox_trip_search">Sök Resa</string>
 
-<!-- Strings for Active Trip Layout -->
+<!-- Strings for Navigation -->
+    <string name="nav_start">Start</string>
+    <string name="nav_detailed_trip">Nuvarande resa</string>
+    <string name="nav_favourites">Favoriter</string>
+    <string name="nav_planned_trips">Planerade Resor</string>
+    <string name="nav_settings">Inställningar</string>
+    <string name="nav_about">Om applikationen</string>
 
 <!-- Generic Strings -->
     <string name="stop">Stopp</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="time">Tid&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
     <string name="departure">&#160;Avgång</string>
     <string name="arrival">&#160;&#160;Ankomst</string>
