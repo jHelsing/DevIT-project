@@ -1,9 +1,11 @@
 package se.chalmers.student.devit.resekompanjon;
 
+import android.app.Fragment;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment;
 
 /**
@@ -21,6 +24,11 @@ import se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment;
 public class SearchResultListActivity extends ListActivity implements SearchInfoFragment.OnFragmentInteractionListener, KeyEvent.Callback{
 
     private static ArrayList<SearchResaultTrips> searchResultTrips;
+
+    /**
+     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     */
+    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     public SearchResultListActivity() {}
 
@@ -39,6 +47,9 @@ public class SearchResultListActivity extends ListActivity implements SearchInfo
 
         SearchResultTripArrayAdapter adapter = new SearchResultTripArrayAdapter(this, searchResultTrips);
         setListAdapter(adapter);
+
+        //TODO get NavigationFragment from parent Activity
+
 
         initSearchInfo();
     }

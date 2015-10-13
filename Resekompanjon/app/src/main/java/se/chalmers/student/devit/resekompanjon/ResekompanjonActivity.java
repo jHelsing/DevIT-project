@@ -3,6 +3,7 @@ package se.chalmers.student.devit.resekompanjon;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
