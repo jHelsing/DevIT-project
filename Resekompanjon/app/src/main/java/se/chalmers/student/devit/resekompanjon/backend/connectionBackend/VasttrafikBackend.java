@@ -129,7 +129,6 @@ public class VasttrafikBackend {
     public void getAllStops() throws NoConnectionException {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.allstops?authKey=" + key + "&format=json&jsonpCallback=processJSON";
         vastTrafikConnect(url);
-
     }
 
     /**
@@ -140,18 +139,11 @@ public class VasttrafikBackend {
      * @param date needs to be on format [YYYY-MM-DD]
      * @param time needs to be on format [XX:XX]
      */
-    public void getTripID(String origin, String dest, String date, String time) throws NoConnectionException{
+    public void getTripID(int origin, int dest, String date, String time) throws NoConnectionException{
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON";
         if (date != null){ url = url +  "&date=" + date;}
         if (time != null){ url = url + "&time=" + time; }
-
-        //Added as we had issues with swedish letters, time to remove?
-        String destUrl = "&originId=" + origin + "&destId=" + dest;
-        try {
-            url = url + URLEncoder.encode(destUrl, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        url = url + "&originId=" + origin + "&destId=" + dest;
 
         vastTrafikConnect(url);
     }

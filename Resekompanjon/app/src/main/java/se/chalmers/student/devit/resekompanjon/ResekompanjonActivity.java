@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
@@ -84,6 +85,14 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         vb = new VasttrafikBackend(getApplicationContext(), this);
         eb = new ElectricityBackend(getApplicationContext(), this);
+
+        BackendCommunicator bc = new BackendCommunicator(getApplicationContext(), this);
+        try {
+            bc.getTripByName("hej", "hej", "hej", "hej");
+            bc.getTripByName("hej", "hej", "hej", "hej");
+        } catch (NoConnectionException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -153,7 +162,7 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     @Override
     public void onSearchButtonClick(String startLocation, String endLocation, String date, String time) {
-
+        /*
         try {
             vb.getTripID(startLocation, endLocation, date, time);
             this.mStartLocation = startLocation;
@@ -169,6 +178,7 @@ public class ResekompanjonActivity extends AppCompatActivity
             noConectionMessage.show();
             e.printStackTrace();
         }
+        */
     }
 
     @Override
