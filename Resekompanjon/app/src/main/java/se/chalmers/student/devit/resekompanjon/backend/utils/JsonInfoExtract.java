@@ -97,9 +97,13 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
             System.out.println("Wrong URL for this method");
         }
         for(int i=0; i<array.size(); i++){
-            JsonArray ar = array.get(i).getAsJsonObject().get("Leg").getAsJsonArray();
-            for(int j=0; j<ar.size(); j++){
-                srtArrayList.add(gson.fromJson(ar.get(j), SearchResaultTrips.class));
+            if (array.get(i).getAsJsonObject().get("Leg").isJsonArray()) {
+                JsonArray ar = array.get(i).getAsJsonObject().get("Leg").getAsJsonArray();
+                for (int j = 0; j < ar.size(); j++) {
+                    srtArrayList.add(gson.fromJson(ar.get(j), SearchResaultTrips.class));
+                }
+            } else if (array.get(i).getAsJsonObject().get("Leg").isJsonObject()){
+                srtArrayList.add(gson.fromJson(array.get(i).getAsJsonObject().get("Leg").getAsJsonObject(), SearchResaultTrips.class));
             }
         }
         return srtArrayList;
