@@ -1,6 +1,7 @@
 package se.chalmers.student.devit.resekompanjon.backend.connectionBackend;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -26,7 +27,7 @@ public class BackendCommunicator implements OnTaskCompleted{
     private JsonObject apiTempDest= null;
     private ArrayList<String> tempStrings = new ArrayList<>();
     private JsonInfoExtract jsonInfoExtract;
-    private static String ORIGIN;
+    private String ORIGIN;
 
     public BackendCommunicator(Context context, OnTaskCompleted listener){
         vBackend = new VasttrafikBackend(context.getApplicationContext(), this);
@@ -35,19 +36,19 @@ public class BackendCommunicator implements OnTaskCompleted{
     }
 
     public void getAllVehiclesFromStop(int id) throws NoConnectionException{
-        ORIGIN = "vBackend;";
+        ORIGIN = "vBackend";
         vBackend.getAllVehiclesFromStop(id);
     }
     public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName) throws NoConnectionException {
-        ORIGIN = "vBackend;";
+        ORIGIN = "vBackend";
         vBackend.getTripCoord(originLat, originLong, originName, destLat, destLong, destName);
     }
     public void getAllStops() throws NoConnectionException {
-        ORIGIN = "vBackend;";
+        ORIGIN = "vBackend";
         vBackend.getAllStops();
     }
     public void getStationbyName(String stop) throws NoConnectionException{
-        ORIGIN = "vBackend;";
+        ORIGIN = "vBackend";
         vBackend.getStationbyName(stop);
     }
     public void getFromPremadeUrl(String url) throws NoConnectionException{
@@ -63,7 +64,7 @@ public class BackendCommunicator implements OnTaskCompleted{
      * @param time needs to be on format [XX:XX]
      */
     public void getTripByName(String originName, String destName, String time, String date) throws NoConnectionException{
-        ORIGIN = "vBackend;";
+        ORIGIN = "vBackend";
         vBackend.getStationbyName(originName);
         severalStepsNeeded = true;
         if (tempStrings.isEmpty()) {
@@ -75,15 +76,17 @@ public class BackendCommunicator implements OnTaskCompleted{
     }
 
     public void getElectricityInformation() throws NoConnectionException{
-        ORIGIN = "eBackend;";
+        ORIGIN = "eBackend";
         eBackend.getInformation();
     }
 
     @Override
     public void onTaskCompleted() {
+        Log.d("origin: ", ORIGIN);
         if (!severalStepsNeeded){
-            if (ORIGIN == "vBackened") {
+            if (ORIGIN.equals("vBackend")) {
                 apiData = vBackend.getApiData();
+                Log.d("getting api", "afwdawd");
             } else if (ORIGIN == "eBackend"){
                 apiData = eBackend.getApiData();
             }
@@ -123,7 +126,6 @@ public class BackendCommunicator implements OnTaskCompleted{
             apiTempOrigin = null;
             apiTempDest = null;
         }
-
     }
 
     public JsonElement getApiData(){
