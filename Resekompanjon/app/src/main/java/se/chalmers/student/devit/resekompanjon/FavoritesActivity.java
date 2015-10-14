@@ -73,6 +73,5 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
     }
 }
