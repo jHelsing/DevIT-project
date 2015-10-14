@@ -1,17 +1,24 @@
 package se.chalmers.student.devit.resekompanjon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
+import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
+import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 
@@ -19,7 +26,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
  * @author Jonathan
  * @version 0.1
  */
-public class FavoritesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class FavoritesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnTaskCompleted {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -30,6 +37,8 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
     private ArrayList<JsonObject> list;
 
     public FavoritesActivity() {}
+
+    private BackendCommunicator bComm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,8 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
+        bComm = new BackendCommunicator(this, this);
+
     }
 
     /**
@@ -66,5 +77,19 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        bComm.getTripByName();
+        setContentView(R.layout.loading_layout);
+        TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
+        loadingView.setText(R.string.loading_search_result);
+    }
+
+    @Override
+    public void onTaskCompleted() {
+        JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
+        JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
+        ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
+        SearchResultListActivity.setTrips(searchedTrips);
+        startActivity(new Intent(FavoritesActivity.this, SearchResultListActivity.class));
+        finish();
     }
 }

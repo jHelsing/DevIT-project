@@ -160,7 +160,7 @@ public class VasttrafikBackend {
         vastTrafikConnect(url);
     }
 
-    public void getAllVehiclesFromStop(String id) throws NoConnectionException{
+    public void getAllVehiclesFromStop(int id) throws NoConnectionException{
             String url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=" + key + "&format=json&jsonpCallback=processJSON&id=+ " + id ;
             vastTrafikConnect(url);
     }
