@@ -187,7 +187,7 @@ public class ResekompanjonActivity extends AppCompatActivity
     @Override
     public void onTaskCompleted() {
 
-        JsonObject fromAPI= bComm.getApiData();
+        JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
         JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
         SearchResultListActivity.setTrips(searchedTrips);
