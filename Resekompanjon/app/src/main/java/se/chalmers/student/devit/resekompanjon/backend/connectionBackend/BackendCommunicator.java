@@ -1,9 +1,7 @@
 package se.chalmers.student.devit.resekompanjon.backend.connectionBackend;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
  * Mostly created to make it possible to search for trips by string names
  */
 public class BackendCommunicator implements OnTaskCompleted{
-    private VasttrafikBackend vbackend;
+    private VasttrafikBackend vBackend;
     private ElectricityBackend eBackend;
     private JsonObject apiData;
     private OnTaskCompleted listener;
@@ -29,22 +27,22 @@ public class BackendCommunicator implements OnTaskCompleted{
     private JsonInfoExtract jsonInfoExtract;
 
     public BackendCommunicator(Context context, OnTaskCompleted listener){
-        vbackend = new VasttrafikBackend(context.getApplicationContext(), this);
+        vBackend = new VasttrafikBackend(context.getApplicationContext(), this);
         eBackend = new ElectricityBackend(context.getApplicationContext(), this);
         this.listener = listener;
     }
 
     public void getAllVehiclesFromStop(int id) throws NoConnectionException{
-        vbackend.getAllVehiclesFromStop(id);
+        vBackend.getAllVehiclesFromStop(id);
     }
     public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName) throws NoConnectionException {
-        vbackend.getTripCoord(originLat, originLong, originName, destLat, destLong, destName);
+        vBackend.getTripCoord(originLat, originLong, originName, destLat, destLong, destName);
     }
     public void getAllStops() throws NoConnectionException {
-        vbackend.getAllStops();
+        vBackend.getAllStops();
     }
     public void getStationbyName(String stop) throws NoConnectionException{
-        vbackend.getStationbyName(stop);
+        vBackend.getStationbyName(stop);
     }
     /**
      * Using ID is preferred in ALL cases as the name of bus stop isn't working
@@ -55,7 +53,7 @@ public class BackendCommunicator implements OnTaskCompleted{
      * @param time needs to be on format [XX:XX]
      */
     public void getTripByName(String originName, String destName, String time, String date) throws NoConnectionException{
-        vbackend.getStationbyName(originName);
+        vBackend.getStationbyName(originName);
         severalStepsNeeded = true;
         if (tempStrings.isEmpty()) {
             tempStrings.add(originName);
@@ -68,7 +66,7 @@ public class BackendCommunicator implements OnTaskCompleted{
     @Override
     public void onTaskCompleted() {
         if (!severalStepsNeeded){
-            apiData = vbackend.getApiData();
+            apiData = vBackend.getApiData();
             listener.onTaskCompleted();
         }else {
             try {
@@ -85,24 +83,27 @@ public class BackendCommunicator implements OnTaskCompleted{
      */
     private void handleTripByNameSearch() throws NoConnectionException {
         if (apiTempOrigin == null){
-            apiTempOrigin = vbackend.getApiData();
-            try {
-                vbackend.getStationbyName(tempStrings.get(0));
-            } catch (NoConnectionException e) {
-                e.printStackTrace();
-            }
+            apiTempOrigin = vBackend.getApiData();
         } else if (apiTempDest == null){
-            apiTempDest = vbackend.getApiData();
+            apiTempDest = vBackend.getApiData();
+        }
+        if (apiTempOrigin == null){
+            vBackend.getStationbyName(tempStrings.get(0));
+        } else if (apiTempDest == null){
+            vBackend.getStationbyName(tempStrings.get(1));
+        }
+        if (apiTempDest != null && apiTempOrigin != null) {
             jsonInfoExtract = new JsonInfoExtract(apiTempOrigin);
             tempStrings.add(jsonInfoExtract.getStopsFromSearchString().get(0).getId()); //adds onto index 4
             jsonInfoExtract = new JsonInfoExtract(apiTempDest);
             tempStrings.add(jsonInfoExtract.getStopsFromSearchString().get(0).getId()); //adds onto index 5
             severalStepsNeeded = false;
-            vbackend.getTripID(tempStrings.get(4),tempStrings.get(5), tempStrings.get(2), tempStrings.get(3));
+            vBackend.getTripID(tempStrings.get(4), tempStrings.get(5), tempStrings.get(2), tempStrings.get(3));
             tempStrings.clear();
             apiTempOrigin = null;
             apiTempDest = null;
         }
+
     }
 
     public JsonObject getApiData(){

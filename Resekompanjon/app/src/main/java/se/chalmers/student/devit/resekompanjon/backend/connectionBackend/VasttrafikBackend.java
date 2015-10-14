@@ -162,4 +162,6 @@ public class VasttrafikBackend {
     public JsonObject getApiData(){
         return apiData;
     }
+
+    public void clearApiData() {apiData = null; }
 }

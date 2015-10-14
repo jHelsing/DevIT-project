@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
@@ -17,12 +18,12 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.VasttrafikBackend;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.VehicleStopFragment;
@@ -52,7 +53,7 @@ public class ResekompanjonActivity extends AppCompatActivity
      */
     private CharSequence mTitle;
 
-    VasttrafikBackend vb; //REMOVE ?!
+    BackendCommunicator bComm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +80,9 @@ public class ResekompanjonActivity extends AppCompatActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.main_drawer_layout));
 
-        vb = new VasttrafikBackend(getApplicationContext(), this);
         eb = new ElectricityBackend(getApplicationContext(), this);
+
+        bComm = new BackendCommunicator(getApplicationContext(), this);
 
     }
 
@@ -152,7 +154,7 @@ public class ResekompanjonActivity extends AppCompatActivity
     public void onSearchButtonClick(String startLocation, String endLocation, String date, String time) {
 
         try {
-            vb.getTripID(startLocation, endLocation, date, time);
+            bComm.getTripByName(startLocation, endLocation, date, time);
             this.mStartLocation = startLocation;
             this.mEndLocation = endLocation;
             this.mDate = date;
@@ -181,7 +183,7 @@ public class ResekompanjonActivity extends AppCompatActivity
     @Override
     public void onTaskCompleted() {
 
-        JsonObject fromAPI= vb.getApiData();
+        JsonObject fromAPI= bComm.getApiData();
         JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
         ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
         SearchResultListActivity.setTrips(searchedTrips);
