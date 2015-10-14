@@ -49,13 +49,6 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.favorite_trip_drawer_layout));
     }
 
     /**
