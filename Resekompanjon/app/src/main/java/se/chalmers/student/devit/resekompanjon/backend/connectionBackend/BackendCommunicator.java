@@ -50,6 +50,10 @@ public class BackendCommunicator implements OnTaskCompleted{
         ORIGIN = "vBackend;";
         vBackend.getStationbyName(stop);
     }
+    public void getFromPremadeUrl(String url) throws NoConnectionException{
+        ORIGIN = "vBackend";
+        vBackend.getFromPremadeUrl(url);
+    }
     /**
      * Using ID is preferred in ALL cases as the name of bus stop isn't working
      *
@@ -68,6 +72,11 @@ public class BackendCommunicator implements OnTaskCompleted{
             tempStrings.add(time);
             tempStrings.add(date);
         }
+    }
+
+    public void getElectricityInformation() throws NoConnectionException{
+        ORIGIN = "eBackend;";
+        eBackend.getInformation();
     }
 
     @Override
@@ -115,11 +124,6 @@ public class BackendCommunicator implements OnTaskCompleted{
             apiTempDest = null;
         }
 
-    }
-
-    public void getElectricityInformation() throws NoConnectionException{
-        ORIGIN = "eBackend;";
-        eBackend.getInformation();
     }
 
     public JsonElement getApiData(){
