@@ -123,7 +123,12 @@ public class VasttrafikBackend {
     }
 
     public void getStationbyName(String stop) throws NoConnectionException{
-        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + key + "&format=json&jsonpCallback=processJSON&input=" + stop;
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + key + "&format=json&jsonpCallback=processJSON&input=";
+        try {
+            url = url + URLEncoder.encode(stop, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         vastTrafikConnect(url);
     }
     public void getAllStops() throws NoConnectionException {
