@@ -9,13 +9,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
@@ -77,7 +83,20 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        bComm.getTripByName();
+        DateFormat travelDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat travelTimeFormatter = new SimpleDateFormat("HH:mm");
+        Date currentTime = Calendar.getInstance().getTime();
+        String startLocation = list.get(position).get("originName").getAsString();
+        String endLocation = list.get(position).get("endName").getAsString();
+        try{
+            bComm.getTripByName(startLocation, endLocation, travelTimeFormatter.format(currentTime)
+                    , travelDateFormatter.format(currentTime));
+        } catch (NoConnectionException e) {
+            Toast noConectionMessage = Toast.makeText(this
+                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+            noConectionMessage.show();
+            e.printStackTrace();
+        }
         setContentView(R.layout.loading_layout);
         TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
         loadingView.setText(R.string.loading_search_result);
