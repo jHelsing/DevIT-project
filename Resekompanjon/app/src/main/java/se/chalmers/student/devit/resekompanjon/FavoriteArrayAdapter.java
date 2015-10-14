@@ -30,10 +30,12 @@ public class FavoriteArrayAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         JsonObject objToShow = list.get(index);
         View rowView = inflater.inflate(R.layout.fragment_favorite_trip, parent, false);
-
         TextView tv = (TextView) rowView.findViewById(R.id.textViewFromLocation);
-        tv.setText(objToShow.get("startName").getAsString());
-
+        tv.setText(objToShow.get("originName").getAsString());
+        tv = (TextView) rowView.findViewById(R.id.textViewToLocation);
+        tv.setText(objToShow.get("endName").getAsString());
         return rowView;
     }
+
+
 }

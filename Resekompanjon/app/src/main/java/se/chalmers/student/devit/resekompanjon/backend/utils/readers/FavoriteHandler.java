@@ -32,8 +32,8 @@ public class FavoriteHandler {
     public FavoriteHandler (Context context){
         cont = context;
         filePath = cont.getFilesDir().getPath().toString() + "/favorites.txt";
-        File file = new File(filePath);
-        if (!file.exists()){
+            File file = new File(filePath);
+            if (!file.exists()){
             try {
                 file.createNewFile();
                 Log.d("File not found", "Creating file for saving favorites");
