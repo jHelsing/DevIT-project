@@ -128,7 +128,10 @@ public class BackendCommunicator implements OnTaskCompleted{
         }
     }
 
-    public JsonElement getApiData(){
+    public JsonElement getApiData() throws NoJsonAavailableException{
+        if (apiData == null){
+            throw new NoJsonAavailableException();
+        }
         return apiData;
     }
 }
