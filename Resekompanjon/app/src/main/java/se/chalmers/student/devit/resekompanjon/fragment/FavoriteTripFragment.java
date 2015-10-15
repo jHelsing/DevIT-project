@@ -85,21 +85,11 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
         jsonObject = new JsonObject();
         jsonObject.addProperty("originName", origin);
         jsonObject.addProperty("endName", destination);
-        int i=0;
-        JsonObject objectToCompare = arr.get(i).getAsJsonObject();
-        objectToCompare.remove("originID");
-        objectToCompare.remove("endID");
-        while(i<arr.size() || !this.jsonObject.equals(objectToCompare)) {
-            i++;
-            objectToCompare = arr.get(i).getAsJsonObject();
-            objectToCompare.remove("originID");
-            objectToCompare.remove("endID");
-        }
-        if(!jsonObject.equals(objectToCompare)) {
+        if(handler.isFavorite(jsonObject)) {
             ImageButton favButton = (ImageButton) getView().findViewById(R.id.favouriteButton);
             favButton.setImageDrawable(getResources().getDrawable(R.drawable.favourite_untoggled));
         } else {
-            this.jsonIndex = i;
+            this.jsonIndex = handler.getFavoriteIndex(jsonObject);
             isFavorite = true;
             ImageButton favButton = (ImageButton) getView().findViewById(R.id.favouriteButton);
             favButton.setImageDrawable(getResources().getDrawable(R.drawable.favourite_toggled));

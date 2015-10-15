@@ -151,4 +151,48 @@ public class FavoriteHandler {
         }
         return stringTripArray;
     }
+
+    /**
+     * Checks if the parameter is a favorite.
+     * @param jsObj is the JsonObject we want to search for in the tripArray.
+     * @return Returns true if the parameters is a favorite.
+     */
+    public boolean isFavorite(JsonObject jsObj){
+        JsonArray arr = getTripArrayAsJson();
+        int i=0;
+        JsonObject objectToCompare = arr.get(i).getAsJsonObject();
+        objectToCompare.remove("originID");
+        objectToCompare.remove("endID");
+        while(i<arr.size() && !jsObj.equals(objectToCompare)) {
+            i++;
+            objectToCompare = arr.get(i).getAsJsonObject();
+            objectToCompare.remove("originID");
+            objectToCompare.remove("endID");
+        }
+        return jsObj.equals(objectToCompare);
+    }
+
+    /**
+     * Checks which index the parameter is in the tripArray.
+     * @param jsObj is the JsonObject we want to search for in the tripArray.
+     * @return Returns the index of the tripArray. If the parameter is not in the
+     * tripArray, then it returns -1.
+     */
+    public int getFavoriteIndex(JsonObject jsObj){
+        if(!isFavorite(jsObj)){
+            return -1;
+        }
+        JsonArray arr = getTripArrayAsJson();
+        int i=0;
+        JsonObject objectToCompare = arr.get(i).getAsJsonObject();
+        objectToCompare.remove("originID");
+        objectToCompare.remove("endID");
+        while(i<arr.size() && !jsObj.equals(objectToCompare)) {
+            i++;
+            objectToCompare = arr.get(i).getAsJsonObject();
+            objectToCompare.remove("originID");
+            objectToCompare.remove("endID");
+        }
+        return i;
+    }
 }
