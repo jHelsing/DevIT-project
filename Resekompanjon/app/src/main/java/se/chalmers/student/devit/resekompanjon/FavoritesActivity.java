@@ -90,17 +90,18 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
         String startLocation = list.get(position).get("originName").getAsString();
         String endLocation = list.get(position).get("endName").getAsString();
         try{
-            bComm.getTripByName(startLocation, endLocation, travelTimeFormatter.format(currentTime)
-                    , travelDateFormatter.format(currentTime));
+            bComm.getTripByName(startLocation, endLocation, travelDateFormatter.format(currentTime)
+                    , travelTimeFormatter.format(currentTime));
+            setContentView(R.layout.loading_layout);
+            TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
+            loadingView.setText(R.string.loading_search_result);
         } catch (NoConnectionException e) {
             Toast noConectionMessage = Toast.makeText(this
                     , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
             noConectionMessage.show();
             e.printStackTrace();
         }
-        setContentView(R.layout.loading_layout);
-        TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
-        loadingView.setText(R.string.loading_search_result);
+
     }
 
     @Override
