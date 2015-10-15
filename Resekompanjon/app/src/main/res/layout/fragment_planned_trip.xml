@@ -65,8 +65,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Avgång"
-                    android:id="@+id/plannedTripsTVDepartureTitle"
+                    android:text="Datum"
+                    android:id="@+id/plannedTripsTVDateTitle"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tid"
+                    android:id="@+id/plannedTripsTVTimeTitle"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"/>
@@ -107,11 +116,22 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/plannedTripsTVDeparture"
+                    android:id="@+id/plannedTripsTVDate"
                     android:textColor="#000000"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/plannedTripsTVTime"
+                    android:textColor="#000000"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin" />
             </LinearLayout>
 
 
