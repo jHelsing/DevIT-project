@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
@@ -30,6 +32,14 @@ public class CurrentTripActivity extends AppCompatActivity
     ElectricityBackend eb;
 
     private JsonObject trip;
+
+    private final String[] stopToJohanneberg = {"Teknikgatan", "Lindholmsplatsen", "Regnbågsgatan"
+            ,"Pumpgatan", "Frihamnsporten", "Lilla Bommen", "Brunnsparken", "Kungsportsplatsen"
+            ,"Valand", "Götaplatsen","Ålandsgatan", "Chalmers Tvärgata", "Sven Hultins plats"};
+
+    private final String[] stopToLindholmen = {"Sven Hultins plats", "Chalmersplatsen", "Kapellplatsen"
+            ,"Götaplatsen", "Valand", "Kungsportsplatsen", "Brunnsparken", "Lilla Bommen"
+            ,"Frihamnsporten", "Pumpgatan","Regnbågsgatan", "Lindholmen", "Teknikgatan"};
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -121,10 +131,15 @@ public class CurrentTripActivity extends AppCompatActivity
 
     @Override
     public void onTaskCompleted() {
-        JsonArray jsArray = eb.getApiData();
+
+        TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
+        busNbrTextview.setText("55");
         boolean condition = true;
         JsonObject jsObj = null;
         int i = 0;
+
+        JsonArray jsArray = eb.getApiData();
+
         while(condition){
             jsObj = jsArray.get(i).getAsJsonObject();
             if(jsObj.get("resourceSpec").getAsString().equals("Destination_Value")){
@@ -133,19 +148,11 @@ public class CurrentTripActivity extends AppCompatActivity
                 i++;
             }
         }
-        TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
-        busNbrTextview.setText(jsObj.get("value").getAsString());
-        condition = true;
-        i = 0;
-        while(condition){
-            jsObj = jsArray.get(i).getAsJsonObject();
-            if(jsObj.get("resourceSpec").getAsString().equals("Journey_Name_Value")){
-                condition = false;
-            } else {
-                i++;
-            }
-        }
         TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
         busDirectionTextview.setText(jsObj.get("value").getAsString());
+    }
+
+    public void initStops(){
+
     }
 }
