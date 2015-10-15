@@ -57,15 +57,20 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     // All the info about the vehicles can be found in the getters in StopsFromString.
     public ArrayList<StopsFromString> getStopsFromSearchString(){
         Gson gson = new Gson();
-        JsonArray array = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonArray();
-        if(array == null) {
-            System.out.println("Wrong URL for this method");
+        if ( this.json.get("LocationList").getAsJsonObject().get("StopLocation").isJsonArray()) {
+            JsonArray array = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonArray();
+            if (array == null) {
+                System.out.println("Wrong URL for this method");
+            }
+            for (int i = 0; i < array.size(); i++) {
+                sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
+            }
         }
-        for (int i = 0; i < array.size(); i++) {
-            sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
+        else if (this.json.get("LocationList").getAsJsonObject().get("StopLocation").isJsonObject()){
+            JsonObject obj = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonObject();
+            sfsArrayList.add(gson.fromJson(obj, StopsFromString.class));
         }
         return sfsArrayList;
-
     }
 
     //Checks whats stops are nearby
@@ -191,14 +196,13 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
 
     public JsonObject getTripSummary(int index){
         ArrayList<SearchResaultTrips> tempSearchArray = getSingleTripAdvice(index);
-        Log.d("array length", tempSearchArray.size() + "");
         JsonObject tripSummary = new JsonObject();
 
         tripSummary.addProperty("originName", tempSearchArray.get(0).getOriginName());
         tripSummary.addProperty("originID", tempSearchArray.get(0).getOriginId());
         tripSummary.addProperty("startTime", tempSearchArray.get(0).getOriginTime());
         tripSummary.addProperty("originDate", tempSearchArray.get(0).getOriginDate());
-        if(tempSearchArray.get(0).getType() != "WALK") {
+        if(!tempSearchArray.get(0).getType().equals("WALK")) {
             tripSummary.addProperty("realStartTime", tempSearchArray.get(0).getOriginRtTime());
             tripSummary.addProperty("realOriginDate", tempSearchArray.get(0).getOriginRtDate());
         }
@@ -207,7 +211,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         tripSummary.addProperty("endID", tempSearchArray.get(tempSearchArray.size()-1).getDestinationId());
         tripSummary.addProperty("endTime",tempSearchArray.get(tempSearchArray.size()-1).getDestinationTime());
         tripSummary.addProperty("endDate",tempSearchArray.get(tempSearchArray.size()-1).getDestinationDate());
-        if(tempSearchArray.get(tempSearchArray.size()-1).getType() != "WALK") {
+        if(!tempSearchArray.get(tempSearchArray.size()-1).getType().equals("WALK")) {
             tripSummary.addProperty("realEndTime", tempSearchArray.get(tempSearchArray.size() - 1).getDestinationRtTime());
             tripSummary.addProperty("realEndDate", tempSearchArray.get(tempSearchArray.size() - 1).getDestinationRtDate());
         }
