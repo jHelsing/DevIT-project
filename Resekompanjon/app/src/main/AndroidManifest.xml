@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DetailedTripActivity"
+        <activity android:name=".CurrentTripActivity"
             android:label="Resekompanjon">
             <intent-filter>
                 <action android:name="se.chalmers.student.devit.resekompanjon.DetailedTripView"/>

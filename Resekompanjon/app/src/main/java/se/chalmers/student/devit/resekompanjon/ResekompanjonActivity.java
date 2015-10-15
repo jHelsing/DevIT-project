@@ -3,7 +3,6 @@ package se.chalmers.student.devit.resekompanjon;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -26,7 +25,6 @@ import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
-import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.VehicleStopFragment;
@@ -110,7 +108,7 @@ public class ResekompanjonActivity extends AppCompatActivity
             startActivity(i);
         } else if(position == 3) {
             // Go to detailed trip
-            Intent i = new Intent(ResekompanjonActivity.this, DetailedTripActivity.class);
+            Intent i = new Intent(ResekompanjonActivity.this, CurrentTripActivity.class);
             startActivity(i);
         } else if(position == 4) {
             // Go to settings

@@ -9,15 +9,11 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
 
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
@@ -28,7 +24,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
  * @author  Jonathan. Revisited by Amar.
  * @version  0.2
  */
-public class DetailedTripActivity extends AppCompatActivity
+public class CurrentTripActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted{
 
     ElectricityBackend eb;
@@ -40,13 +36,13 @@ public class DetailedTripActivity extends AppCompatActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    public DetailedTripActivity() {}
+    public CurrentTripActivity() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.detailed_trip_layout);
+        setContentView(R.layout.current_trip_layout);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -108,7 +104,7 @@ public class DetailedTripActivity extends AppCompatActivity
     public void onNavigationDrawerItemSelected(int position) {
         if(position == 0) {
             // return to start
-            Intent i = new Intent(DetailedTripActivity.this, ResekompanjonActivity.class);
+            Intent i = new Intent(CurrentTripActivity.this, ResekompanjonActivity.class);
             //startActivity(i);
         } else if(position == 1) {
             // Go to planned trips
