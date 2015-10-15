@@ -31,6 +31,8 @@ public class CurrentTripActivity extends AppCompatActivity
 
     private JsonObject trip;
 
+    private InfoState infoState = InfoState.JOURNEY;
+
     private final String[] stopToJohanneberg = {"Teknikgatan", "Lindholmsplatsen", "Regnbågsgatan"
             ,"Pumpgatan", "Frihamnsporten", "Lilla Bommen", "Brunnsparken", "Kungsportsplatsen"
             ,"Valand", "Götaplatsen","Ålandsgatan", "Chalmers Tvärgata", "Sven Hultins plats"};
@@ -129,29 +131,40 @@ public class CurrentTripActivity extends AppCompatActivity
 
     @Override
     public void onTaskCompleted() {
+        switch(infoState){
+            case JOURNEY:
+                TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
+                busNbrTextview.setText("55");
+                boolean condition = true;
+                JsonObject jsObj = null;
+                int i = 0;
 
-        TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
-        busNbrTextview.setText("55");
-        boolean condition = true;
-        JsonObject jsObj = null;
-        int i = 0;
+                JsonArray jsArray = eb.getApiData();
 
-        JsonArray jsArray = eb.getApiData();
-
-        while(condition){
-            jsObj = jsArray.get(i).getAsJsonObject();
-            if(jsObj.get("resourceSpec").getAsString().equals("Destination_Value")){
-                condition = false;
-            } else {
-                i++;
-            }
+                while(condition){
+                    jsObj = jsArray.get(i).getAsJsonObject();
+                    if(jsObj.get("resourceSpec").getAsString().equals("Destination_Value")){
+                        condition = false;
+                    } else {
+                        i++;
+                    }
+                }
+                TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
+                busDirectionTextview.setText(jsObj.get("value").getAsString());
+                break;
+            case NEXT_STOP:
+                break;
         }
-        TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
-        busDirectionTextview.setText(jsObj.get("value").getAsString());
+
         
     }
 
     public void initStops(){
 
+    }
+
+    public enum InfoState{
+        JOURNEY,
+        NEXT_STOP;
     }
 }
