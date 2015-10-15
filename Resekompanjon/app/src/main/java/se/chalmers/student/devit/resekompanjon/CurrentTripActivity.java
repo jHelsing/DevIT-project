@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
-
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
@@ -72,7 +70,7 @@ public class CurrentTripActivity extends AppCompatActivity
         if(isOnBus()){;
             try{
                 eb = new ElectricityBackend(this, this);
-                eb.getInformation();
+                eb.getJourneyInfo();
             }
             catch(NoConnectionException e){
                 Toast noConectionMessage = Toast.makeText(this
@@ -150,6 +148,7 @@ public class CurrentTripActivity extends AppCompatActivity
         }
         TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
         busDirectionTextview.setText(jsObj.get("value").getAsString());
+        
     }
 
     public void initStops(){

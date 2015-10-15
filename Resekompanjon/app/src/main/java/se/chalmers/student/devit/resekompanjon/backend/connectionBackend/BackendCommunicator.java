@@ -77,7 +77,7 @@ public class BackendCommunicator implements OnTaskCompleted{
 
     public void getElectricityInformation() throws NoConnectionException{
         ORIGIN = "eBackend";
-        eBackend.getInformation();
+        eBackend.getJourneyInfo();
     }
 
     @Override
