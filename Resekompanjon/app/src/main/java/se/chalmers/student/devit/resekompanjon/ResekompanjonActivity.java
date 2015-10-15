@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAavailableException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
@@ -186,12 +187,19 @@ public class ResekompanjonActivity extends AppCompatActivity
     //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
-        JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
-        JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
-        ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
-        SearchResultListActivity.setTrips(searchedTrips);
-        startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
-        finish();
+        try{
+            JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
+            JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
+            ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
+            SearchResultListActivity.setTrips(searchedTrips);
+            startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
+            finish();
+        } catch (NoJsonAavailableException e) {
+            Toast noConectionMessage = Toast.makeText(this
+                    , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+            noConectionMessage.show();
+            e.printStackTrace();
+        }
     }
 
     /**

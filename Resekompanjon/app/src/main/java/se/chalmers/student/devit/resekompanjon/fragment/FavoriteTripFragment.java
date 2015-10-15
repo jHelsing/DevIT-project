@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -18,6 +19,7 @@ import com.google.gson.JsonParser;
 import se.chalmers.student.devit.resekompanjon.R;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAavailableException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
@@ -163,25 +165,40 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
     @Override
     public void onTaskCompleted() {
         if(jsonObject.get("originID").getAsString().equals(null) ) {
+            try{
                 JsonObject fromBackend = comm.getApiData().getAsJsonObject();
-            JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
-            fromBackend = infoExtract.getStops();
-            jsonObject.addProperty("originID", fromBackend.get("originID").getAsString());
+                JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
+                fromBackend = infoExtract.getStops();
+                jsonObject.addProperty("originID", fromBackend.get("originID").getAsString());
+            } catch (NoJsonAavailableException e) {
+                Toast noConectionMessage = Toast.makeText(getActivity(), "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+                noConectionMessage.show();
+                e.printStackTrace();
+            }
+
             try {
                 comm.getStationbyName(jsonObject.get("endName").getAsString());
             } catch (NoConnectionException e) {
                 e.printStackTrace();
             }
         } else {
-            JsonObject fromBackend = comm.getApiData().getAsJsonObject();
-            JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
-            fromBackend = infoExtract.getStops();
-            jsonObject.addProperty("endID", fromBackend.get("endID").getAsString());
-            FavoriteHandler handler = new FavoriteHandler(getActivity());
-            handler.addToFavoriteTrips(jsonObject.get("originName").getAsString(),
-                    jsonObject.get("originID").getAsString(),
-                    jsonObject.get("endName").getAsString(), jsonObject.get("endID").getAsString());
-            jsonIndex = handler.getNumbOfFavorites()-1;
+            try{
+                JsonObject fromBackend = comm.getApiData().getAsJsonObject();
+                JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
+                fromBackend = infoExtract.getStops();
+                jsonObject.addProperty("endID", fromBackend.get("endID").getAsString());
+                FavoriteHandler handler = new FavoriteHandler(getActivity());
+                handler.addToFavoriteTrips(jsonObject.get("originName").getAsString(),
+                        jsonObject.get("originID").getAsString(),
+                        jsonObject.get("endName").getAsString(), jsonObject.get("endID").getAsString());
+                jsonIndex = handler.getNumbOfFavorites()-1;
+            } catch (NoJsonAavailableException e) {
+                Toast noConectionMessage = Toast.makeText(getActivity()
+                        , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+                noConectionMessage.show();
+                e.printStackTrace();
+            }
+
         }
 
     }
