@@ -8,12 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import se.chalmers.student.devit.resekompanjon.R;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
+import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
+import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
 
 
@@ -25,13 +31,14 @@ import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHan
  * Use the {@link FavoriteTripFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavoriteTripFragment extends Fragment implements View.OnClickListener {
+public class FavoriteTripFragment extends Fragment implements View.OnClickListener, OnTaskCompleted {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_JSONOBJECT = "jsonObject";
 
     private int jsonIndex;
     private JsonObject jsonObject;
-
+    private  boolean isFavorite;
+    private BackendCommunicator comm;
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -63,19 +70,38 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
         }
         ImageButton favButton = (ImageButton) getView().findViewById(R.id.favouriteButton);
         favButton.setOnClickListener(this);
-        setImageIcon();
+        updateImageIcon();
     }
 
-    private void setImageIcon() {
+    private void updateImageIcon() {
         FavoriteHandler handler = new FavoriteHandler(getActivity());
         JsonArray arr = handler.getTripArrayAsJson();
+
+        String origin = ((TextView) getView().findViewById(R.id.textViewFromLocation)).getText().toString();
+        String destination = ((TextView) getView().findViewById(R.id.textViewToLocation)).getText().toString();
+
+        jsonObject = new JsonObject();
+        jsonObject.addProperty("originName", origin);
+        jsonObject.addProperty("endName", destination);
         int i=0;
         JsonObject objectToCompare = arr.get(i).getAsJsonObject();
-        while(i<arr.size() || this.jsonObject.equals(objectToCompare)) {
-            objectToCompare = arr.get(i).getAsJsonObject();
+        objectToCompare.remove("originID");
+        objectToCompare.remove("endID");
+        while(i<arr.size() || !this.jsonObject.equals(objectToCompare)) {
             i++;
+            objectToCompare = arr.get(i).getAsJsonObject();
+            objectToCompare.remove("originID");
+            objectToCompare.remove("endID");
         }
-        jsonIndex = i;
+        if(!jsonObject.equals(objectToCompare)) {
+            ImageButton favButton = (ImageButton) getView().findViewById(R.id.favouriteButton);
+            favButton.setImageDrawable(getResources().getDrawable(R.drawable.favourite_untoggled));
+        } else {
+            this.jsonIndex = i;
+            isFavorite = true;
+            ImageButton favButton = (ImageButton) getView().findViewById(R.id.favouriteButton);
+            favButton.setImageDrawable(getResources().getDrawable(R.drawable.favourite_toggled));
+        }
     }
 
     @Override
@@ -116,6 +142,47 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
      */
     @Override
     public void onClick(View v) {
+        if(v.equals(getView().findViewById(R.id.favouriteButton))) {
+            updateImageIcon();
+            FavoriteHandler handler = new FavoriteHandler(getActivity());
+            if(isFavorite) {
+                isFavorite=false;
+                handler.removeFavorite(jsonIndex);
+            } else {
+                isFavorite=true;
+                comm = new BackendCommunicator(getActivity(), this);
+                try {
+                    comm.getStationbyName(jsonObject.get("originName").getAsString());
+                } catch (NoConnectionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onTaskCompleted() {
+        if(jsonObject.get("originID").getAsString().equals(null) ) {
+                JsonObject fromBackend = comm.getApiData().getAsJsonObject();
+            JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
+            fromBackend = infoExtract.getStops();
+            jsonObject.addProperty("originID", fromBackend.get("originID").getAsString());
+            try {
+                comm.getStationbyName(jsonObject.get("endName").getAsString());
+            } catch (NoConnectionException e) {
+                e.printStackTrace();
+            }
+        } else {
+            JsonObject fromBackend = comm.getApiData().getAsJsonObject();
+            JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
+            fromBackend = infoExtract.getStops();
+            jsonObject.addProperty("endID", fromBackend.get("endID").getAsString());
+            FavoriteHandler handler = new FavoriteHandler(getActivity());
+            handler.addToFavoriteTrips(jsonObject.get("originName").getAsString(),
+                    jsonObject.get("originID").getAsString(),
+                    jsonObject.get("endName").getAsString(), jsonObject.get("endID").getAsString());
+            jsonIndex = handler.getNumbOfFavorites()-1;
+        }
 
     }
 

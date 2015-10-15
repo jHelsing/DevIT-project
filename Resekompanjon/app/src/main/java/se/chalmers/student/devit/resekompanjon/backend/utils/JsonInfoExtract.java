@@ -156,4 +156,8 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         }
         return grArrayList;
     }
+
+    public JsonObject getStops() {
+        return null;
+    }
 }
