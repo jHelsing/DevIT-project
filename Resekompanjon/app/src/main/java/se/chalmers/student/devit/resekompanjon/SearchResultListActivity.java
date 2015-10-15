@@ -7,28 +7,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment;
 
 /**
  * @author Amar. Revisited by Jonathan
- * @version 0.3
+ * @version 0.4
  */
 public class SearchResultListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
         NavigationDrawerFragment.NavigationDrawerCallbacks,
-        SearchInfoFragment.OnFragmentInteractionListener, KeyEvent.Callback{
+        SearchInfoFragment.OnFragmentInteractionListener, KeyEvent.Callback, View.OnClickListener{
 
     private static ArrayList<SearchResaultTrips> searchResultTrips;
 
     private ListView listView;
 
     private SearchResultTripArrayAdapter adapter;
+
+    private ImageButton favouriteButton;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -67,9 +71,13 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
         String time = searchResultTrips.get(0).getOriginDate() + ", " + searchResultTrips.get(0)
                 .getOriginTime();
         View fragment = findViewById(R.id.fragment);
+
         ((TextView) fragment.findViewById(R.id.tripStartLocation)).setText(startLocation);
         ((TextView) fragment.findViewById(R.id.tripEndLocation)).setText(endLocation);
         ((TextView) fragment.findViewById(R.id.selectedTime)).setText(time);
+
+        favouriteButton = (ImageButton) findViewById(R.id.favouriteButton);
+        favouriteButton.setOnClickListener(this);
     }
 
     @Override
@@ -129,5 +137,17 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
     @Override
     public void onSearchInfoInteraction() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == favouriteButton.getId()){
+            FavoriteHandler favHandler = new FavoriteHandler(this);
+            String orginName = searchResultTrips.get(0).getOriginName();
+            String endName = searchResultTrips.get(0).getDestinationName();
+            String orginID = searchResultTrips.get(0).getOriginId();
+            String endID = searchResultTrips.get(0).getDestinationId();
+            favHandler.addToFavoriteTrips(orginName,orginID,endName,endID);
+        }
     }
 }
