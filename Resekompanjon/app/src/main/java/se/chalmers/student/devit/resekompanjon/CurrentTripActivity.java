@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class CurrentTripActivity extends AppCompatActivity
 
     private JsonObject trip;
 
-    private InfoState infoState = InfoState.JOURNEY;
+    private InfoState infoState;
 
     private final String[] stopToJohanneberg = {"Teknikgatan", "Lindholmsplatsen", "Regnbågsgatan"
             ,"Pumpgatan", "Frihamnsporten", "Lilla Bommen", "Brunnsparken", "Kungsportsplatsen"
@@ -69,10 +70,12 @@ public class CurrentTripActivity extends AppCompatActivity
     public void onStart(){
         super.onStart();
 
-        if(isOnBus()){;
+        if(isOnBus()){
+            infoState = InfoState.JOURNEY;
             try{
                 eb = new ElectricityBackend(this, this);
                 eb.getJourneyInfo();
+
             }
             catch(NoConnectionException e){
                 Toast noConectionMessage = Toast.makeText(this
@@ -80,7 +83,7 @@ public class CurrentTripActivity extends AppCompatActivity
                 noConectionMessage.show();
             }
         } else{
-            setContentView(R.layout.detailed_trip_warning_layout);
+            setContentView(R.layout.current_trip_warning_layout);
         }
     }
 
@@ -131,16 +134,14 @@ public class CurrentTripActivity extends AppCompatActivity
 
     @Override
     public void onTaskCompleted() {
+        JsonArray jsArray = eb.getApiData();
+        JsonObject jsObj = null;
+        boolean condition = true;
+        int i = 0;
         switch(infoState){
             case JOURNEY:
                 TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
                 busNbrTextview.setText("55");
-                boolean condition = true;
-                JsonObject jsObj = null;
-                int i = 0;
-
-                JsonArray jsArray = eb.getApiData();
-
                 while(condition){
                     jsObj = jsArray.get(i).getAsJsonObject();
                     if(jsObj.get("resourceSpec").getAsString().equals("Destination_Value")){
@@ -151,12 +152,22 @@ public class CurrentTripActivity extends AppCompatActivity
                 }
                 TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
                 busDirectionTextview.setText(jsObj.get("value").getAsString());
+                infoState = InfoState.NEXT_STOP;
                 break;
             case NEXT_STOP:
+                
                 break;
         }
+        try{
+            eb.getNextStopInfo();
+        } catch(NoConnectionException e){
+            Toast noConectionMessage = Toast.makeText(this
+                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+            noConectionMessage.show();
+        }
 
-        
+
+
     }
 
     public void initStops(){

@@ -42,6 +42,6 @@
     <string name="loading_search_result">Laddar sökresultat</string>
     <string name="tripDetailFromTitleString">Från</string>
     <string name="tripDetailToTitleString">Till&#160;</string>
-    <string name="warning_detailed_trip">Du måste vara ansluten till bussens WiFi!</string>
+    <string name="warning_current_trip">Du måste vara ansluten till bussens WiFi!</string>
 
 </resources>
