@@ -7,28 +7,29 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 
 import se.chalmers.student.devit.resekompanjon.R;
+import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FavouriteTripFragment.OnFragmentInteractionListener} interface
+ * {@link FavoriteTripFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FavouriteTripFragment#newInstance} factory method to
+ * Use the {@link FavoriteTripFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavouriteTripFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+public class FavoriteTripFragment extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_JSONOBJECT = "jsonObject";
 
-    // TODO: Rename and change types of parameters
+    private int jsonIndex;
     private JsonObject jsonObject;
 
     private OnFragmentInteractionListener mListener;
@@ -38,18 +39,18 @@ public class FavouriteTripFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param obj The JsonObject that this fragment should display.
-     * @return A new instance of fragment FavouriteTripFragment.
+     * @return A new instance of fragment FavoriteTripFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FavouriteTripFragment newInstance(JsonObject obj) {
-        FavouriteTripFragment fragment = new FavouriteTripFragment();
+    public static FavoriteTripFragment newInstance(JsonObject obj) {
+        FavoriteTripFragment fragment = new FavoriteTripFragment();
         Bundle args = new Bundle();
         args.putString(ARG_JSONOBJECT, obj.getAsString());
         fragment.setArguments(args);
         return fragment;
     }
 
-    public FavouriteTripFragment() {
+    public FavoriteTripFragment() {
         // Required empty public constructor
     }
 
@@ -60,6 +61,21 @@ public class FavouriteTripFragment extends Fragment {
             String jsonString = getArguments().getString(ARG_JSONOBJECT);
             this.jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();
         }
+        ImageButton favButton = (ImageButton) getView().findViewById(R.id.favouriteButton);
+        favButton.setOnClickListener(this);
+        setImageIcon();
+    }
+
+    private void setImageIcon() {
+        FavoriteHandler handler = new FavoriteHandler(getActivity());
+        JsonArray arr = handler.getTripArrayAsJson();
+        int i=0;
+        JsonObject objectToCompare = arr.get(i).getAsJsonObject();
+        while(i<arr.size() || this.jsonObject.equals(objectToCompare)) {
+            objectToCompare = arr.get(i).getAsJsonObject();
+            i++;
+        }
+        jsonIndex = i;
     }
 
     @Override
@@ -91,6 +107,16 @@ public class FavouriteTripFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+
     }
 
     /**
