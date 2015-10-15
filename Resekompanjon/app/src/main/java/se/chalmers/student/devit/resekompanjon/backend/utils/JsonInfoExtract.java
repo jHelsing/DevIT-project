@@ -1,10 +1,13 @@
 package se.chalmers.student.devit.resekompanjon.backend.utils;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.AdditionalInfoRoute;
@@ -91,6 +94,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     //Use when user search for a trip (origin-dest). All information can be reached with
     //getters in SearchResaultTrips.
     public ArrayList<SearchResaultTrips> getTripAdvice(){
+        srtArrayList = new ArrayList<>();
         Gson gson = new Gson();
         JsonArray array = this.json.get("TripList").getAsJsonObject().get("Trip").getAsJsonArray();
         if(array == null) {
@@ -107,6 +111,34 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
             }
         }
         return srtArrayList;
+    }
+    //Does the same as getTripAdvice but will only generate SearchResaultTrip object for a single trip in array
+    public ArrayList<SearchResaultTrips> getSingleTripAdvice(int i){
+        srtArrayList = new ArrayList<>();
+        Gson gson = new Gson();
+        JsonArray array = this.json.get("TripList").getAsJsonObject().get("Trip").getAsJsonArray();
+        if(array == null) {
+            System.out.println("Wrong URL for this method");
+        }
+        if (array.get(i).getAsJsonObject().get("Leg").isJsonArray()) {
+            JsonArray ar = array.get(i).getAsJsonObject().get("Leg").getAsJsonArray();
+            for (int j = 0; j < ar.size(); j++) {
+                srtArrayList.add(gson.fromJson(ar.get(j), SearchResaultTrips.class));
+            }
+        } else if (array.get(i).getAsJsonObject().get("Leg").isJsonObject()){
+            srtArrayList.add(gson.fromJson(array.get(i).getAsJsonObject().get("Leg").getAsJsonObject(), SearchResaultTrips.class));
+        }
+        return srtArrayList;
+    }
+
+    public ArrayList<ArrayList> getAllTripAdvice(){
+        ArrayList<ArrayList> arrayOfTripArrays = new ArrayList<>();
+        Gson gson = new Gson();
+        JsonArray array = this.json.get("TripList").getAsJsonObject().get("Trip").getAsJsonArray();
+        for (int i = 0; i < array.size(); i++){
+            arrayOfTripArrays.add(getSingleTripAdvice(i));
+        }
+        return arrayOfTripArrays;
     }
 
     //Gets all stops on the entire trip route, creates EntireTripRoute objects and puts them in an arrayList.
@@ -157,6 +189,47 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         return grArrayList;
     }
 
+    public JsonObject getTripSummary(int index){
+        ArrayList<SearchResaultTrips> tempSearchArray = getSingleTripAdvice(index);
+        Log.d("array length", tempSearchArray.size() + "");
+        JsonObject tripSummary = new JsonObject();
+
+        tripSummary.addProperty("originName", tempSearchArray.get(0).getOriginName());
+        tripSummary.addProperty("originID", tempSearchArray.get(0).getOriginId());
+        tripSummary.addProperty("startTime", tempSearchArray.get(0).getOriginTime());
+        tripSummary.addProperty("originDate", tempSearchArray.get(0).getOriginDate());
+        if(tempSearchArray.get(0).getType() != "WALK") {
+            tripSummary.addProperty("realStartTime", tempSearchArray.get(0).getOriginRtTime());
+            tripSummary.addProperty("realOriginDate", tempSearchArray.get(0).getOriginRtDate());
+        }
+
+        tripSummary.addProperty("endName", tempSearchArray.get(tempSearchArray.size()-1).getDestinationName());
+        tripSummary.addProperty("endID", tempSearchArray.get(tempSearchArray.size()-1).getDestinationId());
+        tripSummary.addProperty("endTime",tempSearchArray.get(tempSearchArray.size()-1).getDestinationTime());
+        tripSummary.addProperty("endDate",tempSearchArray.get(tempSearchArray.size()-1).getDestinationDate());
+        if(tempSearchArray.get(tempSearchArray.size()-1).getType() != "WALK") {
+            tripSummary.addProperty("realEndTime", tempSearchArray.get(tempSearchArray.size() - 1).getDestinationRtTime());
+            tripSummary.addProperty("realEndDate", tempSearchArray.get(tempSearchArray.size() - 1).getDestinationRtDate());
+        }
+        JsonArray tempJArray = new JsonArray();
+
+        for ( int i = 0; i < tempSearchArray.size(); i++ ){
+            tempJArray.add(tempSearchArray.get(i).getSname());
+        }
+
+        tripSummary.add("lineNumbers", tempJArray);
+        //tripSummary.addProperty("travelTime", );
+        //tripSummary.addProperty("ref", tempSearchArray.get(0).getRef());
+        return tripSummary;
+    }
+
+    public JsonArray getAllTripSummary(){
+        JsonArray allTripSummarys = new JsonArray();
+        for (int i = 0; i < getAllTripAdvice().size(); i++){
+            allTripSummarys.add(getTripSummary(i));
+        }
+        return allTripSummarys;
+    }
     public JsonObject getStops() {
         return null;
     }

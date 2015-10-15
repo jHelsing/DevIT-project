@@ -72,6 +72,8 @@ public class SearchResaultTrips {
         return type;
     }
 
+    public String getSname() {return sname;}
+
     public JsonObject getOrigin() {
         return Origin;
     }
@@ -140,4 +142,5 @@ public class SearchResaultTrips {
     public String getDestinationId(){
         return Destination.get("id").getAsString();
     }
+    public String getRef() {return JourneyDetailRef.get("ref").getAsString(); }
 }
