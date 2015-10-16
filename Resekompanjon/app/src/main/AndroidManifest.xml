@@ -41,6 +41,13 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name=".PlannedTripsActivity"
+            android:label="Resekompanjon">
+            <intent-filter>
+                <action android:name="se.chalmers.student.devit.resekompanjon.PlannedTripsActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

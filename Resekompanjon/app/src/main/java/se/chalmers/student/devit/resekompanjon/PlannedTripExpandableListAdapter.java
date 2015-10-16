@@ -29,12 +29,10 @@ import java.util.Date;
 public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter implements CompoundButton.OnCheckedChangeListener {
 
     private final Context context;
-
     /**
      * The list of objects to display and have reminder for
      */
     private ArrayList<JsonObject> arrayListData;
-
 
     private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
     private final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -260,7 +258,6 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
                 ViewParent v = buttonView.getParent();
                 break;
         }
-
     }
 
     private void startAlarm(int position) {
@@ -284,6 +281,13 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
     }
 
     private void stopAlarm(int position) {
-
+        AlarmManager alarmMng = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        JsonObject jsonObject = arrayListData.get(position);
+        Intent i = new Intent();
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setClassName("se.chalmers.student.devit.resekompanjon", "PlannedTripAlarm");
+        i.putExtra("JSON", jsonObject.toString());
+        PendingIntent intent = PendingIntent.getActivity(context, position,i, PendingIntent.FLAG_UPDATE_CURRENT );
+        alarmMng.cancel(intent);
     }
 }
