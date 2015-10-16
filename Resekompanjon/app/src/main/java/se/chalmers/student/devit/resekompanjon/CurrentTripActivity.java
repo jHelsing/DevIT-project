@@ -36,13 +36,8 @@ public class CurrentTripActivity extends AppCompatActivity
 
     private String busDirection;
 
-    private final String[] stopToJohanneberg = {"Teknikgatan", "Lindholmsplatsen", "Regnbågsgatan"
-            ,"Pumpgatan", "Frihamnsporten", "Lilla Bommen", "Brunnsparken", "Kungsportsplatsen"
-            ,"Valand", "Götaplatsen","Ålandsgatan", "Chalmers Tvärgata", "Sven Hultins plats"};
-
-    private final String[] stopToLindholmen = {"Sven Hultins plats", "Chalmersplatsen", "Kapellplatsen"
-            ,"Götaplatsen", "Valand", "Kungsportsplatsen", "Brunnsparken", "Lilla Bommen"
-            ,"Frihamnsporten", "Pumpgatan","Regnbågsgatan", "Lindholmen", "Teknikgatan"};
+    private final String[] stopToLindholmen = {"G�taplatsen", "Kungsportsplatsn", "NisseTerminalen"
+            , "Frihamnen", "Lindholmen"};
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -167,15 +162,20 @@ public class CurrentTripActivity extends AppCompatActivity
             case NEXT_STOP:
                 jsObj = jsArray.get(i).getAsJsonObject();
                 String nextStop = jsObj.get("value").getAsString();
+                int j = 0;
                     switch (busDirection) {
                         case "Lindholmen":
                             while (condition){
-
-                            }
-                            break;
-                        case "Johanneberg":
-                            while (condition){
-                                
+                                if(stopToLindholmen[j].equals(nextStop)){
+                                    for(int k = j; k<stopToLindholmen.length; k++){
+                                        
+                                    }
+                                    condition = false;
+                                } else if(j<stopToLindholmen.length){
+                                    j++;
+                                } else{
+                                    condition = false;
+                                }
                             }
                             break;
                 }
