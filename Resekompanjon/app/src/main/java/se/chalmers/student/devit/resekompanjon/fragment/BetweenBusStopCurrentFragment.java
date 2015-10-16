@@ -1,9 +1,10 @@
 package se.chalmers.student.devit.resekompanjon.fragment;
 
+
 import android.app.Activity;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,14 @@ import se.chalmers.student.devit.resekompanjon.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BusStopCurrentFragment.OnFragmentInteractionListener} interface
+ * {@link BetweenBusStopCurrentFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BusStopCurrentFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Use the {@link BetweenBusStopCurrentFragment#newInstance} factory method to
+ * create an instance of this fragment.7
+ * @author Amar.
+ * @version 0.1
  */
-public class BusStopCurrentFragment extends Fragment {
+public class BetweenBusStopCurrentFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,11 +40,11 @@ public class BusStopCurrentFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BusStopCurrentFragment.
+     * @return A new instance of fragment BetweenBusStopCurrentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BusStopCurrentFragment newInstance(String param1, String param2) {
-        BusStopCurrentFragment fragment = new BusStopCurrentFragment();
+    public static BetweenBusStopCurrentFragment newInstance(String param1, String param2) {
+        BetweenBusStopCurrentFragment fragment = new BetweenBusStopCurrentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -49,7 +52,9 @@ public class BusStopCurrentFragment extends Fragment {
         return fragment;
     }
 
-    public BusStopCurrentFragment() {
+
+
+    public BetweenBusStopCurrentFragment() {
         // Required empty public constructor
     }
 
@@ -66,7 +71,7 @@ public class BusStopCurrentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_current_bus_stop, container, false);
+        return inflater.inflate(R.layout.fragment_between_current_bus_stop, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
+import se.chalmers.student.devit.resekompanjon.fragment.BusStopCurrentFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 
 /**
@@ -169,6 +170,10 @@ public class CurrentTripActivity extends AppCompatActivity
                             while (condition){
                                 if(stopToLindholmen[j].equals(nextStop)){
                                     for(int k = j; k<stopToLindholmen.length; k++){
+                                        String busStop = stopToLindholmen[k];
+                                        BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop, "");
+
+
                                     }
                                     condition = false;
                                 } else if(j<stopToLindholmen.length){
