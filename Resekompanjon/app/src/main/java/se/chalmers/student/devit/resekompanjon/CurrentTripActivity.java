@@ -169,8 +169,6 @@ public class CurrentTripActivity extends AppCompatActivity
                             while (condition){
                                 if(stopToLindholmen[j].equals(nextStop)){
                                     for(int k = j; k<stopToLindholmen.length; k++){
-                                        Fragment busStop =
-                                                findViewById()
                                     }
                                     condition = false;
                                 } else if(j<stopToLindholmen.length){

@@ -14,12 +14,12 @@ import se.chalmers.student.devit.resekompanjon.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BusStopDetailsFragment.OnFragmentInteractionListener} interface
+ * {@link BusStopCurrentFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BusStopDetailsFragment#newInstance} factory method to
+ * Use the {@link BusStopCurrentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BusStopDetailsFragment extends Fragment {
+public class BusStopCurrentFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,8 +40,8 @@ public class BusStopDetailsFragment extends Fragment {
      * @return A new instance of fragment BusStopDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BusStopDetailsFragment newInstance(String param1, String param2) {
-        BusStopDetailsFragment fragment = new BusStopDetailsFragment();
+    public static BusStopCurrentFragment newInstance(String param1, String param2) {
+        BusStopCurrentFragment fragment = new BusStopCurrentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -49,7 +49,7 @@ public class BusStopDetailsFragment extends Fragment {
         return fragment;
     }
 
-    public BusStopDetailsFragment() {
+    public BusStopCurrentFragment() {
         // Required empty public constructor
     }
 
