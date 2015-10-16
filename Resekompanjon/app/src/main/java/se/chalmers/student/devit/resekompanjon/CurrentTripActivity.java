@@ -34,6 +34,8 @@ public class CurrentTripActivity extends AppCompatActivity
 
     private InfoState infoState;
 
+    private String busDirection;
+
     private final String[] stopToJohanneberg = {"Teknikgatan", "Lindholmsplatsen", "Regnbågsgatan"
             ,"Pumpgatan", "Frihamnsporten", "Lilla Bommen", "Brunnsparken", "Kungsportsplatsen"
             ,"Valand", "Götaplatsen","Ålandsgatan", "Chalmers Tvärgata", "Sven Hultins plats"};
@@ -137,7 +139,7 @@ public class CurrentTripActivity extends AppCompatActivity
         JsonArray jsArray = eb.getApiData();
         JsonObject jsObj = null;
         boolean condition = true;
-        int i = 0;
+        int i = jsArray.size()-1;
         switch(infoState){
             case JOURNEY:
                 TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
@@ -147,11 +149,12 @@ public class CurrentTripActivity extends AppCompatActivity
                     if(jsObj.get("resourceSpec").getAsString().equals("Destination_Value")){
                         condition = false;
                     } else {
-                        i++;
+                        i--;
                     }
                 }
                 TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
-                busDirectionTextview.setText(jsObj.get("value").getAsString());
+                busDirection = jsObj.get("value").getAsString();
+                busDirectionTextview.setText(busDirection);
                 infoState = InfoState.NEXT_STOP;
                 try{
                 eb.getNextStopInfo();
@@ -163,6 +166,19 @@ public class CurrentTripActivity extends AppCompatActivity
                 break;
             case NEXT_STOP:
                 jsObj = jsArray.get(i).getAsJsonObject();
+                String nextStop = jsObj.get("value").getAsString();
+                    switch (busDirection) {
+                        case "Lindholmen":
+                            while (condition){
+
+                            }
+                            break;
+                        case "Johanneberg":
+                            while (condition){
+                                
+                            }
+                            break;
+                }
                 break;
         }
     }
