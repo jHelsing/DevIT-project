@@ -102,7 +102,7 @@ public class CurrentTripActivity extends AppCompatActivity
         if(netInfo != null && netInfo.isConnected()){
             WifiManager wifiMngr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifiMngr.getConnectionInfo();
-            return info.getSSID().equals("eduroam");
+            return info.getSSID().equals("Amars iPhone");
         } else{
             return false;
         }
@@ -153,21 +153,18 @@ public class CurrentTripActivity extends AppCompatActivity
                 TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
                 busDirectionTextview.setText(jsObj.get("value").getAsString());
                 infoState = InfoState.NEXT_STOP;
+                try{
+                eb.getNextStopInfo();
+            } catch(NoConnectionException e){
+                Toast noConectionMessage = Toast.makeText(this
+                        , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+                noConectionMessage.show();
+            }
                 break;
             case NEXT_STOP:
-                
+                jsObj = jsArray.get(i).getAsJsonObject();
                 break;
         }
-        try{
-            eb.getNextStopInfo();
-        } catch(NoConnectionException e){
-            Toast noConectionMessage = Toast.makeText(this
-                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
-            noConectionMessage.show();
-        }
-
-
-
     }
 
     public void initStops(){
