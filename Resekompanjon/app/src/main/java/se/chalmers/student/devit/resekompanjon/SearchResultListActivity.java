@@ -135,6 +135,7 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("HEJ", "KOM BARA HIT");
         switch(view.getId()) {
             case R.id.checkboxButton:
                 ImageButton button = (ImageButton) view;
@@ -158,13 +159,13 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
                 if(tripAsJson.equals(tempObj)) {
                     //Trip is already a planned trip
                     handler.removePrenum(i);
-                    button.setBackgroundResource(R.drawable.checkbox_untoggled);
+                    button.setImageResource(R.drawable.checkbox_untoggled);
                 } else {
                     //Trip is not a planned trip, add it as one
                     handler.addToPrenumTrips(trip.getOriginName(), trip.getOriginId(),
                             trip.getDestinationName(), trip.getDestinationId(), trip.getRef(),
                             trip.getOriginDate(), trip.getOriginTime());
-                    button.setBackgroundResource(R.drawable.checkbox_toggled);
+                    button.setImageResource(R.drawable.checkbox_toggled);
                 }
                 Log.d("HEJ", "KOM HIT");
                 break;
