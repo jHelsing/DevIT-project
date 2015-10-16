@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,16 +12,21 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
+import se.chalmers.student.devit.resekompanjon.backend.utils.readers.PrenumHandler;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment;
 
 /**
  * @author Amar. Revisited by Jonathan
- * @version 0.4
+ * @version 0.5
  */
 public class SearchResultListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
         NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -53,6 +59,7 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
         adapter = new SearchResultTripArrayAdapter(this, searchResultTrips);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        listView.setItemsCanFocus(true);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -128,7 +135,41 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        switch(view.getId()) {
+            case R.id.checkboxButton:
+                ImageButton button = (ImageButton) view;
+                SearchResaultTrips trip = searchResultTrips.get(position);
+                PrenumHandler handler = new PrenumHandler(this);
+                JsonArray arr = handler.getTripArrayAsJson();
+                JsonObject tripAsJson = new JsonObject();
+                tripAsJson.addProperty("originName", trip.getOriginName());
+                tripAsJson.addProperty("originID", trip.getOriginId());
+                tripAsJson.addProperty("endName", trip.getDestinationName());
+                tripAsJson.addProperty("endID", trip.getDestinationId());
+                tripAsJson.addProperty("date", trip.getOriginDate());
+                tripAsJson.addProperty("time", trip.getOriginTime());
+                tripAsJson.addProperty("ref", trip.getRef());
+                int i=0;
+                JsonObject tempObj = arr.get(i).getAsJsonObject();
+                while(i<arr.size() && tripAsJson.equals(tempObj)) {
+                    i++;
+                    tempObj = arr.get(i).getAsJsonObject();
+                }
+                if(tripAsJson.equals(tempObj)) {
+                    //Trip is already a planned trip
+                    handler.removePrenum(i);
+                    button.setBackgroundResource(R.drawable.checkbox_untoggled);
+                } else {
+                    //Trip is not a planned trip, add it as one
+                    handler.addToPrenumTrips(trip.getOriginName(), trip.getOriginId(),
+                            trip.getDestinationName(), trip.getDestinationId(), trip.getRef(),
+                            trip.getOriginDate(), trip.getOriginTime());
+                    button.setBackgroundResource(R.drawable.checkbox_toggled);
+                }
+                Log.d("HEJ", "KOM HIT");
+                break;
+        }
+        Log.d("HEJ", "KOM HIT");
     }
 
     /**

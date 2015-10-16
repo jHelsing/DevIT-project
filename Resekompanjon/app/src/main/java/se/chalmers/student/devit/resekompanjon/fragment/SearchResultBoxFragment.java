@@ -50,9 +50,6 @@ public class SearchResultBoxFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //trip = getArguments().getString(ARG_TRIP);
-        }
     }
 
     @Override

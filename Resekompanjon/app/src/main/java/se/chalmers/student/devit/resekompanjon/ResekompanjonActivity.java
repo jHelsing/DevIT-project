@@ -102,6 +102,8 @@ public class ResekompanjonActivity extends AppCompatActivity
             // return to start
         } else if(position == 1) {
             // Go to planned trips
+            Intent i = new Intent(ResekompanjonActivity.this, PlannedTripsActivity.class);
+            startActivity(i);
         } else if(position == 2) {
             // Go to favourites
             Intent i = new Intent(ResekompanjonActivity.this, FavoritesActivity.class);
@@ -173,12 +175,10 @@ public class ResekompanjonActivity extends AppCompatActivity
             noConectionMessage.show();
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void OnVehicleStopFragmentInteraction(Uri uri) {
-
     }
 
     /**
@@ -190,7 +190,7 @@ public class ResekompanjonActivity extends AppCompatActivity
         try{
             JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
             JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
-            Log.d("res", tripResult.getAllTripSummary().toString());
+            //Log.d("res", tripResult.getAllTripSummary().toString());
             ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
             SearchResultListActivity.setTrips(searchedTrips);
             startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
