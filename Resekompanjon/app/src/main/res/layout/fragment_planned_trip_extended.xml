@@ -1,0 +1,108 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="se.chalmers.student.devit.resekompanjon.fragment.PlannedTripExtendedFragment"
+    android:id="@+id/plannedTripExtendedFrameLayout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Påminnelse"
+            android:id="@+id/plannedTripExtendedReminderSwitch"
+            android:checked="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/plannedTripExtendedLLOne">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/background_light">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="påminn mig"
+                android:id="@+id/plannedTripExtendedCheckBoxPreDeparture"
+                android:checked="true"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                />
+
+            <EditText
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/plannedTripExtendedETMinutesDeparture"
+                android:text="10"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:editable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="minuter innan avgång"
+                android:id="@+id/plannedTripExtendedTVReminderText3"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+         <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@android:color/background_light"
+             android:id="@+id/plannedTripExtendedLLTwo">
+             <CheckBox
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="påminn mig"
+                 android:id="@+id/plannedTripExtendedCheckBoxPreArrival"
+                 android:checked="true"
+                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                 android:layout_marginRight="@dimen/activity_horizontal_margin"
+                 />
+
+             <EditText
+                 android:layout_width="45dp"
+                 android:layout_height="wrap_content"
+                 android:inputType="number"
+                 android:ems="10"
+                 android:id="@+id/plannedTripExtendedETMinutesArrival"
+                 android:text="5"
+                 android:layout_marginRight="@dimen/activity_horizontal_margin"
+                 android:editable="true" />
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textAppearance="?android:attr/textAppearanceMedium"
+                 android:text="minuter innan avgång"
+                 android:id="@+id/plannedTripExtendedTVReminderText2"
+                 android:textSize="15dp" />
+             </LinearLayout>
+    </LinearLayout>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stoppsignal"
+            android:checked="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/plannedTripExtendedStopSwitch" />
+
+
+    </LinearLayout>
+</FrameLayout>
