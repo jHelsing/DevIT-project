@@ -3,10 +3,12 @@ package se.chalmers.student.devit.resekompanjon;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -31,14 +33,21 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
         super.onCreate(savedInstanceState);
 
         fileHandler = new PrenumHandler(getApplicationContext());
-        JsonArray tempArr = fileHandler.getTripArrayAsJson();
-        for(int i=0; i<tempArr.size(); i++) {
-            arrayList.add(tempArr.get(i).getAsJsonObject());
+        if(fileHandler.getNumbOfPrenums() > 0) {
+            JsonArray tempArr = fileHandler.getTripArrayAsJson();
+            for(int i=0; i<tempArr.size(); i++) {
+                JsonObject obj = (JsonObject) tempArr.get(i);
+                arrayList.add(obj);
+            }
+            setContentView(R.layout.planned_trip_layout);
+            expListView = (ExpandableListView) findViewById(R.id.expandableListView);
+            adapter = new PlannedTripExpandableListAdapter(this, arrayList);
+            expListView.setAdapter(adapter);
+        } else {
+            //There are no planned trips available
         }
-        setContentView(R.layout.planned_trip_layout);
-        expListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        adapter = new PlannedTripExpandableListAdapter(this, arrayList);
-        expListView.setAdapter(adapter);
+
+
 
         // Setting navigation
         mNavigationDrawerFragment = (NavigationDrawerFragment)
