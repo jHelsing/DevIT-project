@@ -1,11 +1,17 @@
 package se.chalmers.student.devit.resekompanjon;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.readers.PrenumHandler;
 
 /**
  * Simple class for holding search result items.
@@ -72,6 +78,7 @@ public class SearchResultViewHolder {
         int arrivalHour = Integer.parseInt(trip.getDestinationTime().substring(0, 2));
         int arrivalMin = Integer.parseInt(trip.getDestinationTime().substring(3));
 
+        final SearchResaultTrips trip2 = trip;
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, departureHour);
         cal.set(Calendar.MINUTE, departureMin);
@@ -94,5 +101,47 @@ public class SearchResultViewHolder {
         String totalTravelTime = timeFormatter.format(cal.getTime());
         travelTime.setText(totalTravelTime);
         delay.setText("XX:XX");
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrenumHandler handler = new PrenumHandler(v.getContext());
+                JsonArray arr = handler.getTripArrayAsJson();
+                JsonObject tripAsJson = new JsonObject();
+                tripAsJson.addProperty("originName", trip2.getOriginName());
+                tripAsJson.addProperty("originID", trip2.getOriginId());
+                tripAsJson.addProperty("endName", trip2.getDestinationName());
+                tripAsJson.addProperty("endID", trip2.getDestinationId());
+                tripAsJson.addProperty("date", trip2.getOriginDate());
+                tripAsJson.addProperty("time", trip2.getOriginTime());
+                tripAsJson.addProperty("ref", trip2.getRef());
+                Log.d("ARR:SIZE", arr.size() + "");
+                if(arr.size() != 0) {
+                    int i = 0;
+                    JsonObject tempObj = arr.get(i).getAsJsonObject();
+                    while (i < arr.size() && !tripAsJson.equals(tempObj)) {
+                        i++;
+                        tempObj = arr.get(i).getAsJsonObject();
+                    }
+                    if (tripAsJson.equals(tempObj)) {
+                        //Trip is already a planned trip
+                        handler.removePrenum(i);
+                        button.setImageResource(R.drawable.checkbox_untoggled);
+                    } else {
+                        //Trip is not a planned trip, add it as one
+                        handler.addToPrenumTrips(trip2.getOriginName(), trip2.getOriginId(),
+                                trip2.getDestinationName(), trip2.getDestinationId(), trip2.getRef(),
+                                trip2.getOriginDate(), trip2.getOriginTime());
+                        button.setImageResource(R.drawable.checkbox_toggled);
+                    }
+                } else {
+                    handler.addToPrenumTrips(trip2.getOriginName(), trip2.getOriginId(),
+                            trip2.getDestinationName(), trip2.getDestinationId(), trip2.getRef(),
+                            trip2.getOriginDate(), trip2.getOriginTime());
+                    button.setImageResource(R.drawable.checkbox_toggled);
+                }
+                Log.d("HEJ", "KOM HIT1");
+            }
+        });
     }
 }

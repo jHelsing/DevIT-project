@@ -60,7 +60,6 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResaultTrip
         }
         SearchResaultTrips entity = getItem(index);
         viewHolder.setViewFileds(entity, convertView);
-        convertView.setOnClickListener(this);
         return convertView;
 
     }

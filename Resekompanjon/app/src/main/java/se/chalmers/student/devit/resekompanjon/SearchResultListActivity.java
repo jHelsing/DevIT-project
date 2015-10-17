@@ -28,9 +28,9 @@ import se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment;
  * @author Amar. Revisited by Jonathan
  * @version 0.5
  */
-public class SearchResultListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
+public class SearchResultListActivity extends AppCompatActivity implements
         NavigationDrawerFragment.NavigationDrawerCallbacks,
-        SearchInfoFragment.OnFragmentInteractionListener, KeyEvent.Callback, View.OnClickListener, AdapterView.OnItemSelectedListener {
+        SearchInfoFragment.OnFragmentInteractionListener, KeyEvent.Callback, View.OnClickListener {
 
     private static ArrayList<SearchResaultTrips> searchResultTrips;
 
@@ -118,59 +118,6 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
     }
 
     /**
-     * Callback method to be invoked when an item in this AdapterView has
-     * been clicked.
-     * <p/>
-     * Implementers can call getItemAtPosition(position) if they need
-     * to access the data associated with the selected item.
-     *
-     * @param parent   The AdapterView where the click happened.
-     * @param view     The view within the AdapterView that was clicked (this
-     *                 will be a view provided by the adapter)
-     * @param position The position of the view in the adapter.
-     * @param id       The row id of the item that was clicked.
-     */
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("HEJ", "KOM BARA HIT");
-        switch(view.getId()) {
-            case R.id.checkboxButton:
-                ImageButton button = (ImageButton) view;
-                SearchResaultTrips trip = searchResultTrips.get(position);
-                PrenumHandler handler = new PrenumHandler(this);
-                JsonArray arr = handler.getTripArrayAsJson();
-                JsonObject tripAsJson = new JsonObject();
-                tripAsJson.addProperty("originName", trip.getOriginName());
-                tripAsJson.addProperty("originID", trip.getOriginId());
-                tripAsJson.addProperty("endName", trip.getDestinationName());
-                tripAsJson.addProperty("endID", trip.getDestinationId());
-                tripAsJson.addProperty("date", trip.getOriginDate());
-                tripAsJson.addProperty("time", trip.getOriginTime());
-                tripAsJson.addProperty("ref", trip.getRef());
-                int i=0;
-                JsonObject tempObj = arr.get(i).getAsJsonObject();
-                while(i<arr.size() && !tripAsJson.equals(tempObj)) {
-                    i++;
-                    tempObj = arr.get(i).getAsJsonObject();
-                }
-                if(tripAsJson.equals(tempObj)) {
-                    //Trip is already a planned trip
-                    handler.removePrenum(i);
-                    button.setImageResource(R.drawable.checkbox_untoggled);
-                } else {
-                    //Trip is not a planned trip, add it as one
-                    handler.addToPrenumTrips(trip.getOriginName(), trip.getOriginId(),
-                            trip.getDestinationName(), trip.getDestinationId(), trip.getRef(),
-                            trip.getOriginDate(), trip.getOriginTime());
-                    button.setImageResource(R.drawable.checkbox_toggled);
-                }
-                Log.d("HEJ", "KOM HIT1");
-                break;
-        }
-        Log.d("HEJ", "KOM HIT2");
-    }
-
-    /**
      * When interaction with the Search Info Fragment happens, this method will run.
      */
     @Override
@@ -188,71 +135,5 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
             String endID = searchResultTrips.get(0).getDestinationId();
             favHandler.addToFavoriteTrips(orginName,orginID,endName,endID);
         }
-    }
-
-    /**
-     * <p>Callback method to be invoked when an item in this view has been
-     * selected. This callback is invoked only when the newly selected
-     * position is different from the previously selected position or if
-     * there was no selected item.</p>
-     * <p/>
-     * Impelmenters can call getItemAtPosition(position) if they need to access the
-     * data associated with the selected item.
-     *
-     * @param parent   The AdapterView where the selection happened
-     * @param view     The view within the AdapterView that was clicked
-     * @param position The position of the view in the adapter
-     * @param id       The row id of the item that is selected
-     */
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("HEJ", "KOM BARA HIT5");
-        switch(view.getId()) {
-            case R.id.checkboxButton:
-                ImageButton button = (ImageButton) view;
-                SearchResaultTrips trip = searchResultTrips.get(position);
-                PrenumHandler handler = new PrenumHandler(this);
-                JsonArray arr = handler.getTripArrayAsJson();
-                JsonObject tripAsJson = new JsonObject();
-                tripAsJson.addProperty("originName", trip.getOriginName());
-                tripAsJson.addProperty("originID", trip.getOriginId());
-                tripAsJson.addProperty("endName", trip.getDestinationName());
-                tripAsJson.addProperty("endID", trip.getDestinationId());
-                tripAsJson.addProperty("date", trip.getOriginDate());
-                tripAsJson.addProperty("time", trip.getOriginTime());
-                tripAsJson.addProperty("ref", trip.getRef());
-                int i=0;
-                JsonObject tempObj = arr.get(i).getAsJsonObject();
-                while(i<arr.size() && !tripAsJson.equals(tempObj)) {
-                    i++;
-                    tempObj = arr.get(i).getAsJsonObject();
-                }
-                if(tripAsJson.equals(tempObj)) {
-                    //Trip is already a planned trip
-                    handler.removePrenum(i);
-                    button.setImageResource(R.drawable.checkbox_untoggled);
-                } else {
-                    //Trip is not a planned trip, add it as one
-                    handler.addToPrenumTrips(trip.getOriginName(), trip.getOriginId(),
-                            trip.getDestinationName(), trip.getDestinationId(), trip.getRef(),
-                            trip.getOriginDate(), trip.getOriginTime());
-                    button.setImageResource(R.drawable.checkbox_toggled);
-                }
-                Log.d("HEJ", "KOM HIT6");
-                break;
-        }
-        Log.d("HEJ", "KOM HIT7");
-    }
-
-    /**
-     * Callback method to be invoked when the selection disappears from this
-     * view. The selection can disappear for instance when touch is activated
-     * or when the adapter becomes empty.
-     *
-     * @param parent The AdapterView that now contains no selected item.
-     */
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }
