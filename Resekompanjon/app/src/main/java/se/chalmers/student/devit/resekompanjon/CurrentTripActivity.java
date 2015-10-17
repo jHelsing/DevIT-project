@@ -12,8 +12,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -157,16 +155,17 @@ public class CurrentTripActivity extends AppCompatActivity
                 TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
                 busDirection = jsObj.get("value").getAsString();
                 busDirectionTextview.setText("→" + busDirection);
-                infoState = InfoState.NEXT_STOP;
+                infoState = InfoState.UN_UPDATED_NEXT_STOP;
                 try{
                 eb.getNextStopInfo();
             } catch(NoConnectionException e){
                 Toast noConectionMessage = Toast.makeText(this
                         , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
                 noConectionMessage.show();
+                    e.printStackTrace();
             }
                 break;
-            case NEXT_STOP:
+            case UN_UPDATED_NEXT_STOP:
                 jsObj = jsArray.get(i).getAsJsonObject();
                 String nextStop = jsObj.get("value").getAsString();
                 String firstBusStop = nextStop;
@@ -180,10 +179,10 @@ public class CurrentTripActivity extends AppCompatActivity
                                         BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop, firstBusStop);
                                         FragmentManager fragmentManager = getFragmentManager();
                                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        fragmentTransaction.add(R.id.currentStops, busStopFragement, "busStopFragment");
+                                        fragmentTransaction.add(R.id.currentStops, busStopFragement, busStop);
                                         if(!busStop.equals("Lindholmen")){
                                             BetweenBusStopCurrentFragment betweenBusStopFragment = BetweenBusStopCurrentFragment.newInstance("", "");
-                                            fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, "betweenBusStopFragment");
+                                            fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, busStop + "1");
                                         }
                                         fragmentTransaction.commit();
                                     }
@@ -196,6 +195,22 @@ public class CurrentTripActivity extends AppCompatActivity
                             }
                             break;
                 }
+                infoState = InfoState.UPDATED_NEXT_STOP;
+                try{
+                    eb.getNextStopInfo();
+                } catch (NoConnectionException e) {
+                    Toast noConectionMessage = Toast.makeText(this
+                            , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+                    noConectionMessage.show();
+                    e.printStackTrace();
+                }
+                break;
+            case UPDATED_NEXT_STOP:
+                jsObj = jsArray.get(i).getAsJsonObject();
+                nextStop = jsObj.get("value").getAsString();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.findFragmentByTag()
+
                 break;
         }
     }
@@ -210,6 +225,7 @@ public class CurrentTripActivity extends AppCompatActivity
 
     public enum InfoState{
         JOURNEY,
-        NEXT_STOP;
+        UN_UPDATED_NEXT_STOP,
+        UPDATED_NEXT_STOP;
     }
 }
