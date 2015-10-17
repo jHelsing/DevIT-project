@@ -12,6 +12,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -168,6 +169,7 @@ public class CurrentTripActivity extends AppCompatActivity
             case NEXT_STOP:
                 jsObj = jsArray.get(i).getAsJsonObject();
                 String nextStop = jsObj.get("value").getAsString();
+                String firstNextStop = nextStop;
                 int j = 0;
                     switch (busDirection) {
                         case "Lindholmen":
@@ -175,6 +177,10 @@ public class CurrentTripActivity extends AppCompatActivity
                                 if(stopToLindholmen[j].equals(nextStop)){
                                     for(int k = j; k<stopToLindholmen.length; k++){
                                         String busStop = stopToLindholmen[k];
+                                        if(stopToLindholmen[k].equals(firstNextStop)){
+                                            ImageView busStopIcon = (ImageView) findViewById(R.id.busStopIcon);
+                                            busStopIcon.setImageResource(R.drawable.visited_stop);
+                                        }
                                         BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop, "");
                                         FragmentManager fragmentManager = getFragmentManager();
                                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
