@@ -1,24 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    tools:context="se.chalmers.student.devit.resekompanjon.fragment.BusStopCurrentFragment">
+    tools:context="se.chalmers.student.devit.resekompanjon.fragment.BusStopCurrentFragment"
+    android:weightSum="1">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
             android:id="@+id/busStopIcon"
             android:src="@drawable/unvisited_stop"
-            android:paddingTop="5dp"
-            android:paddingLeft="2dp" />
+            android:layout_marginLeft="2dp" />
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="1dp"
             android:background="#000000"
-            android:layout_marginLeft="36dp"
+            android:layout_marginLeft="2dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:weightSum="1"
-            android:gravity="center">
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -26,13 +27,12 @@
                 android:background="@android:color/background_light"
                 android:paddingTop="1dp"
                 android:paddingBottom="1dp"
-                android:layout_weight="0.50"
+                android:layout_weight="1.00"
                 android:gravity="left">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/busStopName"
-                        android:text="Hållplats"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
@@ -43,7 +43,6 @@
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.50"
                 android:background="@android:color/background_light"
                 android:gravity="right">
 
@@ -66,4 +65,4 @@
 
             </LinearLayout>
         </LinearLayout>
-</FrameLayout>
+</LinearLayout>

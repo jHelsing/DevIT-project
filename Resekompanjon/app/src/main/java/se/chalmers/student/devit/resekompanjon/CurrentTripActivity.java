@@ -1,16 +1,18 @@
 package se.chalmers.student.devit.resekompanjon;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.google.gson.JsonObject;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
+import se.chalmers.student.devit.resekompanjon.fragment.BetweenBusStopCurrentFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.BusStopCurrentFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 
@@ -28,7 +31,8 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
  * @version  0.2
  */
 public class CurrentTripActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted
+        ,BusStopCurrentFragment.OnFragmentInteractionListener, BetweenBusStopCurrentFragment.OnFragmentInteractionListener{
 
     ElectricityBackend eb;
 
@@ -172,8 +176,12 @@ public class CurrentTripActivity extends AppCompatActivity
                                     for(int k = j; k<stopToLindholmen.length; k++){
                                         String busStop = stopToLindholmen[k];
                                         BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop, "");
-
-
+                                        BetweenBusStopCurrentFragment betweenBusStopFragment = BetweenBusStopCurrentFragment.newInstance("", "");
+                                        FragmentManager fragmentManager = getFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                        fragmentTransaction.add(R.id.currentStops, busStopFragement, "busStopFragment");
+                                        fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, "betweenBusStopFragment");
+                                        fragmentTransaction.commit();
                                     }
                                     condition = false;
                                 } else if(j<stopToLindholmen.length){
@@ -190,6 +198,10 @@ public class CurrentTripActivity extends AppCompatActivity
 
     public void initStops(){
 
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
     }
 
     public enum InfoState{
