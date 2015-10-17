@@ -56,12 +56,8 @@ public class SearchResultListActivity extends AppCompatActivity implements Adapt
         setContentView(R.layout.search_result_list_layout);
 
         listView = (ListView) findViewById(R.id.list);
-        adapter = new SearchResultTripArrayAdapter(this, searchResultTrips);
+        adapter = new SearchResultTripArrayAdapter(this, searchResultTrips, listView);
         listView.setAdapter(adapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setOnItemClickListener(this);
-        listView.setOnItemSelectedListener(this);
-        listView.setItemsCanFocus(true);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 

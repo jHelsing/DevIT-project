@@ -2,6 +2,7 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.View;
@@ -35,12 +36,14 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
         this.listView = listView;
         this.actionMode = actionMode;
         this.values = values;
+        listView.setOnItemClickListener(this);
         uncheckedDrawable = context.getResources().getDrawable(R.drawable.checkbox_untoggled);
         checkedDrawable = context.getResources().getDrawable(R.drawable.checkbox_toggled);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("HEJ", "KOM HIT1");
         switch (view.getId()) {
             case R.id.checkboxButton:
                 SearchResultBoxFragment box = (SearchResultBoxFragment) listView.getItemAtPosition(position);
