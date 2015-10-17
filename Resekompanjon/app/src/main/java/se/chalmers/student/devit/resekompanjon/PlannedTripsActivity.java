@@ -31,7 +31,7 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        arrayList = new ArrayList<>();
         fileHandler = new PrenumHandler(getApplicationContext());
         if(fileHandler.getNumbOfPrenums() > 0) {
             JsonArray tempArr = fileHandler.getTripArrayAsJson();
@@ -47,15 +47,13 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
             //There are no planned trips available
         }
 
-
-
         // Setting navigation
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.main_drawer_layout));
+                (DrawerLayout) findViewById(R.id.planned_trip_drawer_layout));
     }
 
     /**

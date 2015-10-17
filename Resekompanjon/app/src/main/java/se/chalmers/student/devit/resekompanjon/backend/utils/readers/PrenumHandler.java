@@ -75,7 +75,7 @@ public class PrenumHandler {
         }
 
     }
-    public void addToPrenumTrips(String originName, String originID, String endName, String endID, String ref, String date, String time){
+    public void addToPrenumTrips(String originName, String originID, String endName, String endID, String date, String time){
         readPrenumTrips();
 
         JsonObject newTripObj = new JsonObject();
@@ -85,7 +85,6 @@ public class PrenumHandler {
         newTripObj.addProperty("endID", endID);
         newTripObj.addProperty("date", date);
         newTripObj.addProperty("time", time);
-        newTripObj.addProperty("ref", ref); //is the url last in the json, inside the JourneyDetailRef
         tripArray.add(newTripObj);
 
         try {
@@ -147,7 +146,6 @@ public class PrenumHandler {
             stringTrip.add(tempObj.get("endID").toString());
             stringTrip.add(tempObj.get("date").toString());
             stringTrip.add(tempObj.get("time").toString());
-            stringTrip.add(tempObj.get("ref").toString());
 
             stringTripArray.add(stringTrip);
             stringTrip.clear();

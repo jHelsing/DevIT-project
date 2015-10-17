@@ -58,7 +58,6 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
                 tripAsJson.addProperty("endID", trip.getDestinationId());
                 tripAsJson.addProperty("date", trip.getOriginDate());
                 tripAsJson.addProperty("time", trip.getOriginTime());
-                tripAsJson.addProperty("ref", trip.getRef());
                 int i = 0;
                 JsonObject tempObj = arr.get(i).getAsJsonObject();
                 while (i < arr.size() && !tripAsJson.equals(tempObj)) {
@@ -72,7 +71,7 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
                 } else {
                     //Trip is not a planned trip, add it as one
                     handler.addToPrenumTrips(trip.getOriginName(), trip.getOriginId(),
-                            trip.getDestinationName(), trip.getDestinationId(), trip.getRef(),
+                            trip.getDestinationName(), trip.getDestinationId(),
                             trip.getOriginDate(), trip.getOriginTime());
                     button.setImageResource(R.drawable.checkbox_toggled);
                 }

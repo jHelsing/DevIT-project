@@ -114,9 +114,8 @@ public class SearchResultViewHolder {
                 tripAsJson.addProperty("endID", trip2.getDestinationId());
                 tripAsJson.addProperty("date", trip2.getOriginDate());
                 tripAsJson.addProperty("time", trip2.getOriginTime());
-                tripAsJson.addProperty("ref", trip2.getRef());
                 Log.d("ARR:SIZE", arr.size() + "");
-                if(arr.size() != 0) {
+                /*if(arr.size() != 0) {
                     int i = 0;
                     JsonObject tempObj = arr.get(i).getAsJsonObject();
                     while (i < arr.size() && !tripAsJson.equals(tempObj)) {
@@ -134,12 +133,12 @@ public class SearchResultViewHolder {
                                 trip2.getOriginDate(), trip2.getOriginTime());
                         button.setImageResource(R.drawable.checkbox_toggled);
                     }
-                } else {
+                } else {*/
                     handler.addToPrenumTrips(trip2.getOriginName(), trip2.getOriginId(),
-                            trip2.getDestinationName(), trip2.getDestinationId(), trip2.getRef(),
+                            trip2.getDestinationName(), trip2.getDestinationId(),
                             trip2.getOriginDate(), trip2.getOriginTime());
                     button.setImageResource(R.drawable.checkbox_toggled);
-                }
+                //}
                 Log.d("HEJ", "KOM HIT1");
             }
         });

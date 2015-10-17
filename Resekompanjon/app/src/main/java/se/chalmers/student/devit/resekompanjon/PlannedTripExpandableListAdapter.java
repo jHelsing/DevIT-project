@@ -163,11 +163,11 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
         TextView tvDate = (TextView) convertView.findViewById(R.id.plannedTripsTVDate);
         TextView tvTime = (TextView) convertView.findViewById(R.id.plannedTripsTVTime);
         tvLine.setTypeface(null, Typeface.BOLD);
-        tvLine.setText(objectToShow.get("line").getAsString());
+        tvLine.setText("XX");
         tvStartPos.setText(objectToShow.get("originName").getAsString());
         tvEndPos.setText(objectToShow.get("endName").getAsString());
-        tvDate.setText(objectToShow.get("depDate").getAsString());
-        tvTime.setText(objectToShow.get("depTime").getAsString());
+        tvDate.setText(objectToShow.get("date").getAsString());
+        tvTime.setText(objectToShow.get("time").getAsString());
 
         return convertView;
     }
@@ -211,6 +211,7 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
             linearLayoutOne.setVisibility(View.INVISIBLE);
             linearLayouttwo.setVisibility(View.INVISIBLE);
         }
+        startAlarm(groupPosition);
         return convertView;
     }
 
