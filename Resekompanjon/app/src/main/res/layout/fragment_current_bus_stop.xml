@@ -5,7 +5,7 @@
     android:weightSum="1">
 
         <ImageView
-            android:layout_width="43dp"
+            android:layout_width="45dp"
             android:layout_height="match_parent"
             android:id="@+id/busStopIcon"
             android:src="@drawable/unvisited_stop"
@@ -17,9 +17,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:weightSum="1"
-            android:paddingLeft="1dp"
-            android:paddingRight="1dp"
-            android:paddingBottom="1dp">
+            android:padding="1dp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -34,14 +32,14 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/busStopName"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+                        android:layout_marginLeft="5dp" />
 
 
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="87dp"
                 android:layout_height="fill_parent"
                 android:background="@android:color/background_light"
                 android:gravity="right">
@@ -51,8 +49,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/busStopTime"
                     android:text="XX:XX"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
+                    android:layout_gravity="center" />
 
                 <ImageButton
                     android:layout_width="wrap_content"

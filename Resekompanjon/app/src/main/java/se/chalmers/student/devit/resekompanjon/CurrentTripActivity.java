@@ -155,7 +155,7 @@ public class CurrentTripActivity extends AppCompatActivity
                 }
                 TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
                 busDirection = jsObj.get("value").getAsString();
-                busDirectionTextview.setText(busDirection);
+                busDirectionTextview.setText("→" + busDirection);
                 infoState = InfoState.NEXT_STOP;
                 try{
                 eb.getNextStopInfo();
@@ -176,11 +176,13 @@ public class CurrentTripActivity extends AppCompatActivity
                                     for(int k = j; k<stopToLindholmen.length; k++){
                                         String busStop = stopToLindholmen[k];
                                         BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop, "");
-                                        BetweenBusStopCurrentFragment betweenBusStopFragment = BetweenBusStopCurrentFragment.newInstance("", "");
                                         FragmentManager fragmentManager = getFragmentManager();
                                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                         fragmentTransaction.add(R.id.currentStops, busStopFragement, "busStopFragment");
-                                        fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, "betweenBusStopFragment");
+                                        if(!busStop.equals("Lindholmen")){
+                                            BetweenBusStopCurrentFragment betweenBusStopFragment = BetweenBusStopCurrentFragment.newInstance("", "");
+                                            fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, "betweenBusStopFragment");
+                                        }
                                         fragmentTransaction.commit();
                                     }
                                     condition = false;

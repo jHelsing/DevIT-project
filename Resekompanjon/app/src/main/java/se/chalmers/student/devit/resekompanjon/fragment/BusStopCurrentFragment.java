@@ -81,8 +81,16 @@ public class BusStopCurrentFragment extends Fragment {
     public void onStart() {
         super.onStart();
         TextView busStopTextView = (TextView) getView().findViewById(R.id.busStopName);
+        switch (mbusStop){
+            case "G�taplatsen":
+                mbusStop = "Götaplatsen";
+                break;
+            case "Kungsportsplatsn":
+                mbusStop = "Kungsportsplatsen";
+                break;
+            }
         busStopTextView.setText(mbusStop);
-    }
+        }
 
     @Override
     public void onAttach(Activity activity) {
