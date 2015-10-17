@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import se.chalmers.student.devit.resekompanjon.R;
@@ -25,11 +25,11 @@ public class BusStopCurrentFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String BUS_STOP = "busStop";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String FIRST_BUS_STOP = "firstBusStop";
 
     // TODO: Rename and change types of parameters
-    private String mbusStop;
-    private String mParam2;
+    private String mBusStop;
+    private String mFirstBusStop;
 
     private OnFragmentInteractionListener mListener;
 
@@ -38,15 +38,15 @@ public class BusStopCurrentFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param busStop Parameter 1.
-     * @param param2 Parameter 2.
+     * @param firstBusStop Parameter 2.
      * @return A new instance of fragment BusStopCurrentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BusStopCurrentFragment newInstance(String busStop, String param2) {
+    public static BusStopCurrentFragment newInstance(String busStop, String firstBusStop) {
         BusStopCurrentFragment fragment = new BusStopCurrentFragment();
         Bundle args = new Bundle();
         args.putString(BUS_STOP, busStop);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(FIRST_BUS_STOP, firstBusStop);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,8 +59,8 @@ public class BusStopCurrentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mbusStop = getArguments().getString(BUS_STOP);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mBusStop = getArguments().getString(BUS_STOP);
+            mFirstBusStop = getArguments().getString(FIRST_BUS_STOP);
         }
     }
 
@@ -81,15 +81,19 @@ public class BusStopCurrentFragment extends Fragment {
     public void onStart() {
         super.onStart();
         TextView busStopTextView = (TextView) getView().findViewById(R.id.busStopName);
-        switch (mbusStop){
+        switch (mBusStop){
             case "G�taplatsen":
-                mbusStop = "Götaplatsen";
+                mBusStop = "Götaplatsen";
                 break;
             case "Kungsportsplatsn":
-                mbusStop = "Kungsportsplatsen";
+                mBusStop = "Kungsportsplatsen";
                 break;
             }
-        busStopTextView.setText(mbusStop);
+        busStopTextView.setText(mBusStop);
+        if(mBusStop.equals(mFirstBusStop)){
+            ImageView busStopIcon = (ImageView) getView().findViewById(R.id.busStopIcon);
+            busStopIcon.setImageResource(R.drawable.visited_stop);
+        }
         }
 
     @Override
