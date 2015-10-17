@@ -164,8 +164,6 @@ public class ResekompanjonActivity extends AppCompatActivity
             this.mEndLocation = endLocation;
             this.mDate = date;
             this.mTime = time;
-            Log.d("Rätt", date);
-            Log.d("Rätt här", time);
             setContentView(R.layout.loading_layout);
             TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
             loadingView.setText(R.string.loading_search_result);

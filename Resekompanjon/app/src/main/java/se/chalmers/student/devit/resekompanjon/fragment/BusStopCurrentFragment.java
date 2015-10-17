@@ -80,6 +80,10 @@ public class BusStopCurrentFragment extends Fragment {
 
     public void onStart() {
         super.onStart();
+        if(mBusStop.equals(mFirstBusStop)){
+            ImageView busStopIcon = (ImageView) getView().findViewById(R.id.busStopIcon);
+            busStopIcon.setImageResource(R.drawable.visited_stop);
+        }
         TextView busStopTextView = (TextView) getView().findViewById(R.id.busStopName);
         switch (mBusStop){
             case "G�taplatsen":
@@ -90,10 +94,6 @@ public class BusStopCurrentFragment extends Fragment {
                 break;
             }
         busStopTextView.setText(mBusStop);
-        if(mBusStop.equals(mFirstBusStop)){
-            ImageView busStopIcon = (ImageView) getView().findViewById(R.id.busStopIcon);
-            busStopIcon.setImageResource(R.drawable.visited_stop);
-        }
         }
 
     @Override
