@@ -183,8 +183,11 @@ public class CurrentTripActivity extends AppCompatActivity
                     case UN_UPDATED_NEXT_STOP:
                         jsObj = jsArray.get(i).getAsJsonObject();
                         nextStop = jsObj.get("value").getAsString();
+                        if(nextStop.equals("Lindholmen") && oldNextStop.equals("")){
+                            nextStop = "Frihamnen";
+                        }
                         firstNextStop = nextStop;
-                        if (nextStop.equals("G�taplatsen") && oldNextStop.equals("Lindholmen")) {
+                        if (nextStop.equals("G�taplatsen") && oldNextStop.equals("G�taplatsen")) {
                             LinearLayout currentStopsLinearLayout = (LinearLayout) findViewById(R.id.currentStops);
                             currentStopsLinearLayout.removeAllViews();
                         }
@@ -231,10 +234,7 @@ public class CurrentTripActivity extends AppCompatActivity
                     case UPDATED_NEXT_STOP:
                         jsObj = jsArray.get(i).getAsJsonObject();
                         nextStop = jsObj.get("value").getAsString();
-                        Log.d("Nästa stop är", nextStop);
-                        if (nextStop.equals("G�taplatsen") && oldNextStop.equals("Lindholmen")) {
-                            infoState = InfoState.UN_UPDATED_NEXT_STOP;
-                        } else if (!nextStop.equals(oldNextStop)) {
+                        if (!nextStop.equals(oldNextStop)) {
                             FragmentManager fragmentManager = getFragmentManager();
                             if(oldNextStop.equals(firstNextStop)){
                                 View nextStopFragment = fragmentManager.findFragmentByTag(firstNextStop).getView();
@@ -247,6 +247,9 @@ public class CurrentTripActivity extends AppCompatActivity
                                 View previousStopFragment = fragmentManager.findFragmentByTag(oldNextStop).getView();
                                 ImageView busStopIcon = (ImageView) previousStopFragment.findViewById(R.id.busStopIcon);
                                 busStopIcon.setImageResource(R.drawable.visited_stop);
+                            }
+                            if (nextStop.equals("G�taplatsen") && oldNextStop.equals("Lindholmen")) {
+                                infoState = InfoState.UN_UPDATED_NEXT_STOP;
                             }
                             oldNextStop = nextStop;
                         }
@@ -293,6 +296,9 @@ public class CurrentTripActivity extends AppCompatActivity
                     , "Du har valt att stanna på: " + uri.toString(), Toast.LENGTH_LONG);
             stopPressedMessage.show();
     }
+
+    @Override
+    public void onBetweenFragmentInteraction(Uri uri) {}
 
     public enum InfoState{
         JOURNEY,

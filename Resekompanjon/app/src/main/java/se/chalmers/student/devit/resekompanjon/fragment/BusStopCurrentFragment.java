@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import se.chalmers.student.devit.resekompanjon.R;
@@ -114,7 +115,8 @@ public class BusStopCurrentFragment extends Fragment implements View.OnClickList
         //Sends to activity
         if(!isPressed) {
             stopButton.setImageResource(R.drawable.stop_toggled);
-            TextView stopTextView = (TextView) getActivity().findViewById(R.id.busStopName);
+            LinearLayout ll= (LinearLayout) stopButton.getParent().getParent();
+            TextView stopTextView = (TextView) ll.findViewById(R.id.busStopName);
             String stop = stopTextView.getText().toString();
             ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction(Uri.parse(stop));
             isPressed = true;
