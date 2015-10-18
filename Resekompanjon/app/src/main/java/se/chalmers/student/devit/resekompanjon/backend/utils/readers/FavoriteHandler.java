@@ -20,7 +20,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
- * Created by Marcus on 2015-10-09.
+ * Created by Marcus on 2015-10-09. Revisited by Amar.
  */
 public class FavoriteHandler {
 

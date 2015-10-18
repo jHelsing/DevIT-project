@@ -39,6 +39,10 @@ public class SearchResultListActivity extends AppCompatActivity implements
     private SearchResultTripArrayAdapter adapter;
 
     private ImageButton favouriteButton;
+
+    private FavoriteHandler favHandler;
+
+    private boolean isFavourite = false;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -82,6 +86,19 @@ public class SearchResultListActivity extends AppCompatActivity implements
 
         favouriteButton = (ImageButton) findViewById(R.id.favouriteButton);
         favouriteButton.setOnClickListener(this);
+
+        favHandler = new FavoriteHandler(this);
+
+        String originName = searchResultTrips.get(0).getOriginName();
+        String endName = searchResultTrips.get(0).getDestinationName();
+        JsonObject favObj = new JsonObject();
+        favObj.addProperty("originName", originName);
+        favObj.addProperty("endName", endName);
+
+        if(favHandler.isFavorite(favObj)){
+            isFavourite = true;
+            favouriteButton.setImageResource(R.drawable.favourite_toggled);
+        }
     }
 
     @Override
@@ -127,7 +144,7 @@ public class SearchResultListActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        FavoriteHandler favHandler = new FavoriteHandler(this);
+        favHandler = new FavoriteHandler(this);
         String originName = searchResultTrips.get(0).getOriginName();
         String endName = searchResultTrips.get(0).getDestinationName();
         String originID = searchResultTrips.get(0).getOriginId();
@@ -135,8 +152,16 @@ public class SearchResultListActivity extends AppCompatActivity implements
         JsonObject favObj = new JsonObject();
         favObj.addProperty("originName", originName);
         favObj.addProperty("endName", endName);
-        if(!favHandler.isFavorite(favObj)){
-            favHandler.addToFavoriteTrips(originName,originID,endName,endID);
+
+        if(!isFavourite){
+            favHandler.addToFavoriteTrips(originName, originID, endName, endID);
+            favouriteButton.setImageResource(R.drawable.favourite_toggled);
+            isFavourite = true;
+        } else{
+            int i = favHandler.getFavoriteIndex(favObj);
+            favHandler.removeFavorite(i);
+            favouriteButton.setImageResource(R.drawable.favourite_untoggled);
+            isFavourite = false;
         }
     }
 }
