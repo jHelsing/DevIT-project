@@ -127,13 +127,11 @@ public class SearchResultListActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == favouriteButton.getId()){
             FavoriteHandler favHandler = new FavoriteHandler(this);
             String orginName = searchResultTrips.get(0).getOriginName();
             String endName = searchResultTrips.get(0).getDestinationName();
             String orginID = searchResultTrips.get(0).getOriginId();
             String endID = searchResultTrips.get(0).getDestinationId();
             favHandler.addToFavoriteTrips(orginName,orginID,endName,endID);
-        }
     }
 }

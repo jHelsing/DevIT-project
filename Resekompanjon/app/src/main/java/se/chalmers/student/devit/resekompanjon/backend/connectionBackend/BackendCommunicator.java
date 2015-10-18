@@ -75,9 +75,19 @@ public class BackendCommunicator implements OnTaskCompleted{
         }
     }
 
-    public void getElectricityInformation() throws NoConnectionException{
+    public void getElectricityJourneyInfo() throws NoConnectionException{
         ORIGIN = "eBackend";
         eBackend.getJourneyInfo();
+    }
+
+    public void getElectricityNextStopInfo() throws NoConnectionException{
+        ORIGIN = "eBackend";
+        eBackend.getNextStopInfo();
+    }
+
+    public void getElectricityStopPressedInfo() throws NoConnectionException{
+        ORIGIN = "eBackend";
+        eBackend.getStopPressedInfo();
     }
 
     @Override

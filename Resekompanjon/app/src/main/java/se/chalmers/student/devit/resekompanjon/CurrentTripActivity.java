@@ -22,10 +22,9 @@ import android.widget.Toast;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.util.Arrays;
-
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAavailableException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.fragment.BetweenBusStopCurrentFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.BusStopCurrentFragment;
@@ -33,17 +32,17 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
 
 /**
  * @author  Jonathan. Revisited by Amar.
- * @version  0.2
+ * @version  0.5
  */
 public class CurrentTripActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted
         ,BusStopCurrentFragment.OnFragmentInteractionListener, BetweenBusStopCurrentFragment.OnFragmentInteractionListener{
 
-    ElectricityBackend eb;
-
     private JsonObject trip;
 
     private InfoState infoState;
+
+    private BackendCommunicator bComm;
 
     private String previousStop = "";
     private String nextStop;
@@ -74,19 +73,17 @@ public class CurrentTripActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.detailed_trip_drawer_layout));
-
+        bComm = new BackendCommunicator(this, this);
     }
 
     @Override
     public void onStart(){
         super.onStart();
-
         if(isOnBus()){
             infoState = InfoState.JOURNEY;
             try{
-                eb = new ElectricityBackend(this, this);
-                eb.getJourneyInfo();
-
+                bComm = new BackendCommunicator(this, this);
+                bComm.getElectricityJourneyInfo();
             }
             catch(NoConnectionException e){
                 Toast noConectionMessage = Toast.makeText(this
@@ -143,114 +140,155 @@ public class CurrentTripActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * First brings the Journeyinfo to show the busNumber and the destination. Later on, onTaskCompleted
+     * is called again to make the trip visible to the user. The trip is from next BusStop to Lindholmen. When
+     * this is done, the OnTaskCompleted method is called again and again to update the next stop of the bus so
+     * the users can se the location. This is done until CurrentTripActivity is finished. If the user press
+     * on the stop button for a specific busStop in the BusStopCurrentFragment, then the STOP_PRESSED case is
+     * being done.
+     */
     @Override
     public void onTaskCompleted() {
         if(!this.isFinishing()) {
-            JsonArray jsArray = eb.getApiData();
-            JsonObject jsObj = null;
-            boolean condition = true;
-            int i = jsArray.size() - 1;
-            switch (infoState) {
-                case JOURNEY:
-                    TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
-                    busNbrTextview.setText("55");
-                    while (condition) {
-                        jsObj = jsArray.get(i).getAsJsonObject();
-                        if (jsObj.get("resourceSpec").getAsString().equals("Destination_Value")) {
-                            condition = false;
-                        } else {
-                            i--;
-                        }
-                    }
-                    TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
-                    busDirection = jsObj.get("value").getAsString();
-                    busDirectionTextview.setText("→" + busDirection);
-                    infoState = InfoState.UN_UPDATED_NEXT_STOP;
-                    try {
-                        eb.getNextStopInfo();
-                    } catch (NoConnectionException e) {
-                        Toast noConectionMessage = Toast.makeText(this
-                                , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
-                        noConectionMessage.show();
-                        e.printStackTrace();
-                    }
-                    break;
-                case UN_UPDATED_NEXT_STOP:
-                    jsObj = jsArray.get(i).getAsJsonObject();
-                    nextStop = jsObj.get("value").getAsString();
-                    if (nextStop.equals("G�taplatsen") && previousStop.equals("Lindholmen")) {
-                        LinearLayout currentStopsLinearLayout = (LinearLayout) findViewById(R.id.currentStops);
-                        currentStopsLinearLayout.removeAllViews();
-                    }
-                    int j = 0;
-                    switch (busDirection) {
-                        case "Lindholmen":
-                            while (condition) {
-                                if (stopToLindholmen[j].equals(nextStop)) {
-                                    for (int k = j; k < stopToLindholmen.length; k++) {
-                                        String busStop = stopToLindholmen[k];
-                                        BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop, nextStop);
-                                        FragmentManager fragmentManager = getFragmentManager();
-                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        fragmentTransaction.add(R.id.currentStops, busStopFragement, busStop);
-                                        if (!busStop.equals("Lindholmen")) {
-                                            BetweenBusStopCurrentFragment betweenBusStopFragment = BetweenBusStopCurrentFragment.newInstance("", "");
-                                            fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, busStop + "1");
-                                        }
-                                        fragmentTransaction.commit();
-                                    }
-                                    condition = false;
-                                } else if (j < stopToLindholmen.length) {
-                                    j++;
-                                } else {
-                                    condition = false;
-                                }
+            try {
+                JsonArray jsArray = bComm.getApiData().getAsJsonArray();
+                JsonObject jsObj = null;
+                boolean condition = true;
+                int i = jsArray.size() - 1;
+                switch (infoState) {
+                    case JOURNEY:
+                        TextView busNbrTextview = (TextView) findViewById(R.id.busNumber);
+                        busNbrTextview.setText("55");
+                        while (condition) {
+                            jsObj = jsArray.get(i).getAsJsonObject();
+                            if (jsObj.get("resourceSpec").getAsString().equals("Destination_Value")) {
+                                condition = false;
+                            } else {
+                                i--;
                             }
-                            break;
-                    }
-                    previousStop = nextStop;
-                    infoState = InfoState.UPDATED_NEXT_STOP;
-                    try {
-                        eb.getNextStopInfo();
-                    } catch (NoConnectionException e) {
-                        Toast noConectionMessage = Toast.makeText(this
-                                , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
-                        noConectionMessage.show();
-                        e.printStackTrace();
-                    }
-                    break;
-                case UPDATED_NEXT_STOP:
-                    jsObj = jsArray.get(i).getAsJsonObject();
-                    nextStop = jsObj.get("value").getAsString();
-                    if (nextStop.equals("G�taplatsen") && previousStop.equals("Lindholmen")) {
+                        }
+                        TextView busDirectionTextview = (TextView) findViewById(R.id.busDirection);
+                        busDirection = jsObj.get("value").getAsString();
+                        busDirectionTextview.setText("→" + busDirection);
                         infoState = InfoState.UN_UPDATED_NEXT_STOP;
-
-                    } else if (!nextStop.equals(previousStop)) {
-                        FragmentManager fragmentManager = getFragmentManager();
-                        View previousStopFragment = fragmentManager.findFragmentByTag(previousStop + "1").getView();
-                        ImageView tripIcon = (ImageView) previousStopFragment.findViewById(R.id.tripIcon);
-                        tripIcon.setImageResource(R.drawable.completed_trip);
-                        View nextStopFragment = fragmentManager.findFragmentByTag(nextStop).getView();
-                        ImageView busStopIcon = (ImageView) nextStopFragment.findViewById(R.id.busStopIcon);
-                        busStopIcon.setImageResource(R.drawable.visited_stop);
+                        try {
+                            bComm.getElectricityNextStopInfo();
+                        } catch (NoConnectionException e) {
+                            Toast noConectionMessage = Toast.makeText(this
+                                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+                            noConectionMessage.show();
+                            e.printStackTrace();
+                        }
+                        break;
+                    case UN_UPDATED_NEXT_STOP:
+                        jsObj = jsArray.get(i).getAsJsonObject();
+                        nextStop = jsObj.get("value").getAsString();
+                        if (nextStop.equals("G�taplatsen") && previousStop.equals("Lindholmen")) {
+                            LinearLayout currentStopsLinearLayout = (LinearLayout) findViewById(R.id.currentStops);
+                            currentStopsLinearLayout.removeAllViews();
+                        }
+                        int j = 0;
+                        switch (busDirection) {
+                            case "Lindholmen":
+                                while (condition) {
+                                    if (stopToLindholmen[j].equals(nextStop)) {
+                                        for (int k = j; k < stopToLindholmen.length; k++) {
+                                            String busStop = stopToLindholmen[k];
+                                            BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop, nextStop);
+                                            FragmentManager fragmentManager = getFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            fragmentTransaction.add(R.id.currentStops, busStopFragement, busStop);
+                                            if (!busStop.equals("Lindholmen")) {
+                                                BetweenBusStopCurrentFragment betweenBusStopFragment = BetweenBusStopCurrentFragment.newInstance("", "");
+                                                fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, busStop + "1");
+                                            }
+                                            fragmentTransaction.commit();
+                                        }
+                                        condition = false;
+                                    } else if (j < stopToLindholmen.length) {
+                                        j++;
+                                    } else {
+                                        condition = false;
+                                    }
+                                }
+                                break;
+                        }
                         previousStop = nextStop;
-                    }
-                    try {
-                        eb.getNextStopInfo();
-                    } catch (NoConnectionException e) {
-                        Toast noConectionMessage = Toast.makeText(this
-                                , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
-                        noConectionMessage.show();
-                        e.printStackTrace();
-                    }
-                    break;
+                        infoState = InfoState.UPDATED_NEXT_STOP;
+                        try {
+                            bComm.getElectricityNextStopInfo();
+                        } catch (NoConnectionException e) {
+                            Toast noConectionMessage = Toast.makeText(this
+                                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+                            noConectionMessage.show();
+                            e.printStackTrace();
+                        }
+                        break;
+                    case UPDATED_NEXT_STOP:
+                        jsObj = jsArray.get(i).getAsJsonObject();
+                        nextStop = jsObj.get("value").getAsString();
+                        if (nextStop.equals("G�taplatsen") && previousStop.equals("Lindholmen")) {
+                            infoState = InfoState.UN_UPDATED_NEXT_STOP;
+
+                        } else if (!nextStop.equals(previousStop)) {
+                            FragmentManager fragmentManager = getFragmentManager();
+                            View previousStopFragment = fragmentManager.findFragmentByTag(previousStop + "1").getView();
+                            ImageView tripIcon = (ImageView) previousStopFragment.findViewById(R.id.tripIcon);
+                            tripIcon.setImageResource(R.drawable.completed_trip);
+                            View nextStopFragment = fragmentManager.findFragmentByTag(nextStop).getView();
+                            ImageView busStopIcon = (ImageView) nextStopFragment.findViewById(R.id.busStopIcon);
+                            busStopIcon.setImageResource(R.drawable.visited_stop);
+                            previousStop = nextStop;
+                        }
+                        try {
+                            bComm.getElectricityNextStopInfo();
+                        } catch (NoConnectionException e) {
+                            Toast noConectionMessage = Toast.makeText(this
+                                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+                            noConectionMessage.show();
+                            e.printStackTrace();
+                        }
+                        break;
+                    case STOP_PRESSED:
+                        jsObj = jsArray.get(i).getAsJsonObject();
+                        try {
+                            infoState = InfoState.UPDATED_NEXT_STOP;
+                            bComm.getElectricityNextStopInfo();
+                        } catch (NoConnectionException e) {
+                            Toast noConectionMessage = Toast.makeText(this
+                                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+                            noConectionMessage.show();
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            } catch (NoJsonAavailableException e) {
+                Toast noConectionMessage = Toast.makeText(this
+                        , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+                noConectionMessage.show();
+                e.printStackTrace();
             }
         }
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction() {
+        try{
+            infoState = InfoState.STOP_PRESSED;
+            bComm.getElectricityStopPressedInfo();
+        } catch (NoConnectionException e) {
+            Toast noConectionMessage = Toast.makeText(this
+                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
+            noConectionMessage.show();
+            e.printStackTrace();
+        }
+
     }
+
+    /**
+     * Finishes this activity and starts ResekompanjonActivity.
+     */
     @Override
     protected void onPause(){
         super.onPause();
@@ -259,9 +297,15 @@ public class CurrentTripActivity extends AppCompatActivity
         finish();
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     public enum InfoState{
         JOURNEY,
         UN_UPDATED_NEXT_STOP,
-        UPDATED_NEXT_STOP;
+        UPDATED_NEXT_STOP,
+        STOP_PRESSED;
     }
 }

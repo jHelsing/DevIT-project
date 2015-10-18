@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import se.chalmers.student.devit.resekompanjon.R;
  * Use the {@link BusStopCurrentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BusStopCurrentFragment extends Fragment {
+public class BusStopCurrentFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String BUS_STOP = "busStop";
@@ -30,6 +31,7 @@ public class BusStopCurrentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mBusStop;
     private String mFirstBusStop;
+    private ImageButton stopButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,7 +76,7 @@ public class BusStopCurrentFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction();
         }
     }
 
@@ -94,6 +96,8 @@ public class BusStopCurrentFragment extends Fragment {
                 break;
             }
         busStopTextView.setText(mBusStop);
+        stopButton = (ImageButton) getView().findViewById(R.id.stopButton);
+        stopButton.setOnClickListener(this);
         }
 
     @Override
@@ -113,6 +117,13 @@ public class BusStopCurrentFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        //Sends to activity
+        stopButton.setImageResource(R.drawable.stop_toggled);
+        ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -125,7 +136,7 @@ public class BusStopCurrentFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction();
     }
 
 }
