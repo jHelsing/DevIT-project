@@ -1,13 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="se.chalmers.student.devit.resekompanjon.fragment.PlannedTripExtendedFragment"
-    android:id="@+id/plannedTripExtendedFrameLayout">
+    tools:context="se.chalmers.student.devit.resekompanjon.fragment.PlannedTripExtendedFragment">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:id="@+id/plannedTripExtendedFrameLayout">
 
         <Switch
             android:layout_width="wrap_content"

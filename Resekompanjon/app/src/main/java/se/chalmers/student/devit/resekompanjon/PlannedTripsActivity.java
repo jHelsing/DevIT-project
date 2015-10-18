@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -43,6 +45,27 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
             expListView = (ExpandableListView) findViewById(R.id.expandableListView);
             adapter = new PlannedTripExpandableListAdapter(this, arrayList);
             expListView.setAdapter(adapter);
+            /*
+            expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                    if(expListView.isGroupExpanded(groupPosition)) {
+                        expListView.collapseGroup(groupPosition);
+                    } else {
+                        expListView.expandGroup(groupPosition, true);
+                    }
+                    return false;
+                }
+            });
+
+            expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                    View childAt = parent.getChildAt(groupPosition);
+
+                    return false;
+                }
+            });*/
         } else {
             //There are no planned trips available
         }

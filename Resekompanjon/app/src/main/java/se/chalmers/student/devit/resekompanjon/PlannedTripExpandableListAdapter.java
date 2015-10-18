@@ -2,10 +2,12 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.LauncherActivity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +64,7 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
      */
     @Override
     public int getChildrenCount(int groupPosition) {
-        return arrayListData.size();
+        return 1;
     }
 
     /**
@@ -198,8 +200,10 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
             convertView = infalInflater.inflate(R.layout.fragment_planned_trip_extended, null);
         }
 
-        FrameLayout frameLayout = (FrameLayout) convertView.findViewById(R.id.plannedTripExtendedFrameLayout);
-        frameLayout.setId(groupPosition);
+        LinearLayout linearLayout = (LinearLayout) convertView.findViewById(R.id.plannedTripExtendedFrameLayout);
+        Log.d("GROUP ID:", groupPosition + "");
+        Log.d("CHILD ID:", childPosition + "");
+        linearLayout.setTag(groupPosition);
         Switch reminderSwitch = (Switch) convertView.findViewById(R.id.plannedTripExtendedReminderSwitch);
         Switch stopSwitch = (Switch) convertView.findViewById(R.id.plannedTripExtendedStopSwitch);
         reminderSwitch.setOnCheckedChangeListener(this);
@@ -207,9 +211,9 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
         if (!reminderSwitch.isChecked()) {
             // If the user don't want a reminder, make sure to hide the rest of the information
             LinearLayout linearLayoutOne = (LinearLayout) convertView.findViewById(R.id.plannedTripExtendedLLOne);
-            LinearLayout linearLayouttwo = (LinearLayout) convertView.findViewById(R.id.plannedTripExtendedLLTwo);
+            LinearLayout linearLayoutTwo = (LinearLayout) convertView.findViewById(R.id.plannedTripExtendedLLTwo);
             linearLayoutOne.setVisibility(View.INVISIBLE);
-            linearLayouttwo.setVisibility(View.INVISIBLE);
+            linearLayoutTwo.setVisibility(View.INVISIBLE);
         }
         startAlarm(groupPosition);
         return convertView;
@@ -237,14 +241,13 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch(buttonView.getId()) {
             case R.id.plannedTripExtendedReminderSwitch:
-                ViewParent firstParent = buttonView.getParent();
-                FrameLayout finalParent = (FrameLayout) firstParent.getParent();
-                int position = finalParent.getId();
+                LinearLayout parent = (LinearLayout) buttonView.getParent();
+                int position = (Integer) parent.getTag();
                 if(isChecked) {
                     // show the extra items on screen.
-                    LinearLayout linearLayout = (LinearLayout) finalParent.findViewById(R.id.plannedTripExtendedLLOne);
+                    LinearLayout linearLayout = (LinearLayout) parent.findViewById(R.id.plannedTripExtendedLLOne);
                     linearLayout.setVisibility(View.VISIBLE);
-                    linearLayout = (LinearLayout) finalParent.findViewById(R.id.plannedTripExtendedLLTwo);
+                    linearLayout = (LinearLayout) parent.findViewById(R.id.plannedTripExtendedLLTwo);
                     linearLayout.setVisibility(View.VISIBLE);
 
                     // Start the alarm
@@ -264,11 +267,11 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
     private void startAlarm(int position) {
         JsonObject jsonObject = arrayListData.get(position);
         Calendar cal = Calendar.getInstance();
-        String dateAsString = jsonObject.get("originDate").getAsString();
-        int year = Integer.parseInt(dateAsString.substring(0, 4));
-        int month = Integer.parseInt(dateAsString.substring(5, 7));
-        int day = Integer.parseInt(dateAsString.substring(8));
-        String timeAsString = jsonObject.get("originTime").getAsString();
+        String dateAsString = jsonObject.get("date").toString();
+        String timeAsString = jsonObject.get("time").getAsString();
+        int year = Integer.parseInt(dateAsString.substring(1, 5));
+        int month = Integer.parseInt(dateAsString.substring(6, 8));
+        int day = Integer.parseInt(dateAsString.substring(9, 11));
         int hour = Integer.parseInt(timeAsString.substring(0,2));
         int min = Integer.parseInt(timeAsString.substring(3));
         cal.set(year, month, day, hour, min);
