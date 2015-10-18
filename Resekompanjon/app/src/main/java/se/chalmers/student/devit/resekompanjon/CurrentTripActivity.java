@@ -44,8 +44,9 @@ public class CurrentTripActivity extends AppCompatActivity
 
     private BackendCommunicator bComm;
 
-    private String previousStop = "";
+    private String oldNextStop = "";
     private String nextStop;
+    private String firstNextStop;
 
     private String busDirection;
 
@@ -144,9 +145,7 @@ public class CurrentTripActivity extends AppCompatActivity
      * First brings the Journeyinfo to show the busNumber and the destination. Later on, onTaskCompleted
      * is called again to make the trip visible to the user. The trip is from next BusStop to Lindholmen. When
      * this is done, the OnTaskCompleted method is called again and again to update the next stop of the bus so
-     * the users can se the location. This is done until CurrentTripActivity is finished. If the user press
-     * on the stop button for a specific busStop in the BusStopCurrentFragment, then the STOP_PRESSED case is
-     * being done.
+     * the users can se the location. This is done until CurrentTripActivity is finished.
      */
     @Override
     public void onTaskCompleted() {
@@ -184,7 +183,8 @@ public class CurrentTripActivity extends AppCompatActivity
                     case UN_UPDATED_NEXT_STOP:
                         jsObj = jsArray.get(i).getAsJsonObject();
                         nextStop = jsObj.get("value").getAsString();
-                        if (nextStop.equals("G�taplatsen") && previousStop.equals("Lindholmen")) {
+                        firstNextStop = nextStop;
+                        if (nextStop.equals("G�taplatsen") && oldNextStop.equals("Lindholmen")) {
                             LinearLayout currentStopsLinearLayout = (LinearLayout) findViewById(R.id.currentStops);
                             currentStopsLinearLayout.removeAllViews();
                         }
@@ -195,13 +195,16 @@ public class CurrentTripActivity extends AppCompatActivity
                                     if (stopToLindholmen[j].equals(nextStop)) {
                                         for (int k = j; k < stopToLindholmen.length; k++) {
                                             String busStop = stopToLindholmen[k];
-                                            BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop, nextStop);
                                             FragmentManager fragmentManager = getFragmentManager();
                                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            fragmentTransaction.add(R.id.currentStops, busStopFragement, busStop);
-                                            if (!busStop.equals("Lindholmen")) {
+                                            if (k==j) {
+                                                BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop);
+                                                fragmentTransaction.add(R.id.currentStops, busStopFragement, busStop);
+                                            } else{
                                                 BetweenBusStopCurrentFragment betweenBusStopFragment = BetweenBusStopCurrentFragment.newInstance("", "");
                                                 fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, busStop + "1");
+                                                BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop);
+                                                fragmentTransaction.add(R.id.currentStops, busStopFragement, busStop);
                                             }
                                             fragmentTransaction.commit();
                                         }
@@ -214,7 +217,7 @@ public class CurrentTripActivity extends AppCompatActivity
                                 }
                                 break;
                         }
-                        previousStop = nextStop;
+                        oldNextStop = nextStop;
                         infoState = InfoState.UPDATED_NEXT_STOP;
                         try {
                             bComm.getElectricityNextStopInfo();
@@ -228,32 +231,26 @@ public class CurrentTripActivity extends AppCompatActivity
                     case UPDATED_NEXT_STOP:
                         jsObj = jsArray.get(i).getAsJsonObject();
                         nextStop = jsObj.get("value").getAsString();
-                        if (nextStop.equals("G�taplatsen") && previousStop.equals("Lindholmen")) {
+                        Log.d("Nästa stop är", nextStop);
+                        if (nextStop.equals("G�taplatsen") && oldNextStop.equals("Lindholmen")) {
                             infoState = InfoState.UN_UPDATED_NEXT_STOP;
-
-                        } else if (!nextStop.equals(previousStop)) {
+                        } else if (!nextStop.equals(oldNextStop)) {
                             FragmentManager fragmentManager = getFragmentManager();
-                            View previousStopFragment = fragmentManager.findFragmentByTag(previousStop + "1").getView();
-                            ImageView tripIcon = (ImageView) previousStopFragment.findViewById(R.id.tripIcon);
-                            tripIcon.setImageResource(R.drawable.completed_trip);
-                            View nextStopFragment = fragmentManager.findFragmentByTag(nextStop).getView();
-                            ImageView busStopIcon = (ImageView) nextStopFragment.findViewById(R.id.busStopIcon);
-                            busStopIcon.setImageResource(R.drawable.visited_stop);
-                            previousStop = nextStop;
+                            if(oldNextStop.equals(firstNextStop)){
+                                View nextStopFragment = fragmentManager.findFragmentByTag(firstNextStop).getView();
+                                ImageView busStopIcon = (ImageView) nextStopFragment.findViewById(R.id.busStopIcon);
+                                busStopIcon.setImageResource(R.drawable.visited_stop);
+                            } else{
+                                View previousStopLineFragment = fragmentManager.findFragmentByTag(oldNextStop + "1").getView();
+                                ImageView tripIcon = (ImageView) previousStopLineFragment.findViewById(R.id.tripIcon);
+                                tripIcon.setImageResource(R.drawable.completed_trip);
+                                View previousStopFragment = fragmentManager.findFragmentByTag(oldNextStop).getView();
+                                ImageView busStopIcon = (ImageView) previousStopFragment.findViewById(R.id.busStopIcon);
+                                busStopIcon.setImageResource(R.drawable.visited_stop);
+                            }
+                            oldNextStop = nextStop;
                         }
                         try {
-                            bComm.getElectricityNextStopInfo();
-                        } catch (NoConnectionException e) {
-                            Toast noConectionMessage = Toast.makeText(this
-                                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
-                            noConectionMessage.show();
-                            e.printStackTrace();
-                        }
-                        break;
-                    case STOP_PRESSED:
-                        jsObj = jsArray.get(i).getAsJsonObject();
-                        try {
-                            infoState = InfoState.UPDATED_NEXT_STOP;
                             bComm.getElectricityNextStopInfo();
                         } catch (NoConnectionException e) {
                             Toast noConectionMessage = Toast.makeText(this
@@ -272,18 +269,11 @@ public class CurrentTripActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void onFragmentInteraction() {
-        try{
-            infoState = InfoState.STOP_PRESSED;
-            bComm.getElectricityStopPressedInfo();
-        } catch (NoConnectionException e) {
-            Toast noConectionMessage = Toast.makeText(this
-                    , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
-            noConectionMessage.show();
-            e.printStackTrace();
-        }
-
+    /**
+     * This method is called by busStopCurrentFragment when a stop button is pressed in there.
+     * @param stop is the paramter where the bus has to stay.
+     */
+    public void busStopCurrentFragmentInteraction(String stop) {
     }
 
     /**
@@ -299,13 +289,14 @@ public class CurrentTripActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
+            Toast stopPressedMessage = Toast.makeText(this
+                    , "Du har valt att stanna på: " + uri.toString(), Toast.LENGTH_LONG);
+            stopPressedMessage.show();
     }
 
     public enum InfoState{
         JOURNEY,
         UN_UPDATED_NEXT_STOP,
-        UPDATED_NEXT_STOP,
-        STOP_PRESSED;
+        UPDATED_NEXT_STOP;
     }
 }
