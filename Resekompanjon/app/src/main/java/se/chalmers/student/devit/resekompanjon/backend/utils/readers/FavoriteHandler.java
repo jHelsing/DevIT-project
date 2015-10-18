@@ -159,17 +159,21 @@ public class FavoriteHandler {
      */
     public boolean isFavorite(JsonObject jsObj){
         JsonArray arr = getTripArrayAsJson();
-        int i=0;
-        JsonObject objectToCompare = arr.get(i).getAsJsonObject();
-        objectToCompare.remove("originID");
-        objectToCompare.remove("endID");
-        while(i<arr.size() && !jsObj.equals(objectToCompare)) {
-            i++;
-            objectToCompare = arr.get(i).getAsJsonObject();
+        if(arr.size() == 0){
+            return false;
+        } else{
+            int i=0;
+            JsonObject objectToCompare = arr.get(i).getAsJsonObject();
             objectToCompare.remove("originID");
             objectToCompare.remove("endID");
+            while(i<arr.size()-1 && !jsObj.equals(objectToCompare)) {
+                i++;
+                objectToCompare = arr.get(i).getAsJsonObject();
+                objectToCompare.remove("originID");
+                objectToCompare.remove("endID");
+            }
+            return jsObj.equals(objectToCompare);
         }
-        return jsObj.equals(objectToCompare);
     }
 
     /**
