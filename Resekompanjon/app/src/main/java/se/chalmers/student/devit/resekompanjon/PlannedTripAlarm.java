@@ -57,19 +57,7 @@ public class PlannedTripAlarm extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("REMINDER:", "Where it's supposed to be");
         NotificationManager notifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        JsonObject jsonObject = new JsonParser().parse(intent.getStringExtra("JSON")).getAsJsonObject();
-        Calendar cal = Calendar.getInstance();
-        String dateAsString = jsonObject.get("originDate").getAsString();
-        int year = Integer.parseInt(dateAsString.substring(0, 4));
-        int month = Integer.parseInt(dateAsString.substring(5, 7));
-        int day = Integer.parseInt(dateAsString.substring(8));
-        String timeAsString = jsonObject.get("originTime").getAsString();
-        int hour = Integer.parseInt(timeAsString.substring(0,2));
-        int min = Integer.parseInt(timeAsString.substring(3));
-        cal.set(year, month, day, hour, min);
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.stop_toggled);
         builder.setContentTitle("Dags att gå till bussen");

@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,9 +36,6 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
      * The list of objects to display and have reminder for
      */
     private ArrayList<JsonObject> arrayListData;
-
-    private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
-    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
     public PlannedTripExpandableListAdapter(Context context, ArrayList<JsonObject> values) {
         super();
@@ -170,7 +168,6 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
         tvEndPos.setText(objectToShow.get("endName").getAsString());
         tvDate.setText(objectToShow.get("date").getAsString());
         tvTime.setText(objectToShow.get("time").getAsString());
-
         return convertView;
     }
 
@@ -201,8 +198,6 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
         }
 
         LinearLayout linearLayout = (LinearLayout) convertView.findViewById(R.id.plannedTripExtendedFrameLayout);
-        Log.d("GROUP ID:", groupPosition + "");
-        Log.d("CHILD ID:", childPosition + "");
         linearLayout.setTag(groupPosition);
         Switch reminderSwitch = (Switch) convertView.findViewById(R.id.plannedTripExtendedReminderSwitch);
         Switch stopSwitch = (Switch) convertView.findViewById(R.id.plannedTripExtendedStopSwitch);
@@ -276,12 +271,10 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
         int min = Integer.parseInt(timeAsString.substring(3));
         cal.set(year, month, day, hour, min);
         AlarmManager alarmMng = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent();
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.setClassName("se.chalmers.student.devit.resekompanjon", "PlannedTripAlarm");
-        i.putExtra("JSON", jsonObject.toString());
-        PendingIntent intent = PendingIntent.getActivity(context, position,i, PendingIntent.FLAG_UPDATE_CURRENT );
-        alarmMng.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(), intent);
+        Intent i = new Intent(context.getApplicationContext(), PlannedTripAlarm.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmMng.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1, pendingIntent);
+        Log.d("TAGG", "Turned On");
     }
 
     private void stopAlarm(int position) {
@@ -293,5 +286,6 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
         i.putExtra("JSON", jsonObject.toString());
         PendingIntent intent = PendingIntent.getActivity(context, position,i, PendingIntent.FLAG_UPDATE_CURRENT );
         alarmMng.cancel(intent);
+        Log.d("TAGG", "TURNED OFF");
     }
 }
