@@ -48,7 +48,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <receiver android:name=".PlannedTripAlarm"
+        <receiver android:name="se.chalmers.student.devit.resekompanjon.PlannedTripAlarm"
                   android:process=":remote">
         </receiver>
     </application>
