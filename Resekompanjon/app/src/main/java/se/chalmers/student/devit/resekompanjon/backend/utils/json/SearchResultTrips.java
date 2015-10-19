@@ -1,5 +1,7 @@
 package se.chalmers.student.devit.resekompanjon.backend.utils.json;
 
+import android.util.Log;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -104,10 +106,21 @@ public class SearchResultTrips {
         return Origin.get("track").getAsString();
     }
     public String getOriginRtTime(){
-        return Origin.get("rtTime").getAsString();
+        Log.d("re", Origin.get("rtTime") + "");
+        if (Origin.get("rtTime") != null) {
+            return Origin.get("rtTime").getAsString();
+        }
+        else {
+            return Origin.get("time").getAsString();
+        }
     }
     public String getOriginRtDate(){
-        return Origin.get("rtDate").getAsString();
+        if (Origin.get("rtDate") != null) {
+            return Origin.get("rtDate").getAsString();
+        }
+        else {
+            return Origin.get("date").getAsString();
+        }
     }
     public String getOriginId(){
         return Origin.get("id").getAsString();
@@ -134,10 +147,20 @@ public class SearchResultTrips {
         return Destination.get("track").getAsString();
     }
     public String getDestinationRtTime(){
-        return Destination.get("rtTime").getAsString();
+        if (Destination.get("rtTime") != null) {
+            return Destination.get("rtTime").getAsString();
+        }
+        else {
+            return Destination.get("time").getAsString();
+        }
     }
     public String getDestinationRtDate(){
-        return Destination.get("rtDate").getAsString();
+        if (Destination.get("rtDate") != null) {
+            return Destination.get("rtDate").getAsString();
+        }
+        else {
+            return Destination.get("date").getAsString();
+        }
     }
     public String getDestinationId(){
         return Destination.get("id").getAsString();
