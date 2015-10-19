@@ -247,7 +247,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         }
         for(int i=0; i<tempArray.size(); i++){
             SearchResultTripSummary tempTrip = gson.fromJson(tempArray.get(i), SearchResultTripSummary.class);
-            tempTrip.setResaultTripArrayList(getSingleTripAdvice(i));
+            tempTrip.setResultTripArrayList(getSingleTripAdvice(i));
             tripSummaries.add(tempTrip);
         }
         return tripSummaries;

@@ -108,7 +108,8 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
             JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
             JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
             ArrayList<SearchResultTrips> searchedTrips = tripResult.getTripAdvice();
-            SearchResultListActivity.setTrips(searchedTrips);
+            //SearchResultListActivity.setTrips(searchedTrips);
+            SearchResultListActivity.setTrips(tripResult.getAllTripSummary());
             startActivity(new Intent(FavoritesActivity.this, SearchResultListActivity.class));
             finish();
         } catch (NoJsonAvailableException e) {

@@ -11,7 +11,8 @@ import android.widget.ListView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
+
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.PrenumHandler;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchResultBoxFragment;
 
@@ -21,7 +22,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.SearchResultBoxFragment;
  */
 public class SelectionClickListener implements AdapterView.OnItemClickListener {
 
-    private final ArrayList<SearchResultTrips> values;
+    private final ArrayList<SearchResultTripSummary> values;
     private ListView listView;
     private ActionMode actionMode;
     private Drawable uncheckedDrawable;
@@ -30,7 +31,7 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
     private int selectedItems = 1;
 
     public SelectionClickListener(Context context, ListView listView, ActionMode actionMode,
-                                  ArrayList<SearchResultTrips> values) {
+                                  ArrayList<SearchResultTripSummary> values) {
         this.context = context;
         this.listView = listView;
         this.actionMode = actionMode;
@@ -46,17 +47,17 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
         switch (view.getId()) {
             case R.id.checkboxButton:
                 SearchResultBoxFragment box = (SearchResultBoxFragment) listView.getItemAtPosition(position);
-                SearchResultTrips trip = values.get(position);
+                SearchResultTripSummary trip = values.get(position);
                 ImageButton button = (ImageButton) view;
                 PrenumHandler handler = new PrenumHandler(context);
                 JsonArray arr = handler.getTripArrayAsJson();
                 JsonObject tripAsJson = new JsonObject();
                 tripAsJson.addProperty("originName", trip.getOriginName());
-                tripAsJson.addProperty("originID", trip.getOriginId());
+                tripAsJson.addProperty("originID", trip.getOriginID());
                 tripAsJson.addProperty("endName", trip.getDestinationName());
                 tripAsJson.addProperty("endID", trip.getDestinationId());
-                tripAsJson.addProperty("date", trip.getOriginDate());
-                tripAsJson.addProperty("time", trip.getOriginTime());
+                tripAsJson.addProperty("date", trip.getDepartureDate());
+                tripAsJson.addProperty("time", trip.getDepartureTime());
                 int i = 0;
                 JsonObject tempObj = arr.get(i).getAsJsonObject();
                 while (i < arr.size() && !tripAsJson.equals(tempObj)) {
@@ -69,9 +70,9 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
                     button.setImageResource(R.drawable.checkbox_untoggled);
                 } else {
                     //Trip is not a planned trip, add it as one
-                    handler.addToPrenumTrips(trip.getOriginName(), trip.getOriginId(),
+                    handler.addToPrenumTrips(trip.getOriginName(), trip.getOriginID(),
                             trip.getDestinationName(), trip.getDestinationId(),
-                            trip.getOriginDate(), trip.getOriginTime());
+                            trip.getDepartureDate(), trip.getDepartureTime());
                     button.setImageResource(R.drawable.checkbox_toggled);
                 }
                 Log.d("HEJ", "KOM HIT1");

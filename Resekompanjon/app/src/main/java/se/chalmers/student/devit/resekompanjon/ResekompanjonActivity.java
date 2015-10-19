@@ -188,14 +188,14 @@ public class ResekompanjonActivity extends AppCompatActivity
         try{
             JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
             JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
-            Log.d("dawdad", tripResult.getAllTripSummary().get(0).getResaultTripsArrayList().get(0).getOriginName());
+            Log.d("dawdad", tripResult.getAllTripSummary().size() + "");
             ArrayList <SearchResultTrips> searchedTrips = tripResult.getTripAdvice();
-            SearchResultListActivity.setTrips(searchedTrips);
+            SearchResultListActivity.setTrips(tripResult.getAllTripSummary());
+            //SearchResultListActivity.setTrips(searchedTrips);
             startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
             finish();
         } catch (NoJsonAvailableException e) {
-            Toast noConectionMessage = Toast.makeText(this
-                    , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+            Toast noConectionMessage = Toast.makeText(this, "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
             noConectionMessage.show();
             e.printStackTrace();
         }

@@ -10,7 +10,9 @@ import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
+import java.util.Date;
+
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.PrenumHandler;
 
 /**
@@ -72,13 +74,13 @@ public class SearchResultViewHolder {
         this.button = button;
     }
 
-    public void setViewFields(SearchResultTrips trip) {
-        int departureHour = Integer.parseInt(trip.getOriginTime().substring(0, 2));
-        int departureMin = Integer.parseInt(trip.getOriginTime().substring(3));
-        int arrivalHour = Integer.parseInt(trip.getDestinationTime().substring(0, 2));
-        int arrivalMin = Integer.parseInt(trip.getDestinationTime().substring(3));
+    public void setViewFields(SearchResultTripSummary trip) {
+        int departureHour = Integer.parseInt(trip.getDepartureTime().substring(0, 2));
+        int departureMin = Integer.parseInt(trip.getDepartureTime().substring(3));
+        int arrivalHour = Integer.parseInt(trip.getArrivalTime().substring(0, 2));
+        int arrivalMin = Integer.parseInt(trip.getArrivalTime().substring(3));
 
-        final SearchResultTrips trip2 = trip;
+        final SearchResultTripSummary trip2 = trip;
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, departureHour);
         cal.set(Calendar.MINUTE, departureMin);
@@ -100,7 +102,30 @@ public class SearchResultViewHolder {
         cal.set(Calendar.MINUTE, travelMin);
         String totalTravelTime = timeFormatter.format(cal.getTime());
         travelTime.setText(totalTravelTime);
-        delay.setText("XX:XX");
+
+
+        int realDepHour = Integer.parseInt(trip.getRealDepartureTime().substring(0, 2));
+        int realDepMin = Integer.parseInt(trip.getRealDepartureTime().substring(3));
+        boolean negative = false;
+        int delayHour = realDepHour - departureHour;
+        if(delayHour < 0)
+            negative = true;
+            delayHour = delayHour * -1;
+        int delayMin = realDepMin - departureMin;
+        if(delayMin < 0) {
+            negative = true;
+            delayMin = delayMin * -1;
+
+        }
+        Log.d("res", delayHour + " "+ delayMin + " " + trip.getDepartureTime() + " "+ trip.getRealDepartureTime());
+        cal.set(Calendar.HOUR_OF_DAY, delayHour);
+        cal.set(Calendar.MINUTE, delayMin);
+        String totalDelayTime = timeFormatter.format(cal.getTime());
+        if ( negative ){
+            delay.setText("-" + totalDelayTime);
+            negative = false;
+        }
+        delay.setText(totalDelayTime);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,11 +134,11 @@ public class SearchResultViewHolder {
                 JsonArray arr = handler.getTripArrayAsJson();
                 JsonObject tripAsJson = new JsonObject();
                 tripAsJson.addProperty("originName", trip2.getOriginName());
-                tripAsJson.addProperty("originID", trip2.getOriginId());
+                tripAsJson.addProperty("originID", trip2.getOriginID());
                 tripAsJson.addProperty("endName", trip2.getDestinationName());
                 tripAsJson.addProperty("endID", trip2.getDestinationId());
-                tripAsJson.addProperty("date", trip2.getOriginDate());
-                tripAsJson.addProperty("time", trip2.getOriginTime());
+                tripAsJson.addProperty("date", trip2.getDepartureDate());
+                tripAsJson.addProperty("time", trip2.getDepartureTime());
                 Log.d("ARR:SIZE", arr.size() + "");
                 /*if(arr.size() != 0) {
                     int i = 0;
@@ -130,14 +155,14 @@ public class SearchResultViewHolder {
                         //Trip is not a planned trip, add it as one
                         handler.addToPrenumTrips(trip2.getOriginName(), trip2.getOriginId(),
                                 trip2.getDestinationName(), trip2.getDestinationId(), trip2.getRef(),
-                                trip2.getOriginDate(), trip2.getOriginTime());
+                                trip2.getDepartureDate(), trip2.getDepartureTime());
                         button.setImageResource(R.drawable.checkbox_toggled);
                     }
                 } else {*/
-                    handler.addToPrenumTrips(trip2.getOriginName(), trip2.getOriginId(),
-                            trip2.getDestinationName(), trip2.getDestinationId(),
-                            trip2.getOriginDate(), trip2.getOriginTime());
-                    button.setImageResource(R.drawable.checkbox_toggled);
+                handler.addToPrenumTrips(trip2.getOriginName(), trip2.getOriginID(),
+                        trip2.getDestinationName(), trip2.getDestinationId(),
+                        trip2.getDepartureDate(), trip2.getDepartureTime());
+                button.setImageResource(R.drawable.checkbox_toggled);
                 //}
                 Log.d("HEJ", "KOM HIT1");
             }

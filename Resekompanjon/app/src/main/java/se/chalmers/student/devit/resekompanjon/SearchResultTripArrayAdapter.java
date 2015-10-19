@@ -10,22 +10,23 @@ import android.widget.ListView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 
 /**
  * @author Jonathan
  * @version 1.0
  */
-public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTrips> implements View.OnClickListener {
+public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTripSummary> implements View.OnClickListener {
 
     private final Context context;
 
-    private ArrayList<SearchResultTrips> values;
+    private ArrayList<SearchResultTripSummary> values;
     private SelectionClickListener listener;
 
     private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
 
-    public SearchResultTripArrayAdapter(Context context, ArrayList<SearchResultTrips> values, ListView view) {
+    public SearchResultTripArrayAdapter(Context context, ArrayList<SearchResultTripSummary> values, ListView view) {
         super(context, -1, values);
         this.context = context;
         this.values = values;
@@ -34,17 +35,17 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTrips
 
     @Override
     public View getView(int index, View convertView, ViewGroup parent) {
-        ItemViewHolder<SearchResultTrips> viewHolder = null;
+        ItemViewHolder<SearchResultTripSummary> viewHolder = null;
         if(convertView == null || !(convertView.getTag() instanceof ItemViewHolder<?>)) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.fragment_search_result_box, null);
 
-            viewHolder = new ItemViewHolder<SearchResultTrips>(convertView, values.get(index));
+            viewHolder = new ItemViewHolder<SearchResultTripSummary>(convertView, values.get(index));
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ItemViewHolder<SearchResultTrips>) convertView.getTag();
+            viewHolder = (ItemViewHolder<SearchResultTripSummary>) convertView.getTag();
         }
-        SearchResultTrips entity = getItem(index);
+        SearchResultTripSummary entity = getItem(index);
         viewHolder.setViewFileds(entity, convertView);
         return convertView;
 

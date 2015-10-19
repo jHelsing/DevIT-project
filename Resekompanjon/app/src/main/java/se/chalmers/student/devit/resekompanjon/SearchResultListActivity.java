@@ -10,12 +10,11 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchInfoFragment;
@@ -28,13 +27,11 @@ public class SearchResultListActivity extends AppCompatActivity implements
         NavigationDrawerFragment.NavigationDrawerCallbacks,
         SearchInfoFragment.OnFragmentInteractionListener, KeyEvent.Callback, View.OnClickListener {
 
-    private static ArrayList<SearchResultTrips> searchResultTrips;
+    private static ArrayList<SearchResultTripSummary> searchResultTrips;
 
     private ListView listView;
 
     private SearchResultTripArrayAdapter adapter;
-
-    private static JsonArray summaryArray;
 
     private ImageButton favouriteButton;
 
@@ -48,12 +45,9 @@ public class SearchResultListActivity extends AppCompatActivity implements
 
     public SearchResultListActivity() {}
 
-    public static void setTrips(ArrayList<SearchResultTrips> trips) {
+    public static void setTrips(ArrayList<SearchResultTripSummary> trips) {
         searchResultTrips = trips;
     }
-
-    public static void setTripsFromJson(JsonArray array) { summaryArray = array; }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -77,8 +71,8 @@ public class SearchResultListActivity extends AppCompatActivity implements
     private void initSearchInfo(){
         String startLocation = searchResultTrips.get(0).getOriginName();
         String endLocation = searchResultTrips.get(searchResultTrips.size()-1).getDestinationName();
-        String time = searchResultTrips.get(0).getOriginDate() + ", " + searchResultTrips.get(0)
-                .getOriginTime();
+        String time = searchResultTrips.get(0).getDepartureDate() + ", " + searchResultTrips.get(0)
+                .getDepartureTime();
         View fragment = findViewById(R.id.fragment);
 
         ((TextView) fragment.findViewById(R.id.tripStartLocation)).setText(startLocation);
@@ -148,7 +142,7 @@ public class SearchResultListActivity extends AppCompatActivity implements
         favHandler = new FavoriteHandler(this);
         String originName = searchResultTrips.get(0).getOriginName();
         String endName = searchResultTrips.get(searchResultTrips.size()-1).getDestinationName();
-        String originID = searchResultTrips.get(0).getOriginId();
+        String originID = searchResultTrips.get(0).getOriginID();
         String endID = searchResultTrips.get(searchResultTrips.size()-1).getDestinationId();
         JsonObject favObj = new JsonObject();
         favObj.addProperty("originName", originName);

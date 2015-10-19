@@ -2,6 +2,7 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.view.View;
 
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 
 /**
@@ -38,8 +39,8 @@ public class ItemViewHolder<T> extends SearchResultViewHolder {
         this.listener = listener;
     }
 
-    public void setViewFileds(SearchResultTrips entity, View convertView) {
-        SearchResultTrips trip = (SearchResultTrips) item;
+    public void setViewFileds(SearchResultTripSummary entity, View convertView) {
+        SearchResultTripSummary trip = (SearchResultTripSummary) item;
         super.setViewFields(trip);
     }
 }

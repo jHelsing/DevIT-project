@@ -45,11 +45,11 @@ public class backendtest {
         System.out.println(tripList.get(0).getType());
         System.out.println(tripList.get(0).getOriginType());
        // System.out.println(tripList.get(0).getOrigin$());
-        //System.out.println(tripList.get(0).getOriginDate());
+        //System.out.println(tripList.get(0).getDepartureDate());
         //System.out.println(tripList.get(0).getOriginId());
         //System.out.println(tripList.get(0).getOriginRouteIdx());
         //System.out.println(tripList.get(0).getOriginRtDate());
-        //System.out.println(tripList.get(0).getOriginTime());
+        //System.out.println(tripList.get(0).getDepartureTime());
         //System.out.println(tripList.get(0).getOriginRtTime());
         //System.out.println(tripList.get(0).getOriginTrack());
         //System.out.println(tripList.get(0).getDestination$());

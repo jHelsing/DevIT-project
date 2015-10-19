@@ -42,54 +42,55 @@ public class SearchResultTripSummary {
     public String getOriginName() {
         return originName;
     }
+
     public String getOriginID() {
         return originID;
     }
 
-    public String getStartTime() {
+    public String getDepartureTime() {
         return startTime;
     }
 
-    public String getOriginDate() {
+    public String getDepartureDate() {
         return originDate;
     }
 
-    public String getRealStartTime() {
+    public String getRealDepartureTime() {
         return realStartTime;
     }
 
-    public String getRealOriginDate() {
+    public String getRealDepartureDate() {
         return realOriginDate;
     }
 
-    public String getEndName() {
+    public String getDestinationName() {
         return endName;
     }
 
-    public String getEndID() {
+    public String getDestinationId() {
         return endID;
     }
 
-    public String getEndDate() {
+    public String getDestinationDate() {
         return endDate;
     }
 
-    public String getEndTime() {
+    public String getArrivalTime() {
         return endTime;
     }
 
-    public String getRealEndTime() {
+    public String getRealArrivalTime() {
         return realEndTime;
     }
 
-    public String getRealEndDate() {
+    public String getRealArrivalDate() {
         return realEndDate;
     }
 
-    public ArrayList<SearchResultTrips> getResaultTripsArrayList() {
+    public ArrayList<SearchResultTrips> getResultTripsArrayList() {
         return resaultTripsArrayList;
     }
-    public void setResaultTripArrayList(ArrayList<SearchResultTrips> arrayList){
+    public void setResultTripArrayList(ArrayList<SearchResultTrips> arrayList){
         this.resaultTripsArrayList = arrayList;
     }
 }
