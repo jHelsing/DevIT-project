@@ -23,6 +23,7 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTripS
 
     private ArrayList<SearchResultTripSummary> values;
     private SelectionClickListener listener;
+    private int valuePosition = 0;
 
     private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
 
@@ -35,19 +36,23 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTripS
 
     @Override
     public View getView(int index, View convertView, ViewGroup parent) {
-        Log.d("index = ", index + "");
         ItemViewHolder<SearchResultTripSummary> viewHolder = null;
         if(convertView == null || !(convertView.getTag() instanceof ItemViewHolder<?>)) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.fragment_search_result_box, null);
 
-            viewHolder = new ItemViewHolder<SearchResultTripSummary>(convertView, values.get(index));
+            viewHolder = new ItemViewHolder<SearchResultTripSummary>(convertView, values.get(valuePosition));
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ItemViewHolder<SearchResultTripSummary>) convertView.getTag();
         }
-        SearchResultTripSummary entity = getItem(index);
+        SearchResultTripSummary entity = getItem(valuePosition);
         viewHolder.setViewFields(entity, convertView);
+        Log.d("INDEX", valuePosition + "");
+        valuePosition++;
+        if(valuePosition >= values.size()) {
+            valuePosition = 0;
+        }
         return convertView;
 
     }
