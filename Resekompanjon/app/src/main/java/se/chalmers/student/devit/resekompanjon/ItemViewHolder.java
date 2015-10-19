@@ -39,7 +39,7 @@ public class ItemViewHolder<T> extends SearchResultViewHolder {
         this.listener = listener;
     }
 
-    public void setViewFileds(SearchResultTripSummary entity, View convertView) {
+    public void setViewFields(SearchResultTripSummary entity, View convertView) {
         SearchResultTripSummary trip = (SearchResultTripSummary) item;
         super.setViewFields(trip);
     }

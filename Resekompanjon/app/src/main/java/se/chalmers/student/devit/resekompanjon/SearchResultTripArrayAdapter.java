@@ -1,6 +1,7 @@
 package se.chalmers.student.devit.resekompanjon;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 
 /**
  * @author Jonathan
@@ -35,6 +35,7 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTripS
 
     @Override
     public View getView(int index, View convertView, ViewGroup parent) {
+        Log.d("index = ", index + "");
         ItemViewHolder<SearchResultTripSummary> viewHolder = null;
         if(convertView == null || !(convertView.getTag() instanceof ItemViewHolder<?>)) {
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -46,7 +47,7 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTripS
             viewHolder = (ItemViewHolder<SearchResultTripSummary>) convertView.getTag();
         }
         SearchResultTripSummary entity = getItem(index);
-        viewHolder.setViewFileds(entity, convertView);
+        viewHolder.setViewFields(entity, convertView);
         return convertView;
 
     }
