@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by emmafahlen on 2015-10-07.
  */
-public class SearchResaultTrips {
+public class SearchResultTrips {
     String name;
     String type;
     String sname;
@@ -21,9 +21,9 @@ public class SearchResaultTrips {
     JsonObject JourneyDetailRef;
     //JsonObject Leg;
 
-    public SearchResaultTrips(String name, String type, String sname, String id, String direction,
-                              String fgColor, String bgColor, String stroke, String accessibility,
-                              JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef){
+    public SearchResultTrips(String name, String type, String sname, String id, String direction,
+                             String fgColor, String bgColor, String stroke, String accessibility,
+                             JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef){
         this.name = name;
         this.type = type;
         this.Origin = Origin;
@@ -38,9 +38,9 @@ public class SearchResaultTrips {
         this.JourneyDetailRef = JourneyDetailRef;
     }
 
-    public SearchResaultTrips(String name, String type, JsonObject origin, JsonObject destination,
-                              String sname, String id, String direction, String fgColor, String bgColor,
-                              String stroke, JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef){
+    public SearchResultTrips(String name, String type, JsonObject origin, JsonObject destination,
+                             String sname, String id, String direction, String fgColor, String bgColor,
+                             String stroke, JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef){
         this.name = name;
         this.type = type;
         this.Origin = origin;
@@ -54,7 +54,7 @@ public class SearchResaultTrips {
         this.JourneyDetailRef = JourneyDetailRef;
     }
 
-    public SearchResaultTrips(String name, String type) {
+    public SearchResultTrips(String name, String type) {
         this.name = name;
         this.type = type;
     }

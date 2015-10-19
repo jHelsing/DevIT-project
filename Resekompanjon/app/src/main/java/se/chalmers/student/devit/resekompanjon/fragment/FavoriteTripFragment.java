@@ -12,14 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import se.chalmers.student.devit.resekompanjon.R;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAavailableException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
@@ -160,7 +159,7 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
                 JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
                 fromBackend = infoExtract.getStops();
                 jsonObject.addProperty("originID", fromBackend.get("originID").getAsString());
-            } catch (NoJsonAavailableException e) {
+            } catch (NoJsonAvailableException e) {
                 Toast noConectionMessage = Toast.makeText(getActivity(), "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
                 noConectionMessage.show();
                 e.printStackTrace();
@@ -182,7 +181,7 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
                         jsonObject.get("originID").getAsString(),
                         jsonObject.get("endName").getAsString(), jsonObject.get("endID").getAsString());
                 jsonIndex = handler.getNumbOfFavorites()-1;
-            } catch (NoJsonAavailableException e) {
+            } catch (NoJsonAvailableException e) {
                 Toast noConectionMessage = Toast.makeText(getActivity()
                         , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
                 noConectionMessage.show();

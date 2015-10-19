@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.PrenumHandler;
 
 /**
@@ -72,13 +72,13 @@ public class SearchResultViewHolder {
         this.button = button;
     }
 
-    public void setViewFields(SearchResaultTrips trip) {
+    public void setViewFields(SearchResultTrips trip) {
         int departureHour = Integer.parseInt(trip.getOriginTime().substring(0, 2));
         int departureMin = Integer.parseInt(trip.getOriginTime().substring(3));
         int arrivalHour = Integer.parseInt(trip.getDestinationTime().substring(0, 2));
         int arrivalMin = Integer.parseInt(trip.getDestinationTime().substring(3));
 
-        final SearchResaultTrips trip2 = trip;
+        final SearchResultTrips trip2 = trip;
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, departureHour);
         cal.set(Calendar.MINUTE, departureMin);

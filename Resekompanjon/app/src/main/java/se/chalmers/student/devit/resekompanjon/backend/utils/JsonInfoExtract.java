@@ -1,20 +1,18 @@
 package se.chalmers.student.devit.resekompanjon.backend.utils;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.AdditionalInfoRoute;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.AdressNearby;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.EntireTripRoute;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.GeometryRef;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.StopsFromString;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.StopsNearby;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.VehicleInfo;
@@ -27,7 +25,7 @@ JsonObject json;
 ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     ArrayList<StopsFromString> sfsArrayList = new ArrayList<>();
     ArrayList<StopsNearby> snArrayList = new ArrayList<>();
-    ArrayList<SearchResaultTrips> srtArrayList = new ArrayList<>();
+    ArrayList<SearchResultTrips> srtArrayList = new ArrayList<>();
     ArrayList<EntireTripRoute> etrArrayList = new ArrayList<>();
     ArrayList<AdditionalInfoRoute> airArrayList = new ArrayList<>();
     ArrayList<GeometryRef> grArrayList = new ArrayList<>();
@@ -98,7 +96,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
 
     //Use when user search for a trip (origin-dest). All information can be reached with
     //getters in SearchResaultTrips.
-    public ArrayList<SearchResaultTrips> getTripAdvice(){
+    public ArrayList<SearchResultTrips> getTripAdvice(){
         srtArrayList = new ArrayList<>();
         Gson gson = new Gson();
         JsonArray array = this.json.get("TripList").getAsJsonObject().get("Trip").getAsJsonArray();
@@ -109,16 +107,16 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
             if (array.get(i).getAsJsonObject().get("Leg").isJsonArray()) {
                 JsonArray ar = array.get(i).getAsJsonObject().get("Leg").getAsJsonArray();
                 for (int j = 0; j < ar.size(); j++) {
-                    srtArrayList.add(gson.fromJson(ar.get(j), SearchResaultTrips.class));
+                    srtArrayList.add(gson.fromJson(ar.get(j), SearchResultTrips.class));
                 }
             } else if (array.get(i).getAsJsonObject().get("Leg").isJsonObject()){
-                srtArrayList.add(gson.fromJson(array.get(i).getAsJsonObject().get("Leg").getAsJsonObject(), SearchResaultTrips.class));
+                srtArrayList.add(gson.fromJson(array.get(i).getAsJsonObject().get("Leg").getAsJsonObject(), SearchResultTrips.class));
             }
         }
         return srtArrayList;
     }
     //Does the same as getTripAdvice but will only generate SearchResaultTrip object for a single trip in array
-    public ArrayList<SearchResaultTrips> getSingleTripAdvice(int i){
+    public ArrayList<SearchResultTrips> getSingleTripAdvice(int i){
         srtArrayList = new ArrayList<>();
         Gson gson = new Gson();
         JsonArray array = this.json.get("TripList").getAsJsonObject().get("Trip").getAsJsonArray();
@@ -128,10 +126,10 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         if (array.get(i).getAsJsonObject().get("Leg").isJsonArray()) {
             JsonArray ar = array.get(i).getAsJsonObject().get("Leg").getAsJsonArray();
             for (int j = 0; j < ar.size(); j++) {
-                srtArrayList.add(gson.fromJson(ar.get(j), SearchResaultTrips.class));
+                srtArrayList.add(gson.fromJson(ar.get(j), SearchResultTrips.class));
             }
         } else if (array.get(i).getAsJsonObject().get("Leg").isJsonObject()){
-            srtArrayList.add(gson.fromJson(array.get(i).getAsJsonObject().get("Leg").getAsJsonObject(), SearchResaultTrips.class));
+            srtArrayList.add(gson.fromJson(array.get(i).getAsJsonObject().get("Leg").getAsJsonObject(), SearchResultTrips.class));
         }
         return srtArrayList;
     }
@@ -195,7 +193,7 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
     }
 
     public JsonObject getTripSummary(int index){
-        ArrayList<SearchResaultTrips> tempSearchArray = getSingleTripAdvice(index);
+        ArrayList<SearchResultTrips> tempSearchArray = getSingleTripAdvice(index);
         JsonObject tripSummary = new JsonObject();
 
         tripSummary.addProperty("originName", tempSearchArray.get(0).getOriginName());
@@ -205,6 +203,9 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         if(!tempSearchArray.get(0).getType().equals("WALK")) {
             tripSummary.addProperty("realStartTime", tempSearchArray.get(0).getOriginRtTime());
             tripSummary.addProperty("realOriginDate", tempSearchArray.get(0).getOriginRtDate());
+        }else{
+            tripSummary.addProperty("realStartTime", "No realtime");
+            tripSummary.addProperty("realOriginDate", "No realtime");
         }
 
         tripSummary.addProperty("endName", tempSearchArray.get(tempSearchArray.size()-1).getDestinationName());
@@ -214,6 +215,9 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         if(!tempSearchArray.get(tempSearchArray.size()-1).getType().equals("WALK")) {
             tripSummary.addProperty("realEndTime", tempSearchArray.get(tempSearchArray.size() - 1).getDestinationRtTime());
             tripSummary.addProperty("realEndDate", tempSearchArray.get(tempSearchArray.size() - 1).getDestinationRtDate());
+        }else{
+            tripSummary.addProperty("realEndTime", "No realtime");
+            tripSummary.addProperty("realEndDate", "No realtime");
         }
         JsonArray tempJArray = new JsonArray();
 
@@ -227,13 +231,29 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         return tripSummary;
     }
 
-    public JsonArray getAllTripSummary(){
+    public JsonArray getAllTripSummaryAsJson(){
         JsonArray allTripSummarys = new JsonArray();
         for (int i = 0; i < getAllTripAdvice().size(); i++){
             allTripSummarys.add(getTripSummary(i));
         }
         return allTripSummarys;
     }
+    public ArrayList<SearchResultTripSummary> getAllTripSummary(){
+        JsonArray tempArray = getAllTripSummaryAsJson();
+        ArrayList<SearchResultTripSummary> tripSummaries = new ArrayList<>();
+        Gson gson = new Gson();
+        if(tempArray == null) {
+            System.out.println("Wrong URL for this method");
+        }
+        for(int i=0; i<tempArray.size(); i++){
+            SearchResultTripSummary tempTrip = gson.fromJson(tempArray.get(i), SearchResultTripSummary.class);
+            tempTrip.setResaultTripArrayList(getSingleTripAdvice(i));
+            tripSummaries.add(tempTrip);
+        }
+        return tripSummaries;
+
+    }
+
     public JsonObject getStops() {
         return null;
     }

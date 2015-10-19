@@ -2,7 +2,6 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.ListView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.PrenumHandler;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchResultBoxFragment;
 
@@ -22,7 +21,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.SearchResultBoxFragment;
  */
 public class SelectionClickListener implements AdapterView.OnItemClickListener {
 
-    private final ArrayList<SearchResaultTrips> values;
+    private final ArrayList<SearchResultTrips> values;
     private ListView listView;
     private ActionMode actionMode;
     private Drawable uncheckedDrawable;
@@ -31,7 +30,7 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
     private int selectedItems = 1;
 
     public SelectionClickListener(Context context, ListView listView, ActionMode actionMode,
-                                  ArrayList<SearchResaultTrips> values) {
+                                  ArrayList<SearchResultTrips> values) {
         this.context = context;
         this.listView = listView;
         this.actionMode = actionMode;
@@ -47,7 +46,7 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
         switch (view.getId()) {
             case R.id.checkboxButton:
                 SearchResultBoxFragment box = (SearchResultBoxFragment) listView.getItemAtPosition(position);
-                SearchResaultTrips trip = values.get(position);
+                SearchResultTrips trip = values.get(position);
                 ImageButton button = (ImageButton) view;
                 PrenumHandler handler = new PrenumHandler(context);
                 JsonArray arr = handler.getTripArrayAsJson();

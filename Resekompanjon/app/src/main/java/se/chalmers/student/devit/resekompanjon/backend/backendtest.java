@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 
 /**
  * Created by emmafahlen on 2015-10-06.
@@ -40,7 +40,7 @@ public class backendtest {
         System.out.println(adressNear.getName());*/
         JsonObject trip = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&date=2015-10-08&time=19:07&originId=kungs&destId=kors","83cdc6c1-0614-453e-97ec-4b0158227330","TripList");
         JsonInfoExtract trips = new JsonInfoExtract(trip);
-        ArrayList<SearchResaultTrips> tripList = trips.getTripAdvice();
+        ArrayList<SearchResultTrips> tripList = trips.getTripAdvice();
         System.out.println(tripList.get(0).getName());
         System.out.println(tripList.get(0).getType());
         System.out.println(tripList.get(0).getOriginType());

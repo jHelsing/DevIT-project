@@ -3,13 +3,13 @@ package se.chalmers.student.devit.resekompanjon.backend.connectionBackend;
 /**
  * Created by Marcus on 2015-10-15.
  */
-public class NoJsonAavailableException extends Exception {
+public class NoJsonAvailableException extends Exception {
 
-    public NoJsonAavailableException (){
+    public NoJsonAvailableException(){
         super();
     }
 
-    public NoJsonAavailableException(String message) {
+    public NoJsonAvailableException(String message) {
         super(message);
     }
 }

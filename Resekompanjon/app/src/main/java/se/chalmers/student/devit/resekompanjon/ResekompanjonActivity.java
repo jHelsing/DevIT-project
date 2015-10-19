@@ -20,11 +20,11 @@ import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAavailableException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.VehicleStopFragment;
@@ -188,12 +188,12 @@ public class ResekompanjonActivity extends AppCompatActivity
         try{
             JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
             JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
-            //Log.d("res", tripResult.getAllTripSummary().toString());
-            ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
+            Log.d("dawdad", tripResult.getAllTripSummary().get(0).getResaultTripsArrayList().get(0).getOriginName());
+            ArrayList <SearchResultTrips> searchedTrips = tripResult.getTripAdvice();
             SearchResultListActivity.setTrips(searchedTrips);
             startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
             finish();
-        } catch (NoJsonAavailableException e) {
+        } catch (NoJsonAvailableException e) {
             Toast noConectionMessage = Toast.makeText(this
                     , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
             noConectionMessage.show();

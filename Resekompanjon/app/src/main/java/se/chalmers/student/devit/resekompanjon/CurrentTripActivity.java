@@ -12,7 +12,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +23,7 @@ import com.google.gson.JsonObject;
 
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAavailableException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.fragment.BetweenBusStopCurrentFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.BusStopCurrentFragment;
@@ -263,7 +262,7 @@ public class CurrentTripActivity extends AppCompatActivity
                         }
                         break;
                 }
-            } catch (NoJsonAavailableException e) {
+            } catch (NoJsonAvailableException e) {
                 Toast noConectionMessage = Toast.makeText(this
                         , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
                 noConectionMessage.show();

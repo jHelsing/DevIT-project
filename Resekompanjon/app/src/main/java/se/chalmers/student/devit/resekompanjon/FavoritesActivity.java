@@ -2,9 +2,7 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,10 +20,10 @@ import java.util.Date;
 
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAavailableException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 
@@ -109,11 +107,11 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
         try{
             JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
             JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
-            ArrayList<SearchResaultTrips> searchedTrips = tripResult.getTripAdvice();
+            ArrayList<SearchResultTrips> searchedTrips = tripResult.getTripAdvice();
             SearchResultListActivity.setTrips(searchedTrips);
             startActivity(new Intent(FavoritesActivity.this, SearchResultListActivity.class));
             finish();
-        } catch (NoJsonAavailableException e) {
+        } catch (NoJsonAvailableException e) {
             Toast noConectionMessage = Toast.makeText(this
                     , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
             noConectionMessage.show();

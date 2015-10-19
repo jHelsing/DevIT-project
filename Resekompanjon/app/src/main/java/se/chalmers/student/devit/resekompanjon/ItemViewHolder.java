@@ -1,11 +1,8 @@
 package se.chalmers.student.devit.resekompanjon;
 
 import android.view.View;
-import android.widget.TextView;
 
-import java.util.Calendar;
-
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 
 /**
  * @author Jonathan
@@ -41,8 +38,8 @@ public class ItemViewHolder<T> extends SearchResultViewHolder {
         this.listener = listener;
     }
 
-    public void setViewFileds(SearchResaultTrips entity, View convertView) {
-        SearchResaultTrips trip = (SearchResaultTrips) item;
+    public void setViewFileds(SearchResultTrips entity, View convertView) {
+        SearchResultTrips trip = (SearchResultTrips) item;
         super.setViewFields(trip);
     }
 }

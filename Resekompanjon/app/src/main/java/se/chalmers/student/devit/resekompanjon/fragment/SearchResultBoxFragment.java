@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import se.chalmers.student.devit.resekompanjon.R;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultTrips;
+import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 
 
 /**
@@ -23,7 +23,7 @@ import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResaultT
 public class SearchResultBoxFragment extends Fragment {
     private static final String ARG_TRIP = "Trip";
 
-    private SearchResaultTrips trip;
+    private SearchResultTrips trip;
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,7 +35,7 @@ public class SearchResultBoxFragment extends Fragment {
      * @return A new instance of fragment SearchResultBoxFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchResultBoxFragment newInstance(SearchResaultTrips trip) {
+    public static SearchResultBoxFragment newInstance(SearchResultTrips trip) {
         SearchResultBoxFragment fragment = new SearchResultBoxFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TRIP, trip.toString());

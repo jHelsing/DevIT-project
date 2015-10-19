@@ -96,7 +96,6 @@ public class BackendCommunicator implements OnTaskCompleted{
         if (!severalStepsNeeded){
             if (ORIGIN.equals("vBackend")) {
                 apiData = vBackend.getApiData();
-                Log.d("getting api", "afwdawd");
             } else if (ORIGIN == "eBackend"){
                 apiData = eBackend.getApiData();
             }
@@ -138,9 +137,9 @@ public class BackendCommunicator implements OnTaskCompleted{
         }
     }
 
-    public JsonElement getApiData() throws NoJsonAavailableException{
+    public JsonElement getApiData() throws NoJsonAvailableException {
         if (apiData == null){
-            throw new NoJsonAavailableException();
+            throw new NoJsonAvailableException();
         }
         return apiData;
     }
