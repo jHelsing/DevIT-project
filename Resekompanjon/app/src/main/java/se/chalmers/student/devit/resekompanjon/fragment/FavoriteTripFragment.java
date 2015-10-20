@@ -19,6 +19,7 @@ import se.chalmers.student.devit.resekompanjon.R;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripFoundException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.FavoriteHandler;
@@ -163,6 +164,11 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
                 Toast noConectionMessage = Toast.makeText(getActivity(), "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
                 noConectionMessage.show();
                 e.printStackTrace();
+            } catch (NoTripFoundException e) {
+                Toast noConectionMessage = Toast.makeText(getActivity()
+                        , "Tyvärr så gick det inte att hitta någon resa för sträckan", Toast.LENGTH_LONG);
+                noConectionMessage.show();
+                e.printStackTrace();
             }
 
             try {
@@ -184,6 +190,11 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
             } catch (NoJsonAvailableException e) {
                 Toast noConectionMessage = Toast.makeText(getActivity()
                         , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+                noConectionMessage.show();
+                e.printStackTrace();
+            } catch (NoTripFoundException e) {
+                Toast noConectionMessage = Toast.makeText(getActivity()
+                        , "Tyvärr så gick det inte att hitta någon resa för sträckan", Toast.LENGTH_LONG);
                 noConectionMessage.show();
                 e.printStackTrace();
             }

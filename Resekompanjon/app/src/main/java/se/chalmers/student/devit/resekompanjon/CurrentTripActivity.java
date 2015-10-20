@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripFoundException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.fragment.BetweenBusStopCurrentFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.BusStopCurrentFragment;
@@ -265,6 +266,11 @@ public class CurrentTripActivity extends AppCompatActivity
             } catch (NoJsonAvailableException e) {
                 Toast noConectionMessage = Toast.makeText(this
                         , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+                noConectionMessage.show();
+                e.printStackTrace();
+            } catch (NoTripFoundException e) {
+                Toast noConectionMessage = Toast.makeText(this
+                        , "Tyvärr så gick det inte att hitta någon resa för sträckan", Toast.LENGTH_LONG);
                 noConectionMessage.show();
                 e.printStackTrace();
             }

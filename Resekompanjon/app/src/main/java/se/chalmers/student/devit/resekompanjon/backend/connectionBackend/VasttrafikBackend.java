@@ -88,14 +88,28 @@ public class VasttrafikBackend {
             } else{
                 inputStream = conn.getErrorStream();
             }
-
             String contentAsString = readInputStream(inputStream);
 
             //UGLY FIX
             //TODO: Figure out a way to remove unnecessary characters some other way
             JsonElement jsonResponse = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
 
-            apiData = jsonResponse.getAsJsonObject();
+            if( jsonResponse.getAsJsonObject().has("TripList")) {
+                if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().has("errorText")) {
+                    if(jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString().equals("No connections found")){
+                        JsonObject tempObj = new JsonObject();
+                        tempObj.addProperty("Fail", "No connection found");
+                        Log.d("Throwing", tempObj.get("Fail").getAsString());
+                        apiData = tempObj.getAsJsonObject();
+                    }else{
+                        apiData = jsonResponse.getAsJsonObject();
+                    }
+                } else{
+                    apiData = jsonResponse.getAsJsonObject();
+                }
+            } else {
+                apiData = jsonResponse.getAsJsonObject();
+            }
 
             return "Success ApiData downloaded";
 
