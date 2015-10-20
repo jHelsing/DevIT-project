@@ -140,10 +140,11 @@ public class BackendCommunicator implements OnTaskCompleted{
     public JsonElement getApiData() throws NoJsonAvailableException, NoTripFoundException {
         if (apiData == null){
             throw new NoJsonAvailableException();
-        } else if (apiData.getAsJsonObject().has("Fail")){
-            if (apiData.getAsJsonObject().get("Fail").getAsString().equals("No connection found")) {
-                Log.d("Throwing", "adw");
-                throw new NoTripFoundException();
+        } else if (ORIGIN.equals("vBackend")) {
+            if (apiData.getAsJsonObject().has("Fail")) {
+                if (apiData.getAsJsonObject().get("Fail").getAsString().equals("No connection found")) {
+                    throw new NoTripFoundException();
+                }
             }
         }
         return apiData;

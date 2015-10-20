@@ -189,10 +189,7 @@ public class ResekompanjonActivity extends AppCompatActivity
         try{
             JsonObject fromAPI = bComm.getApiData().getAsJsonObject();
             JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
-            Log.d("dawdad", tripResult.getAllTripSummary().size() + "");
-            ArrayList <SearchResultTrips> searchedTrips = tripResult.getTripAdvice();
             SearchResultListActivity.setTrips(tripResult.getAllTripSummary());
-            //SearchResultListActivity.setTrips(searchedTrips);
             startActivity(new Intent(ResekompanjonActivity.this, SearchResultListActivity.class));
             finish();
         } catch (NoJsonAvailableException e) {
