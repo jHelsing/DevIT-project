@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import se.chalmers.student.devit.resekompanjon.CurrentTripActivity;
 import se.chalmers.student.devit.resekompanjon.R;
 
 
@@ -112,15 +113,27 @@ public class BusStopCurrentFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+
+        CurrentTripActivity currentTripActivity = (CurrentTripActivity) getActivity();
+
+        LinearLayout ll= (LinearLayout) stopButton.getParent().getParent();
+        TextView stopTextView = (TextView) ll.findViewById(R.id.busStopName);
+        String stopToStopAt = stopTextView.getText().toString();
+
         //Sends to activity
-        if(!isPressed) {
+        if(!isPressed && !currentTripActivity.isPassed(stopToStopAt)) {
             stopButton.setImageResource(R.drawable.stop_toggled);
-            LinearLayout ll= (LinearLayout) stopButton.getParent().getParent();
-            TextView stopTextView = (TextView) ll.findViewById(R.id.busStopName);
-            String stop = stopTextView.getText().toString();
-            ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction(Uri.parse(stop));
+            ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction(Uri.parse(stopToStopAt));
             isPressed = true;
         }
+    }
+
+    /**
+     * Sets the static variable isPressed, which is false at start.
+     * @param isPressed is the new boolean to set isPressed.
+     */
+    public static void setIsPressed(boolean isPressed){
+        BusStopCurrentFragment.isPressed = isPressed;
     }
 
     /**

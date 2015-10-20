@@ -111,7 +111,7 @@ public class CurrentTripActivity extends AppCompatActivity
         if(netInfo != null && netInfo.isConnected()){
             WifiManager wifiMngr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifiMngr.getConnectionInfo();
-            return info.getSSID().equals("Amars iPhone");
+            return info.getSSID().equals("Jonathan's iPhone");
         } else{
             return false;
         }
@@ -190,6 +190,7 @@ public class CurrentTripActivity extends AppCompatActivity
                         if (nextStop.equals("G�taplatsen") && oldNextStop.equals("G�taplatsen")) {
                             LinearLayout currentStopsLinearLayout = (LinearLayout) findViewById(R.id.currentStops);
                             currentStopsLinearLayout.removeAllViews();
+                            BusStopCurrentFragment.setIsPressed(false);
                         }
                         int j = 0;
                         switch (busDirection) {
@@ -265,7 +266,7 @@ public class CurrentTripActivity extends AppCompatActivity
                 }
             } catch (NoJsonAvailableException e) {
                 Toast noConectionMessage = Toast.makeText(this
-                        , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+                        , "Tyvärr, kan inte hämta information från servern!", Toast.LENGTH_LONG);
                 noConectionMessage.show();
                 e.printStackTrace();
             } catch (NoTripFoundException e) {
@@ -281,8 +282,6 @@ public class CurrentTripActivity extends AppCompatActivity
      * This method is called by busStopCurrentFragment when a stop button is pressed in there.
      * @param stop is the paramter where the bus has to stay.
      */
-    public void busStopCurrentFragmentInteraction(String stop) {
-    }
 
     /**
      * Finishes this activity and starts ResekompanjonActivity.
@@ -295,11 +294,56 @@ public class CurrentTripActivity extends AppCompatActivity
         finish();
     }
 
+    /**
+     * Is called by busStopCurrentFragment when stop button is pressed in there.
+     * @param uri is the parameter where the bus has to stop.
+     */
     @Override
     public void onFragmentInteraction(Uri uri) {
             Toast stopPressedMessage = Toast.makeText(this
                     , "Du har valt att stanna på: " + uri.toString(), Toast.LENGTH_LONG);
             stopPressedMessage.show();
+    }
+
+    /**
+     * Checks if the stop to stop at is passed.
+     * @param stopToStopAt is the stop to check if it has passed.
+     * @return Returns true if the stop to stop at has been passed.
+     */
+    public boolean isPassed(String stopToStopAt){
+        String [] tempStopToLindholmen = this.stopToLindholmen;
+
+        for(int i = 0; i<tempStopToLindholmen.length; i++){
+            switch (tempStopToLindholmen[i]){
+                case "G�taplatsen":
+                    tempStopToLindholmen[i] = "Götaplatsen";
+                    break;
+                case "Kungsportsplatsn":
+                    tempStopToLindholmen[i] = "Kungsportsplatsen";
+                    break;
+            }
+        }
+
+        int indexNextStop = -1;
+        for(int i = 0; i<tempStopToLindholmen.length; i++){
+            if(tempStopToLindholmen[i].equals(nextStop)){
+                indexNextStop = i;
+                break;
+            }
+        }
+        int indexStopToStopAt = -1;
+        for(int i = 0; i<tempStopToLindholmen.length; i++){
+            if(tempStopToLindholmen[i].equals(stopToStopAt)){
+                indexStopToStopAt = i;
+                break;
+            }
+        }
+
+        if(indexStopToStopAt < indexNextStop){
+            return true;
+        } {
+            return false;
+        }
     }
 
     @Override
