@@ -12,6 +12,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,7 +46,7 @@ public class CurrentTripActivity extends AppCompatActivity
     private String oldNextStop = "";
     private String nextStop;
     private String firstNextStop;
-    private boolean start = false; //Needed to stop program from going back to start right away
+    private int start = 2; //Needed to stop program from going back to start right away
     private String busDirection;
 
     private final String[] stopToLindholmen = {"G�taplatsen", "Kungsportsplatsn", "NisseTerminalen"
@@ -55,6 +56,7 @@ public class CurrentTripActivity extends AppCompatActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private NavigationDrawerFragment m2NavigationDrawerFragment;
 
     public CurrentTripActivity() {}
 
@@ -72,7 +74,6 @@ public class CurrentTripActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.detailed_trip_drawer_layout));
-
         }
 
     @Override
@@ -91,6 +92,13 @@ public class CurrentTripActivity extends AppCompatActivity
             }
         } else{
             setContentView(R.layout.current_trip_warning_layout);
+            m2NavigationDrawerFragment = (NavigationDrawerFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+            // Set up the drawer.
+            m2NavigationDrawerFragment.setUp(
+                    R.id.navigation_drawer,
+                    (DrawerLayout) findViewById(R.id.current_trip_drawer_layout));
+
         }
     }
 
@@ -124,12 +132,12 @@ public class CurrentTripActivity extends AppCompatActivity
     public void onNavigationDrawerItemSelected(int position) {
         switch (position){
             case 0:
-                if(start) {
+                if(!(start > 0)) {
                     Intent myIntent = new Intent(this, ResekompanjonActivity.class);
                     startActivity(myIntent);
                     finish();
                 } else {
-                    start = true;
+                    start--;
                 }
                 break;
             case 1:
