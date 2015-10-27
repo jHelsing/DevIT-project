@@ -2,6 +2,7 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,7 +34,8 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
  * @author Jonathan
  * @version 0.1
  */
-public class FavoritesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnTaskCompleted {
+public class FavoritesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnTaskCompleted,
+                                                            NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -67,6 +69,12 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
 
         bComm = new BackendCommunicator(this, this);
 
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.favorite_trip_drawer_layout));
     }
 
     /**
@@ -130,5 +138,10 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
             noConectionMessage.show();
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+
     }
 }
