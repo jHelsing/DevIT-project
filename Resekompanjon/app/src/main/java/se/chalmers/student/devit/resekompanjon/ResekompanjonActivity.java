@@ -58,6 +58,8 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     BackendCommunicator bComm;
 
+    private boolean start = false; //Needed to stop program from going back to start right away
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,24 +102,31 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        if(position == 0) {
-            // return to start
-        } else if(position == 1) {
-            // Go to planned trips
-            Intent i = new Intent(ResekompanjonActivity.this, PlannedTripsActivity.class);
-            startActivity(i);
-        } else if(position == 2) {
-            // Go to favourites
-            Intent i = new Intent(ResekompanjonActivity.this, FavoritesActivity.class);
-            startActivity(i);
-        } else if(position == 3) {
-            // Go to detailed trip
-            Intent i = new Intent(ResekompanjonActivity.this, CurrentTripActivity.class);
-            startActivity(i);
-        } else if(position == 4) {
-            // Go to settings
-        } else if(position == 5) {
-            // Go to about
+        switch (position){
+            case 0:
+                //this is the current activity, do nothing
+                break;
+            case 1:
+                Intent plannedTripIntent = new Intent(this, PlannedTripsActivity.class);
+                startActivity(plannedTripIntent);
+                finish();
+                break;
+            case 2:
+                Intent favIntent = new Intent(this, FavoritesActivity.class);
+                startActivity(favIntent);
+                finish();
+                break;
+            case 3:
+                Intent currentTripIntent = new Intent(this, CurrentTripActivity.class);
+                startActivity(currentTripIntent);
+                finish();
+                break;
+            case 4:
+                //No settings to go to
+                break;
+            case 5:
+                //No about to go to
+                break;
         }
     }
 

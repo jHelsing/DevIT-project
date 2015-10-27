@@ -32,7 +32,7 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
     private ExpandableListView expListView;
     private ExpandableListAdapter adapter;
     private ArrayList<JsonObject> arrayList;
-    private boolean start = false;
+    private boolean start = false; //Needed to stop program from going back to start right away
 
     public PlannedTripsActivity(){}
 

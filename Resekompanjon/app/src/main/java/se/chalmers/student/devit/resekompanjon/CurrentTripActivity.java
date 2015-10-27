@@ -49,6 +49,8 @@ public class CurrentTripActivity extends AppCompatActivity
     private String nextStop;
     private String firstNextStop;
 
+    private boolean start = false; //Needed to stop program from going back to start right away
+
     private String busDirection;
 
     private final String[] stopToLindholmen = {"G�taplatsen", "Kungsportsplatsn", "NisseTerminalen"
@@ -125,20 +127,35 @@ public class CurrentTripActivity extends AppCompatActivity
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        if(position == 0) {
-            // return to start
-            Intent i = new Intent(CurrentTripActivity.this, ResekompanjonActivity.class);
-            //startActivity(i);
-        } else if(position == 1) {
-            // Go to planned trips
-        } else if(position == 2) {
-            // Go to favourites
-        } else if(position == 3) {
-            // Go to detailed trip
-        } else if(position == 4) {
-            // Go to settings
-        } else if(position == 5) {
-            // Go to about
+        switch (position){
+            case 0:
+                if(start) {
+                    Intent myIntent = new Intent(this, ResekompanjonActivity.class);
+                    startActivity(myIntent);
+                    finish();
+                } else {
+                    start = true;
+                }
+                break;
+            case 1:
+                Intent plannedTripIntent = new Intent(this, PlannedTripsActivity.class);
+                startActivity(plannedTripIntent);
+                finish();
+                break;
+            case 2:
+                Intent favIntent = new Intent(this, FavoritesActivity.class);
+                startActivity(favIntent);
+                finish();
+                break;
+            case 3:
+                //this is the current activity, do nothing
+                break;
+            case 4:
+                //No settings to go to
+                break;
+            case 5:
+                //No about to go to
+                break;
         }
     }
 
