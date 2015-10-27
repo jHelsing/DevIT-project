@@ -40,17 +40,12 @@ public class CurrentTripActivity extends AppCompatActivity
         ,BusStopCurrentFragment.OnFragmentInteractionListener, BetweenBusStopCurrentFragment.OnFragmentInteractionListener{
 
     private JsonObject trip;
-
     private InfoState infoState;
-
     private BackendCommunicator bComm;
-
     private String oldNextStop = "";
     private String nextStop;
     private String firstNextStop;
-
     private boolean start = false; //Needed to stop program from going back to start right away
-
     private String busDirection;
 
     private final String[] stopToLindholmen = {"G�taplatsen", "Kungsportsplatsn", "NisseTerminalen"
@@ -69,16 +64,16 @@ public class CurrentTripActivity extends AppCompatActivity
 
         setContentView(R.layout.current_trip_layout);
 
+        bComm = new BackendCommunicator(this, this);
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.setmCurrentSelectedPosition(3);
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.detailed_trip_drawer_layout));
-        bComm = new BackendCommunicator(this, this);
-    }
+
+        }
 
     @Override
     public void onStart(){
