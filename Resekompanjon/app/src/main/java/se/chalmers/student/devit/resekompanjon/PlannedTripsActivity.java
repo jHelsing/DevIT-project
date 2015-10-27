@@ -1,7 +1,9 @@
 package se.chalmers.student.devit.resekompanjon;
 
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,6 +32,7 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
     private ExpandableListView expListView;
     private ExpandableListAdapter adapter;
     private ArrayList<JsonObject> arrayList;
+    private boolean start = false;
 
     public PlannedTripsActivity(){}
 
@@ -47,27 +50,6 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
             expListView = (ExpandableListView) findViewById(R.id.expandableListView);
             adapter = new PlannedTripExpandableListAdapter(this, arrayList);
             expListView.setAdapter(adapter);
-            /*
-            expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-                @Override
-                public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                    if(expListView.isGroupExpanded(groupPosition)) {
-                        expListView.collapseGroup(groupPosition);
-                    } else {
-                        expListView.expandGroup(groupPosition, true);
-                    }
-                    return false;
-                }
-            });
-
-            expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                    View childAt = parent.getChildAt(groupPosition);
-
-                    return false;
-                }
-            });*/
         } else {
             //There are no planned trips available
             Toast noConectionMessage = Toast.makeText(this
@@ -107,6 +89,28 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-
+        if(position == 0) {
+            if(start) {
+                Intent myIntent = new Intent(this, ResekompanjonActivity.class);
+                startActivity(myIntent);
+            } else {
+                start = true;
+            }
+        } else if(position == 1) {
+            Intent myIntent = new Intent(this, PlannedTripsActivity.class);
+            startActivity(myIntent);
+            // Go to planned trips
+        } else if(position == 2) {
+            // Go to favourites
+            // Already in favorites, no reason to do anything
+        } else if(position == 3) {
+            Intent myIntent = new Intent(this, CurrentTripActivity.class);
+            startActivity(myIntent);
+            // Go to detailed trip
+        } else if(position == 4) {
+            // Go to settings
+        } else if(position == 5) {
+            // Go to about
+        }
     }
 }
