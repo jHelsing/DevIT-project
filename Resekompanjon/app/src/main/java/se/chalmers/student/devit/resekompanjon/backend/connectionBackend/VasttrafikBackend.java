@@ -101,7 +101,12 @@ public class VasttrafikBackend {
                         tempObj.addProperty("Fail", "No connection found");
                         Log.d("Throwing", tempObj.get("Fail").getAsString());
                         apiData = tempObj.getAsJsonObject();
-                    }else{
+                    } else if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString().equals("Error in date field")){
+                        JsonObject tempObj = new JsonObject();
+                        tempObj.addProperty("Fail", "Error in date field");
+                        Log.d("Throwing", tempObj.get("Fail").getAsString());
+                        apiData = tempObj.getAsJsonObject();
+                    } else{
                         apiData = jsonResponse.getAsJsonObject();
                     }
                 } else{

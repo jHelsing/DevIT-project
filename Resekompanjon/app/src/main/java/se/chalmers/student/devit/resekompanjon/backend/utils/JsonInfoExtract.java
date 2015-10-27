@@ -204,8 +204,8 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
             tripSummary.addProperty("realStartTime", tempSearchArray.get(0).getOriginRtTime());
             tripSummary.addProperty("realOriginDate", tempSearchArray.get(0).getOriginRtDate());
         }else{
-            tripSummary.addProperty("realStartTime", "No realtime");
-            tripSummary.addProperty("realOriginDate", "No realtime");
+            tripSummary.addProperty("realStartTime", tempSearchArray.get(0).getOriginRtTime());
+            tripSummary.addProperty("realOriginDate", tempSearchArray.get(0).getOriginRtDate());
         }
 
         tripSummary.addProperty("endName", tempSearchArray.get(tempSearchArray.size()-1).getDestinationName());
@@ -216,8 +216,8 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
             tripSummary.addProperty("realEndTime", tempSearchArray.get(tempSearchArray.size() - 1).getDestinationRtTime());
             tripSummary.addProperty("realEndDate", tempSearchArray.get(tempSearchArray.size() - 1).getDestinationRtDate());
         }else{
-            tripSummary.addProperty("realEndTime", "No realtime");
-            tripSummary.addProperty("realEndDate", "No realtime");
+            tripSummary.addProperty("realStartTime", tempSearchArray.get(0).getOriginRtTime());
+            tripSummary.addProperty("realOriginDate", tempSearchArray.get(0).getOriginRtDate());
         }
         JsonArray tempJArray = new JsonArray();
 
@@ -226,8 +226,6 @@ ArrayList<VehicleInfo> viArrayList = new ArrayList<>();
         }
 
         tripSummary.add("lineNumbers", tempJArray);
-        //tripSummary.addProperty("travelTime", );
-        //tripSummary.addProperty("ref", tempSearchArray.get(0).getRef());
         return tripSummary;
     }
 

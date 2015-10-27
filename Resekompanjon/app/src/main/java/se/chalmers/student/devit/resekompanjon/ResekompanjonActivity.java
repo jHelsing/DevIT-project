@@ -22,6 +22,7 @@ import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.Backend
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripFoundException;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripsForDateException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
@@ -199,6 +200,11 @@ public class ResekompanjonActivity extends AppCompatActivity
         } catch (NoTripFoundException e) {
             Toast noConectionMessage = Toast.makeText(this
                     , "Tyvärr så gick det inte att hitta någon resa för sträckan", Toast.LENGTH_LONG);
+            noConectionMessage.show();
+            e.printStackTrace();
+        } catch (NoTripsForDateException e) {
+            Toast noConectionMessage = Toast.makeText(this
+                    , "Tyvärr så finns inga resor tillgängliga för det datumet", Toast.LENGTH_LONG);
             noConectionMessage.show();
             e.printStackTrace();
         }

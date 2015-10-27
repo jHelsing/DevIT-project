@@ -103,7 +103,6 @@ public class SearchResultViewHolder {
         String totalTravelTime = timeFormatter.format(cal.getTime());
         travelTime.setText(totalTravelTime);
 
-
         int realDepHour = Integer.parseInt(trip.getRealDepartureTime().substring(0, 2));
         int realDepMin = Integer.parseInt(trip.getRealDepartureTime().substring(3));
         boolean negative = false;

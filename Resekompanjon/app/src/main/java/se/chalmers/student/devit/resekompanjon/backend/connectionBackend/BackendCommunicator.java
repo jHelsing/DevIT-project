@@ -137,13 +137,15 @@ public class BackendCommunicator implements OnTaskCompleted{
         }
     }
 
-    public JsonElement getApiData() throws NoJsonAvailableException, NoTripFoundException {
+    public JsonElement getApiData() throws NoJsonAvailableException, NoTripFoundException, NoTripsForDateException {
         if (apiData == null){
             throw new NoJsonAvailableException();
         } else if (ORIGIN.equals("vBackend")) {
             if (apiData.getAsJsonObject().has("Fail")) {
                 if (apiData.getAsJsonObject().get("Fail").getAsString().equals("No connection found")) {
                     throw new NoTripFoundException();
+                } else if (apiData.getAsJsonObject().get("Fail").getAsString().equals("Error in date field")){
+                    throw new NoTripsForDateException();
                 }
             }
         }
