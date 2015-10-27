@@ -47,6 +47,8 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
 
     public FavoritesActivity() {}
 
+    private boolean start = false;
+
     private BackendCommunicator bComm;
 
     @Override
@@ -142,6 +144,28 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-
+        if(position == 0) {
+            if(start) {
+                Intent myIntent = new Intent(this, ResekompanjonActivity.class);
+                startActivity(myIntent);
+            } else {
+                start = true;
+            }
+        } else if(position == 1) {
+            Intent myIntent = new Intent(this, PlannedTripsActivity.class);
+            startActivity(myIntent);
+            // Go to planned trips
+        } else if(position == 2) {
+            // Go to favourites
+            // Already in favorites, no reason to do anything
+        } else if(position == 3) {
+            Intent myIntent = new Intent(this, CurrentTripActivity.class);
+            startActivity(myIntent);
+            // Go to detailed trip
+        } else if(position == 4) {
+            // Go to settings
+        } else if(position == 5) {
+            // Go to about
+        }
     }
 }

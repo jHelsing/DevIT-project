@@ -89,28 +89,35 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        if(position == 0) {
-            if(start) {
-                Intent myIntent = new Intent(this, ResekompanjonActivity.class);
-                startActivity(myIntent);
-            } else {
-                start = true;
-            }
-        } else if(position == 1) {
-            Intent myIntent = new Intent(this, PlannedTripsActivity.class);
-            startActivity(myIntent);
-            // Go to planned trips
-        } else if(position == 2) {
-            // Go to favourites
-            // Already in favorites, no reason to do anything
-        } else if(position == 3) {
-            Intent myIntent = new Intent(this, CurrentTripActivity.class);
-            startActivity(myIntent);
-            // Go to detailed trip
-        } else if(position == 4) {
-            // Go to settings
-        } else if(position == 5) {
-            // Go to about
+        switch (position){
+            case 0:
+                if(start) {
+                    Intent myIntent = new Intent(this, ResekompanjonActivity.class);
+                    startActivity(myIntent);
+                    finish();
+                } else {
+                    start = true;
+                }
+                break;
+            case 1:
+                //this is the current activity, do nothing
+                break;
+            case 2:
+                Intent favIntent = new Intent(this, FavoritesActivity.class);
+                startActivity(favIntent);
+                finish();
+                break;
+            case 3:
+                Intent currentTripIntent = new Intent(this, CurrentTripActivity.class);
+                startActivity(currentTripIntent);
+                finish();
+                break;
+            case 4:
+                //No settings to go to
+                break;
+            case 5:
+                //No about to go to
+                break;
         }
     }
 }
