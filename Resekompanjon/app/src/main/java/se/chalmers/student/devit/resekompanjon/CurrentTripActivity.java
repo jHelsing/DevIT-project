@@ -34,7 +34,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
 
 /**
  * @author  Jonathan. Revisited by Amar.
- * @version  0.5
+ * @version  0.6
  */
 public class CurrentTripActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted
@@ -117,7 +117,7 @@ public class CurrentTripActivity extends AppCompatActivity
         if(netInfo != null && netInfo.isConnected()){
             WifiManager wifiMngr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifiMngr.getConnectionInfo();
-            return info.getSSID().equals("Jonathan's iPhone");
+            return info.getSSID().equals("eduroam");
         } else{
             return false;
         }
@@ -234,7 +234,7 @@ public class CurrentTripActivity extends AppCompatActivity
                                             fragmentTransaction.commit();
                                         }
                                         condition = false;
-                                    } else if (j < stopToLindholmen.length) {
+                                    } else if (j < stopToLindholmen.length-1) {
                                         j++;
                                     } else {
                                         condition = false;
@@ -337,7 +337,7 @@ public class CurrentTripActivity extends AppCompatActivity
      * @return Returns true if the stop to stop at has been passed.
      */
     public boolean isPassed(String stopToStopAt){
-        String [] tempStopToLindholmen = this.stopToLindholmen;
+        String [] tempStopToLindholmen = this.stopToLindholmen.clone();
 
         for(int i = 0; i<tempStopToLindholmen.length; i++){
             switch (tempStopToLindholmen[i]){
@@ -367,9 +367,8 @@ public class CurrentTripActivity extends AppCompatActivity
 
         if(indexStopToStopAt < indexNextStop){
             return true;
-        } {
-            return false;
         }
+        return false;
     }
 
     @Override
