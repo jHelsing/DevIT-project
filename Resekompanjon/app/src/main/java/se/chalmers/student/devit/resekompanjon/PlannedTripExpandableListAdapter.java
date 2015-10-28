@@ -100,7 +100,7 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+        if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.fragment_planned_trip_extended, null);
@@ -143,11 +143,11 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
      */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch(buttonView.getId()) {
+        switch (buttonView.getId()) {
             case R.id.plannedTripExtendedReminderSwitch:
                 LinearLayout parent = (LinearLayout) buttonView.getParent();
                 int position = (Integer) parent.getTag();
-                if(isChecked) {
+                if (isChecked) {
                     // show the extra items on screen.
                     LinearLayout linearLayout = (LinearLayout) parent.findViewById(R.id.plannedTripExtendedLLOne);
                     linearLayout.setVisibility(View.VISIBLE);
@@ -176,7 +176,7 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
         int year = Integer.parseInt(dateAsString.substring(1, 5));
         int month = Integer.parseInt(dateAsString.substring(6, 8));
         int day = Integer.parseInt(dateAsString.substring(9, 11));
-        int hour = Integer.parseInt(timeAsString.substring(0,2));
+        int hour = Integer.parseInt(timeAsString.substring(0, 2));
         int min = Integer.parseInt(timeAsString.substring(3));
         cal.set(year, month, day, hour, min);
         AlarmManager alarmMng = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -193,7 +193,7 @@ public class PlannedTripExpandableListAdapter extends BaseExpandableListAdapter 
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.setClassName("se.chalmers.student.devit.resekompanjon", "PlannedTripAlarm");
         i.putExtra("JSON", jsonObject.toString());
-        PendingIntent intent = PendingIntent.getActivity(context, position,i, PendingIntent.FLAG_UPDATE_CURRENT );
+        PendingIntent intent = PendingIntent.getActivity(context, position, i, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmMng.cancel(intent);
         Log.d("TAGG", "TURNED OFF");
     }

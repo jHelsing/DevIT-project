@@ -32,7 +32,7 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     private final static String STATE_START_LOCATION = "startLocation";
     private final static String STATE_END_LOCATION = "endLocation";
-    private final static String STATE_DATE= "date";
+    private final static String STATE_DATE = "date";
     private final static String STATE_TIME = "time";
 
     private String mStartLocation;
@@ -54,9 +54,9 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_resekompanjon);
 
-        if(savedInstanceState != null){
-             SearchBoxFragment searchBoxFragment = (SearchBoxFragment)this.getFragmentManager()
-                     .findFragmentById(R.id.search_box_fragment);
+        if (savedInstanceState != null) {
+            SearchBoxFragment searchBoxFragment = (SearchBoxFragment) this.getFragmentManager()
+                    .findFragmentById(R.id.search_box_fragment);
             this.mStartLocation = savedInstanceState.getString(STATE_START_LOCATION);
             this.mEndLocation = savedInstanceState.getString(STATE_END_LOCATION);
             this.mDate = savedInstanceState.getString(STATE_DATE);
@@ -88,7 +88,7 @@ public class ResekompanjonActivity extends AppCompatActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 //this is the current activity, do nothing
                 break;
@@ -112,20 +112,6 @@ public class ResekompanjonActivity extends AppCompatActivity
                 break;
             case 5:
                 //No about to go to
-                break;
-        }
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
                 break;
         }
     }
@@ -162,7 +148,7 @@ public class ResekompanjonActivity extends AppCompatActivity
             this.mDate = date;
             this.mTime = time;
             setContentView(R.layout.loading_layout);
-            TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
+            TextView loadingView = (TextView) this.findViewById(R.id.loadingMessage);
             loadingView.setText(R.string.loading_search_result);
         } catch (NoConnectionException e) {
             Toast noConectionMessage = Toast.makeText(this
@@ -178,7 +164,7 @@ public class ResekompanjonActivity extends AppCompatActivity
     //TODO: A lot of work of JSON
     @Override
     public void onTaskCompleted() {
-        try{
+        try {
             JsonObject fromAPI = bComm.getApiData().getAsJsonObject();
             JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
             SearchResultListActivity.setTrips(tripResult.getAllTripSummary());

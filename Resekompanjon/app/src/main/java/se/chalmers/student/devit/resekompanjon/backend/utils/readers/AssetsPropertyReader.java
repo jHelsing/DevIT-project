@@ -21,6 +21,7 @@ public class AssetsPropertyReader {
         res = context.getResources();
         prop = new Properties();
     }
+
     private Properties getProperties(String FileName) {
 
         try {
@@ -46,7 +47,8 @@ public class AssetsPropertyReader {
         }
         return prop;
     }
-    public String getPassword(String s){
+
+    public String getPassword(String s) {
         return getProperties("config.properties").getProperty(s) + "";
     }
 }

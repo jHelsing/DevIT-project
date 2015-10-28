@@ -35,7 +35,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
  * @version 0.1
  */
 public class FavoritesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnTaskCompleted,
-                                                            NavigationDrawerFragment.NavigationDrawerCallbacks{
+        NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -43,7 +43,8 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private ArrayList<JsonObject> list;
 
-    public FavoritesActivity() {}
+    public FavoritesActivity() {
+    }
 
     private boolean start = false;
 
@@ -56,7 +57,7 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
         FavoriteHandler handler = new FavoriteHandler(this);
         JsonArray jsonArray = handler.getTripArrayAsJson();
         list = new ArrayList<>();
-        for(int i=0; i<jsonArray.size(); i++) {
+        for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject obj = jsonArray.get(i).getAsJsonObject();
             list.add(obj);
         }
@@ -97,11 +98,11 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
         Date currentTime = Calendar.getInstance().getTime();
         String startLocation = list.get(position).get("originName").getAsString();
         String endLocation = list.get(position).get("endName").getAsString();
-        try{
+        try {
             bComm.getTripByName(startLocation, endLocation, travelDateFormatter.format(currentTime)
                     , travelTimeFormatter.format(currentTime));
             setContentView(R.layout.loading_layout);
-            TextView loadingView = (TextView)this.findViewById(R.id.loadingMessage);
+            TextView loadingView = (TextView) this.findViewById(R.id.loadingMessage);
             loadingView.setText(R.string.loading_search_result);
         } catch (NoConnectionException e) {
             Toast noConectionMessage = Toast.makeText(this
@@ -114,8 +115,8 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onTaskCompleted() {
-        try{
-            JsonObject fromAPI= bComm.getApiData().getAsJsonObject();
+        try {
+            JsonObject fromAPI = bComm.getApiData().getAsJsonObject();
             JsonInfoExtract tripResult = new JsonInfoExtract(fromAPI);
             ArrayList<SearchResultTrips> searchedTrips = tripResult.getTripAdvice();
             //SearchResultListActivity.setTrips(searchedTrips);
@@ -142,9 +143,9 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                if(start) {
+                if (start) {
                     Intent myIntent = new Intent(this, ResekompanjonActivity.class);
                     startActivity(myIntent);
                     finish();
@@ -158,7 +159,7 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
                 finish();
                 break;
             case 2:
-                                //this is the current activity, do nothing
+                //this is the current activity, do nothing
                 break;
             case 3:
                 Intent currentTripIntent = new Intent(this, CurrentTripActivity.class);

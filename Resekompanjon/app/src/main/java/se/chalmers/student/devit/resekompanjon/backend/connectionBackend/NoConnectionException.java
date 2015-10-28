@@ -1,8 +1,6 @@
 package se.chalmers.student.devit.resekompanjon.backend.connectionBackend;
 
 /**
- * 
- *
  * @author Jonathan
  * @version 1.0
  */

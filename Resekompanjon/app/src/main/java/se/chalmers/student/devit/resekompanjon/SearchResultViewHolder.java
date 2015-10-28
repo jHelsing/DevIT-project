@@ -88,12 +88,12 @@ public class SearchResultViewHolder {
         cal.set(Calendar.MINUTE, arrivalMin);
         arrivalText.setText(timeFormatter.format(cal.getTime()));
 
-        int travelHour = arrivalHour-departureHour;
-        if(travelHour < 0)
-            travelHour = travelHour+24;
-        int travelMin = arrivalMin-departureMin;
-        if(travelMin < 0) {
-            travelHour = travelHour-1;
+        int travelHour = arrivalHour - departureHour;
+        if (travelHour < 0)
+            travelHour = travelHour + 24;
+        int travelMin = arrivalMin - departureMin;
+        if (travelMin < 0) {
+            travelHour = travelHour - 1;
             travelMin = 60 + travelMin;
         }
 
@@ -106,11 +106,11 @@ public class SearchResultViewHolder {
         int realDepMin = Integer.parseInt(trip.getRealDepartureTime().substring(3));
         boolean negative = false;
         int delayHour = realDepHour - departureHour;
-        if(delayHour < 0)
+        if (delayHour < 0)
             negative = true;
-            delayHour = delayHour * -1;
+        delayHour = delayHour * -1;
         int delayMin = realDepMin - departureMin;
-        if(delayMin < 0) {
+        if (delayMin < 0) {
             negative = true;
             delayMin = delayMin * -1;
 
@@ -118,7 +118,7 @@ public class SearchResultViewHolder {
         cal.set(Calendar.HOUR_OF_DAY, delayHour);
         cal.set(Calendar.MINUTE, delayMin);
         String totalDelayTime = timeFormatter.format(cal.getTime());
-        if ( negative ){
+        if (negative) {
             delay.setText("-" + totalDelayTime);
             negative = false;
         }

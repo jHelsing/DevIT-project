@@ -28,13 +28,13 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTripS
         super(context, -1, values);
         this.context = context;
         this.values = values;
-        this.listener = new SelectionClickListener(context,view, null, values);
+        this.listener = new SelectionClickListener(context, view, null, values);
     }
 
     @Override
     public View getView(int index, View convertView, ViewGroup parent) {
         ItemViewHolder<SearchResultTripSummary> viewHolder = null;
-        if(convertView == null || !(convertView.getTag() instanceof ItemViewHolder<?>)) {
+        if (convertView == null || !(convertView.getTag() instanceof ItemViewHolder<?>)) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.fragment_search_result_box, null);
 
@@ -47,7 +47,7 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTripS
         viewHolder.setViewFields(entity, convertView);
         Log.d("INDEX", valuePosition + "");
         valuePosition++;
-        if(valuePosition >= values.size()) {
+        if (valuePosition >= values.size()) {
             valuePosition = 0;
         }
         return convertView;

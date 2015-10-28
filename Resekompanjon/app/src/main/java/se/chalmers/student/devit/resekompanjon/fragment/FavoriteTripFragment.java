@@ -40,7 +40,7 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
 
     private int jsonIndex;
     private JsonObject jsonObject;
-    private  boolean isFavorite;
+    private boolean isFavorite;
     private BackendCommunicator comm;
     private OnFragmentInteractionListener mListener;
 
@@ -86,7 +86,7 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
         jsonObject = new JsonObject();
         jsonObject.addProperty("originName", origin);
         jsonObject.addProperty("endName", destination);
-        if(handler.isFavorite(jsonObject)) {
+        if (handler.isFavorite(jsonObject)) {
             ImageButton favButton = (ImageButton) getView().findViewById(R.id.favouriteButton);
             favButton.setImageDrawable(getResources().getDrawable(R.drawable.favourite_untoggled));
         } else {
@@ -135,14 +135,14 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
      */
     @Override
     public void onClick(View v) {
-        if(v.equals(getView().findViewById(R.id.favouriteButton))) {
+        if (v.equals(getView().findViewById(R.id.favouriteButton))) {
             updateImageIcon();
             FavoriteHandler handler = new FavoriteHandler(getActivity());
-            if(isFavorite) {
-                isFavorite=false;
+            if (isFavorite) {
+                isFavorite = false;
                 handler.removeFavorite(jsonIndex);
             } else {
-                isFavorite=true;
+                isFavorite = true;
                 comm = new BackendCommunicator(getActivity(), this);
                 try {
                     comm.getStationbyName(jsonObject.get("originName").getAsString());
@@ -155,8 +155,8 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onTaskCompleted() {
-        if(jsonObject.get("originID").getAsString().equals(null) ) {
-            try{
+        if (jsonObject.get("originID").getAsString().equals(null)) {
+            try {
                 JsonObject fromBackend = comm.getApiData().getAsJsonObject();
                 JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
                 fromBackend = infoExtract.getStops();
@@ -183,7 +183,7 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
                 e.printStackTrace();
             }
         } else {
-            try{
+            try {
                 JsonObject fromBackend = comm.getApiData().getAsJsonObject();
                 JsonInfoExtract infoExtract = new JsonInfoExtract(fromBackend);
                 fromBackend = infoExtract.getStops();
@@ -192,7 +192,7 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
                 handler.addToFavoriteTrips(jsonObject.get("originName").getAsString(),
                         jsonObject.get("originID").getAsString(),
                         jsonObject.get("endName").getAsString(), jsonObject.get("endID").getAsString());
-                jsonIndex = handler.getNumbOfFavorites()-1;
+                jsonIndex = handler.getNumbOfFavorites() - 1;
             } catch (NoJsonAvailableException e) {
                 Toast noConectionMessage = Toast.makeText(getActivity()
                         , "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);

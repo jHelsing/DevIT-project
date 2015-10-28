@@ -1,6 +1,7 @@
 package se.chalmers.student.devit.resekompanjon.backend.utils.json;
 
 import com.google.gson.JsonObject;
+
 /**
  * Created by emmafahlen on 2015-10-06.
  */
@@ -27,7 +28,7 @@ public class VehicleInfo {
     public VehicleInfo(String name, String sname, String type, String stopid, String stop,
                        String time, String date, String journeyid, String direction,
                        String track, String rtTime, String stDate, String fgColor,
-                       String bgColor, String stroke, String accessibility, JsonObject JourneyDetailRef){
+                       String bgColor, String stroke, String accessibility, JsonObject JourneyDetailRef) {
 
         this.name = name;
         this.sname = sname;
@@ -47,6 +48,7 @@ public class VehicleInfo {
         this.accessibility = accessibility;
         this.JourneyDetailRef = JourneyDetailRef;
     }
+
     public String getName() {
         return name;
     }

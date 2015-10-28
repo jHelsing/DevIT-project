@@ -17,6 +17,7 @@ public class StopsNearby {
         this.lon = lon;
         this.track = track;
     }
+
     public StopsNearby(String name, String id, String lat, String lon) {
         this.name = name;
         this.id = id;

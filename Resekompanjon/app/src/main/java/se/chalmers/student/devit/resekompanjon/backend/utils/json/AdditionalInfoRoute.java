@@ -17,30 +17,26 @@ public class AdditionalInfoRoute {
 
 
     public AdditionalInfoRoute(String str1, String str2, String str3) {
-        if(str1=="fgColor" && str2=="bgColor" && str3=="stroke"){
-            this.fgColor=str1;
-            this.bgColor=str2;
-            this.stroke=str3;
-        }
-        else if(str1=="name" && str2=="routeIdxFrom" && str3=="routeIdxTo"){
-            this.name=str1;
-            this.routeIdxFrom=str2;
-            this.routeIdxTo=str3;
-        }
-        else if(str1=="type" && str2=="routeIdxFrom" && str3=="routeIdxTo"){
-            this.type=str1;
-            this.routeIdxFrom=str2;
-            this.routeIdxTo=str3;
-        }
-        else if(str1=="id" && str2=="routeIdxFrom" && str3=="routeIdxTo"){
-            this.id=str1;
-            this.routeIdxFrom=str2;
-            this.routeIdxTo=str3;
-        }
-        else if(str1=="routeIdxFrom" && str2=="routeIdxTo" && str3=="$"){
-            this.routeIdxFrom=str1;
-            this.routeIdxTo=str2;
-            this.$=str3;
+        if (str1 == "fgColor" && str2 == "bgColor" && str3 == "stroke") {
+            this.fgColor = str1;
+            this.bgColor = str2;
+            this.stroke = str3;
+        } else if (str1 == "name" && str2 == "routeIdxFrom" && str3 == "routeIdxTo") {
+            this.name = str1;
+            this.routeIdxFrom = str2;
+            this.routeIdxTo = str3;
+        } else if (str1 == "type" && str2 == "routeIdxFrom" && str3 == "routeIdxTo") {
+            this.type = str1;
+            this.routeIdxFrom = str2;
+            this.routeIdxTo = str3;
+        } else if (str1 == "id" && str2 == "routeIdxFrom" && str3 == "routeIdxTo") {
+            this.id = str1;
+            this.routeIdxFrom = str2;
+            this.routeIdxTo = str3;
+        } else if (str1 == "routeIdxFrom" && str2 == "routeIdxTo" && str3 == "$") {
+            this.routeIdxFrom = str1;
+            this.routeIdxTo = str2;
+            this.$ = str3;
         }
     }
 

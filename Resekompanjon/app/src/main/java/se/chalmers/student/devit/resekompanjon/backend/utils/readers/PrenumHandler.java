@@ -27,11 +27,11 @@ public class PrenumHandler {
     private String filePath;
     private static final String FILE_NAME = "prenums.txt";
 
-    public PrenumHandler (Context context){
+    public PrenumHandler(Context context) {
         cont = context;
         filePath = cont.getFilesDir().getPath().toString() + "/" + FILE_NAME;
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             try {
                 file.createNewFile();
                 Log.d("File not found", "Creating file for saving favorites");
@@ -47,21 +47,20 @@ public class PrenumHandler {
         try {
             InputStream inputStream = cont.openFileInput(FILE_NAME);
 
-            if ( inputStream != null ) {
+            if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                while ((receiveString = bufferedReader.readLine()) != null) {
                     stringBuilder.append(receiveString).append("\n");
                 }
 
                 inputStream.close();
                 result = stringBuilder.toString();
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             Log.e("login activity", "File not found: " + e.toString());
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
@@ -75,7 +74,8 @@ public class PrenumHandler {
         }
 
     }
-    public void addToPrenumTrips(String originName, String originID, String endName, String endID, String date, String time){
+
+    public void addToPrenumTrips(String originName, String originID, String endName, String endID, String date, String time) {
         readPrenumTrips();
 
         JsonObject newTripObj = new JsonObject();
@@ -91,30 +91,30 @@ public class PrenumHandler {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput(FILE_NAME, Context.MODE_PRIVATE));
             outputStreamWriter.write(tripArray.toString());
             outputStreamWriter.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 
     /**
      * Used to remove a single Favorite
+     *
      * @param i int that determines what prenum to remove, index in array to remove
      */
-    public void removePrenum(int i){
+    public void removePrenum(int i) {
         readPrenumTrips();
         tripArray.remove(i); //Maybe i-1 depending on how what i is sent
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput(FILE_NAME, Context.MODE_PRIVATE));
             outputStreamWriter.write(tripArray.toString());
             outputStreamWriter.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
+
     //Mostly added for testing but might be useful
-    public void clearPrenums(){
+    public void clearPrenums() {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput(FILE_NAME, Context.MODE_PRIVATE));
             outputStreamWriter.close();
@@ -126,18 +126,21 @@ public class PrenumHandler {
             e.printStackTrace();
         }
     }
-    public int getNumbOfPrenums(){ return tripArray.size(); }
 
-    public JsonArray getTripArrayAsJson(){
+    public int getNumbOfPrenums() {
+        return tripArray.size();
+    }
+
+    public JsonArray getTripArrayAsJson() {
         readPrenumTrips();
         return tripArray;
     }
 
-    public ArrayList<ArrayList> getTripArrayAsStrings(){
+    public ArrayList<ArrayList> getTripArrayAsStrings() {
         readPrenumTrips();
         ArrayList<String> stringTrip = new ArrayList<>();
         ArrayList<ArrayList> stringTripArray = new ArrayList<>();
-        for (int i = 0; i < tripArray.size(); i++){
+        for (int i = 0; i < tripArray.size(); i++) {
 
             JsonObject tempObj = tripArray.get(i).getAsJsonObject();
             stringTrip.add(tempObj.get("originName").toString());

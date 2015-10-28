@@ -24,7 +24,7 @@ public class SearchResultTrips {
 
     public SearchResultTrips(String name, String type, String sname, String id, String direction,
                              String fgColor, String bgColor, String stroke, String accessibility,
-                             JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef){
+                             JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef) {
         this.name = name;
         this.type = type;
         this.Origin = Origin;
@@ -41,7 +41,7 @@ public class SearchResultTrips {
 
     public SearchResultTrips(String name, String type, JsonObject origin, JsonObject destination,
                              String sname, String id, String direction, String fgColor, String bgColor,
-                             String stroke, JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef){
+                             String stroke, JsonObject Origin, JsonObject Destination, JsonObject JourneyDetailRef) {
         this.name = name;
         this.type = type;
         this.Origin = origin;
@@ -73,7 +73,9 @@ public class SearchResultTrips {
         return type;
     }
 
-    public String getSname() {return sname;}
+    public String getSname() {
+        return sname;
+    }
 
     public JsonObject getOrigin() {
         return Origin;
@@ -83,86 +85,104 @@ public class SearchResultTrips {
         return Destination;
     }
 
-    public String getOriginName(){
+    public String getOriginName() {
         return Origin.get("name").getAsString();
     }
-    public String getOriginType(){
+
+    public String getOriginType() {
         return Origin.get("type").getAsString();
     }
-    public String getOriginTime(){
+
+    public String getOriginTime() {
         return Origin.get("time").getAsString();
     }
-    public String getOriginDate(){
+
+    public String getOriginDate() {
         return Origin.get("date").getAsString();
     }
-    public String getOrigin$(){
+
+    public String getOrigin$() {
         return Origin.get("$").getAsString();
     }
-    public String getOriginRouteIdx(){
+
+    public String getOriginRouteIdx() {
         return Origin.get("routeIdx").getAsString();
     }
-    public String getOriginTrack(){
+
+    public String getOriginTrack() {
         return Origin.get("track").getAsString();
     }
-    public String getOriginRtTime(){
+
+    public String getOriginRtTime() {
         Log.d("re", Origin.get("rtTime") + "");
         if (Origin.get("rtTime") != null) {
             return Origin.get("rtTime").getAsString();
-        }
-        else {
+        } else {
             return Origin.get("time").getAsString();
         }
     }
-    public String getOriginRtDate(){
+
+    public String getOriginRtDate() {
         if (Origin.get("rtDate") != null) {
             return Origin.get("rtDate").getAsString();
-        }
-        else {
+        } else {
             return Origin.get("date").getAsString();
         }
     }
-    public String getOriginId(){
+
+    public String getOriginId() {
         return Origin.get("id").getAsString();
     }
-    public String getDestinationName(){
+
+    public String getDestinationName() {
         return Destination.get("name").getAsString();
     }
-    public String getDestinationType(){
+
+    public String getDestinationType() {
         return Destination.get("type").getAsString();
     }
-    public String getDestinationTime(){
+
+    public String getDestinationTime() {
         return Destination.get("time").getAsString();
     }
-    public String getDestinationDate(){
+
+    public String getDestinationDate() {
         return Destination.get("date").getAsString();
     }
-    public String getDestination$(){
+
+    public String getDestination$() {
         return Destination.get("$").getAsString();
     }
-    public String getDestinationRouteIdx(){
+
+    public String getDestinationRouteIdx() {
         return Destination.get("routeIdx").getAsString();
     }
-    public String getDestinationTrack(){
+
+    public String getDestinationTrack() {
         return Destination.get("track").getAsString();
     }
-    public String getDestinationRtTime(){
+
+    public String getDestinationRtTime() {
         if (Destination.get("rtTime") != null) {
             return Destination.get("rtTime").getAsString();
-        }
-        else {
+        } else {
             return Destination.get("time").getAsString();
         }
     }
-    public String getDestinationRtDate(){
+
+    public String getDestinationRtDate() {
         if (Destination.get("rtDate") != null) {
             return Destination.get("rtDate").getAsString();
-        }
-        else {
+        } else {
             return Destination.get("date").getAsString();
         }
     }
-    public String getDestinationId(){
+
+    public String getDestinationId() {
         return Destination.get("id").getAsString();
     }
-    public String getRef() {return JourneyDetailRef.get("ref").getAsString(); }
+
+    public String getRef() {
+        return JourneyDetailRef.get("ref").getAsString();
+    }
 }

@@ -25,7 +25,7 @@ import se.chalmers.student.devit.resekompanjon.backend.utils.readers.AssetsPrope
  * @author Jonathan
  * @version 0.1
  */
-public class ElectricityBackend  {
+public class ElectricityBackend {
 
     private static final String DEBUG_TAG = "HttpExample";
     ConnectivityManager connMgr;
@@ -34,7 +34,7 @@ public class ElectricityBackend  {
     private Context context;
     private static String key;
 
-    public ElectricityBackend(Context context, OnTaskCompleted listener){
+    public ElectricityBackend(Context context, OnTaskCompleted listener) {
         this.listener = listener;
         this.context = context;
         connMgr = (ConnectivityManager)
@@ -63,7 +63,7 @@ public class ElectricityBackend  {
         StringBuffer buffer = new StringBuffer();
         char[] chars = new char[1024];
         while ((len = reader.read(chars)) != -1)
-            buffer.append(chars,0,len);
+            buffer.append(chars, 0, len);
         return buffer.toString();
     }
 
@@ -110,6 +110,7 @@ public class ElectricityBackend  {
                 return "Unable to retrieve information, URL may be invalid";
             }
         }
+
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -117,11 +118,11 @@ public class ElectricityBackend  {
         }
     }
 
-    public JsonArray getApiData(){
+    public JsonArray getApiData() {
         return apiData;
     }
 
-    public void getJourneyInfo() throws NoConnectionException{
+    public void getJourneyInfo() throws NoConnectionException {
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 120);
         String url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_001&sensorSpec=Ericsson$Journey_Info&t1="
@@ -130,7 +131,7 @@ public class ElectricityBackend  {
         electricityConnect(url);
     }
 
-    public void getNextStopInfo() throws NoConnectionException{
+    public void getNextStopInfo() throws NoConnectionException {
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 120);
         String url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_001&sensorSpec=Ericsson$Next_Stop&t1="
@@ -139,7 +140,7 @@ public class ElectricityBackend  {
         electricityConnect(url);
     }
 
-    public void getStopPressedInfo() throws NoConnectionException{
+    public void getStopPressedInfo() throws NoConnectionException {
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 120);
         String url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_001&sensorSpec=Ericsson$Stop_Pressed&t1="

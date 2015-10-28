@@ -10,7 +10,7 @@ public class StopsFromString {
     private final String id;
     private final String idx;
 
-    public StopsFromString(String name, String lon, String lat, String id, String idx){
+    public StopsFromString(String name, String lon, String lat, String id, String idx) {
 
         this.name = name;
         this.lon = lon;

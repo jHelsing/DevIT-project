@@ -36,17 +36,17 @@ public class SearchInfoFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param startLocation This is the startpoint of the search.
-     * @param endLocation This is the endpoint of the search.
-     * @param time This is the date and time of the search.
+     * @param endLocation   This is the endpoint of the search.
+     * @param time          This is the date and time of the search.
      * @return A new instance of fragment SearchInfoFragment.
      */
     public static SearchInfoFragment newInstance(String startLocation, String endLocation
-                                                 ,String time) {
+            , String time) {
         SearchInfoFragment fragment = new SearchInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_STARTLOCATION, startLocation);
         args.putString(ARG_ENDLOCATION, endLocation);
-        args.putString(ARG_TIME,time);
+        args.putString(ARG_TIME, time);
         fragment.setArguments(args);
         return fragment;
     }

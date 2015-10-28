@@ -5,7 +5,7 @@ package se.chalmers.student.devit.resekompanjon.backend.connectionBackend;
  */
 public class NoJsonAvailableException extends Exception {
 
-    public NoJsonAvailableException(){
+    public NoJsonAvailableException() {
         super();
     }
 

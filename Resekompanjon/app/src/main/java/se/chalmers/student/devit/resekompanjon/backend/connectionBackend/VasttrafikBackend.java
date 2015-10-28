@@ -34,7 +34,7 @@ public class VasttrafikBackend {
     private JsonObject apiData;
     OnTaskCompleted listener;
 
-    public VasttrafikBackend(Context context, OnTaskCompleted listener){
+    public VasttrafikBackend(Context context, OnTaskCompleted listener) {
         this.listener = listener;
         connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -62,7 +62,7 @@ public class VasttrafikBackend {
         StringBuffer buffer = new StringBuffer();
         char[] chars = new char[1024];
         while ((len = reader.read(chars)) != -1)
-            buffer.append(chars,0,len);
+            buffer.append(chars, 0, len);
         return buffer.toString();
     }
 
@@ -83,9 +83,9 @@ public class VasttrafikBackend {
 
             int response = conn.getResponseCode();
             Log.d(DEBUG_TAG, "The response is: " + response); // DEBUG
-            if (response != 500){
+            if (response != 500) {
                 inputStream = conn.getInputStream();
-            } else{
+            } else {
                 inputStream = conn.getErrorStream();
             }
             String contentAsString = readInputStream(inputStream);
@@ -94,22 +94,22 @@ public class VasttrafikBackend {
             //TODO: Figure out a way to remove unnecessary characters some other way
             JsonElement jsonResponse = new JsonParser().parse(contentAsString.substring(13, contentAsString.length() - 2));
 
-            if( jsonResponse.getAsJsonObject().has("TripList")) {
+            if (jsonResponse.getAsJsonObject().has("TripList")) {
                 if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().has("errorText")) {
-                    if(jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString().equals("No connections found")){
+                    if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString().equals("No connections found")) {
                         JsonObject tempObj = new JsonObject();
                         tempObj.addProperty("Fail", "No connection found");
                         Log.d("Throwing", tempObj.get("Fail").getAsString());
                         apiData = tempObj.getAsJsonObject();
-                    } else if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString().equals("Error in date field")){
+                    } else if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString().equals("Error in date field")) {
                         JsonObject tempObj = new JsonObject();
                         tempObj.addProperty("Fail", "Error in date field");
                         Log.d("Throwing", tempObj.get("Fail").getAsString());
                         apiData = tempObj.getAsJsonObject();
-                    } else{
+                    } else {
                         apiData = jsonResponse.getAsJsonObject();
                     }
-                } else{
+                } else {
                     apiData = jsonResponse.getAsJsonObject();
                 }
             } else {
@@ -134,6 +134,7 @@ public class VasttrafikBackend {
                 return "Unable to retrieve information, URL may be invalid";
             }
         }
+
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -141,7 +142,7 @@ public class VasttrafikBackend {
         }
     }
 
-    public void getStationbyName(String stop) throws NoConnectionException{
+    public void getStationbyName(String stop) throws NoConnectionException {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + key + "&format=json&jsonpCallback=processJSON&input=";
         try {
             url = url + URLEncoder.encode(stop, "UTF-8");
@@ -150,6 +151,7 @@ public class VasttrafikBackend {
         }
         vastTrafikConnect(url);
     }
+
     public void getAllStops() throws NoConnectionException {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.allstops?authKey=" + key + "&format=json&jsonpCallback=processJSON";
         vastTrafikConnect(url);
@@ -160,18 +162,23 @@ public class VasttrafikBackend {
      * ID is only String as long is otherwise needed
      *
      * @param originID ID of bus stop
-     * @param destID ID of buss top
-     * @param date needs to be on format [YYYY-MM-DD]
-     * @param time needs to be on format [XX:XX]
+     * @param destID   ID of buss top
+     * @param date     needs to be on format [YYYY-MM-DD]
+     * @param time     needs to be on format [XX:XX]
      */
-    public void getTripID(String originID, String destID, String date, String time) throws NoConnectionException{
+    public void getTripID(String originID, String destID, String date, String time) throws NoConnectionException {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON";
-        if (date != null){ url = url +  "&date=" + date;}
-        if (time != null){ url = url + "&time=" + time; }
+        if (date != null) {
+            url = url + "&date=" + date;
+        }
+        if (time != null) {
+            url = url + "&time=" + time;
+        }
         url = url + "&originId=" + originID + "&destId=" + destID;
         vastTrafikConnect(url);
     }
-    public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName) throws NoConnectionException{
+
+    public void getTripCoord(Double originLat, Double originLong, String originName, Double destLat, Double destLong, String destName) throws NoConnectionException {
         String url = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + key + "&format=json&jsonpCallback=processJSON&originCoordLat=" + originLat +
                 "&originCoordLong=" + originLong + " &originCoordName=" + originName + "&destCoordLat=" + destLat + "&destCoordLong=" + destLong + "&destCoordName=" +
                 destName;
@@ -179,18 +186,21 @@ public class VasttrafikBackend {
         vastTrafikConnect(url);
     }
 
-    public void getAllVehiclesFromStop(int id) throws NoConnectionException{
-            String url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=" + key + "&format=json&jsonpCallback=processJSON&id=+ " + id ;
-            vastTrafikConnect(url);
-    }
-    // Used for debug, might be useful with prenumerations
-    public void getFromPremadeUrl(String url) throws NoConnectionException{
+    public void getAllVehiclesFromStop(int id) throws NoConnectionException {
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=" + key + "&format=json&jsonpCallback=processJSON&id=+ " + id;
         vastTrafikConnect(url);
     }
 
-    public JsonObject getApiData(){
+    // Used for debug, might be useful with prenumerations
+    public void getFromPremadeUrl(String url) throws NoConnectionException {
+        vastTrafikConnect(url);
+    }
+
+    public JsonObject getApiData() {
         return apiData;
     }
 
-    public void clearApiData() {apiData = null; }
+    public void clearApiData() {
+        apiData = null;
+    }
 }

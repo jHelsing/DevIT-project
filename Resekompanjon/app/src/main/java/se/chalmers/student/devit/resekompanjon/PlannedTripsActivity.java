@@ -27,15 +27,16 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
     private ArrayList<JsonObject> arrayList;
     private boolean start = false; //Needed to stop program from going back to start right away
 
-    public PlannedTripsActivity(){}
+    public PlannedTripsActivity() {
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         arrayList = new ArrayList<>();
         PrenumHandler fileHandler = new PrenumHandler(getApplicationContext());
-        if(fileHandler.getNumbOfPrenums() > 0) {
+        if (fileHandler.getNumbOfPrenums() > 0) {
             JsonArray tempArr = fileHandler.getTripArrayAsJson();
-            for(int i=0; i<tempArr.size(); i++) {
+            for (int i = 0; i < tempArr.size(); i++) {
                 JsonObject obj = (JsonObject) tempArr.get(i);
                 arrayList.add(obj);
             }
@@ -49,7 +50,7 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
                     , "Tyvärr, men du måste lägga till en"
                     + " resa som planerad resa för att kunna gå vidare.", Toast.LENGTH_LONG);
             noConectionMessage.show();
-            Thread thread = new Thread(){
+            Thread thread = new Thread() {
                 @Override
                 public void run() {
                     try {
@@ -68,9 +69,9 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                if(start) {
+                if (start) {
                     Intent myIntent = new Intent(this, ResekompanjonActivity.class);
                     startActivity(myIntent);
                     finish();

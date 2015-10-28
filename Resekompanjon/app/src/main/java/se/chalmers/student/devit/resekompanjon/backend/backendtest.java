@@ -38,13 +38,13 @@ public class backendtest {
         System.out.println(stopList.get(0).getName());
         System.out.println(nearList.get(0).getId());
         System.out.println(adressNear.getName());*/
-        JsonObject trip = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&date=2015-10-08&time=19:07&originId=kungs&destId=kors","83cdc6c1-0614-453e-97ec-4b0158227330","TripList");
+        JsonObject trip = downloadApiInformation("http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=83cdc6c1-0614-453e-97ec-4b0158227330&format=json&jsonpCallback=processJSON&date=2015-10-08&time=19:07&originId=kungs&destId=kors", "83cdc6c1-0614-453e-97ec-4b0158227330", "TripList");
         JsonInfoExtract trips = new JsonInfoExtract(trip);
         ArrayList<SearchResultTrips> tripList = trips.getTripAdvice();
         System.out.println(tripList.get(0).getName());
         System.out.println(tripList.get(0).getType());
         System.out.println(tripList.get(0).getOriginType());
-       // System.out.println(tripList.get(0).getOrigin$());
+        // System.out.println(tripList.get(0).getOrigin$());
         //System.out.println(tripList.get(0).getDepartureDate());
         //System.out.println(tripList.get(0).getOriginId());
         //System.out.println(tripList.get(0).getOriginRouteIdx());
@@ -72,7 +72,7 @@ public class backendtest {
     }
 
 
-      private static JsonObject downloadApiInformation(String myUrl, String key, String json) throws IOException {
+    private static JsonObject downloadApiInformation(String myUrl, String key, String json) throws IOException {
         InputStream inputStream = null;
         JsonObject apiData;
 
@@ -98,7 +98,7 @@ public class backendtest {
             apiData = root.getAsJsonObject();
             return apiData;
 
-                    ///.get(json).getAsJsonObject();
+            ///.get(json).getAsJsonObject();
 
         } finally {
             if (inputStream != null) {
@@ -106,6 +106,7 @@ public class backendtest {
             }
         }
     }
+
     // Reads an InputStream and converts it to a String.
     private static String readIt(InputStream stream) throws IOException {
         int len;
@@ -113,7 +114,7 @@ public class backendtest {
         StringBuffer buffer = new StringBuffer();
         char[] chars = new char[1024];
         while ((len = reader.read(chars)) != -1)
-            buffer.append(chars,0,len);
+            buffer.append(chars, 0, len);
         return buffer.toString();
     }
 }

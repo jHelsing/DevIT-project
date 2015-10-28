@@ -50,7 +50,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
     private DatePickerDialog travelDatePicker;
     private SimpleDateFormat travelDateFormatter;
 
-    private  Calendar newTime;
+    private Calendar newTime;
     private TimePickerDialog travelTimePicker;
     private SimpleDateFormat travelTimeFormatter;
 
@@ -112,7 +112,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
             this.getView().findViewById(R.id.editTextTipEndLocation).setOnFocusChangeListener(this);
 
         } catch (ClassCastException e) {
-            throw new ClassCastException( getActivity().toString()
+            throw new ClassCastException(getActivity().toString()
                     + " must implement OnFragmentInteractionListener");
         }
 
@@ -122,7 +122,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
         View view = this.getView();
         Resources res = this.getResources();
 
-        EditText eT= (EditText) view.findViewById(R.id.editTextTravelTime);
+        EditText eT = (EditText) view.findViewById(R.id.editTextTravelTime);
         eT.setText(travelTimeFormatter.format(newTime.getTime()));
 
         eT = (EditText) view.findViewById(R.id.editTextTravelDate);
@@ -138,7 +138,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
 
     }
 
-    private void initDatePicker(){
+    private void initDatePicker() {
         travelDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
         final EditText editDate = (EditText) this.getView().findViewById(R.id.editTextTravelDate);
@@ -151,14 +151,14 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
         travelDatePicker = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                newDate.set(year,monthOfYear,dayOfMonth);
+                newDate.set(year, monthOfYear, dayOfMonth);
                 editDate.setText(travelDateFormatter.format(newDate.getTime()));
             }
-        },newDate.get(Calendar.YEAR),newDate.get(Calendar.MONTH),newDate.get(Calendar.DAY_OF_MONTH));
+        }, newDate.get(Calendar.YEAR), newDate.get(Calendar.MONTH), newDate.get(Calendar.DAY_OF_MONTH));
 
     }
 
-    private void initTimePicker(){
+    private void initTimePicker() {
         travelTimeFormatter = new SimpleDateFormat("HH:mm");
 
         final EditText editTime = (EditText) this.getView().findViewById(R.id.editTextTravelTime);
@@ -175,13 +175,13 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
                 newTime.set(Calendar.MINUTE, minute);
                 editTime.setText(travelTimeFormatter.format(newTime.getTime()));
             }
-        }, newTime.get(Calendar.HOUR_OF_DAY), newTime.get(Calendar.MINUTE),true);
+        }, newTime.get(Calendar.HOUR_OF_DAY), newTime.get(Calendar.MINUTE), true);
     }
 
-    public void initSavedValues(String startLocation,String endLocation, String date, String time){
+    public void initSavedValues(String startLocation, String endLocation, String date, String time) {
         View view = this.getView();
 
-        EditText eT= (EditText) view.findViewById(R.id.editTextTravelTime);
+        EditText eT = (EditText) view.findViewById(R.id.editTextTravelTime);
         eT.setText(time);
 
         eT = (EditText) view.findViewById(R.id.editTextTravelDate);
@@ -202,19 +202,19 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
-        if(v == this.getView().findViewById(R.id.buttonSearchTrip)){
+        if (v == this.getView().findViewById(R.id.buttonSearchTrip)) {
             String startLocation = ((EditText) this.getView().findViewById(R.id.editTextTipStartLocation))
                     .getText().toString();
             String endLocation = ((EditText) this.getView().findViewById(R.id.editTextTipEndLocation))
                     .getText().toString();
-            String date = ((EditText)this.getView().findViewById(R.id.editTextTravelDate))
+            String date = ((EditText) this.getView().findViewById(R.id.editTextTravelDate))
                     .getText().toString();
             String time = ((EditText) this.getView().findViewById(R.id.editTextTravelTime))
                     .getText().toString();
 
             boolean canSearch = true;
 
-            if(startLocation.isEmpty() || startLocation.equals(null)){
+            if (startLocation.isEmpty() || startLocation.equals(null)) {
                 EditText editTextStartLocation = ((EditText) this.getView().findViewById(R.id.editTextTipStartLocation));
                 editTextStartLocation.getBackground().setColorFilter(getResources().getColor(R.color.redwarning)
                         , PorterDuff.Mode.SRC_ATOP);
@@ -222,7 +222,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
                 canSearch = false;
             }
 
-            if(endLocation.isEmpty() || endLocation.equals(null)){
+            if (endLocation.isEmpty() || endLocation.equals(null)) {
                 EditText editTextEndLocation = ((EditText) this.getView().findViewById(R.id.editTextTipEndLocation));
                 editTextEndLocation.getBackground().setColorFilter(getResources().getColor(R.color.redwarning)
                         , PorterDuff.Mode.SRC_ATOP);
@@ -230,21 +230,21 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
                 canSearch = false;
             }
 
-            if(canSearch){
+            if (canSearch) {
                 mListener.onSearchButtonClick(startLocation, endLocation, date, time);
             }
-            
-        } else if(v == this.getView().findViewById(R.id.editTextTravelTime)){
+
+        } else if (v == this.getView().findViewById(R.id.editTextTravelTime)) {
             travelTimePicker.show();
-        } else if(v == this.getView().findViewById(R.id.editTextTravelDate)){
+        } else if (v == this.getView().findViewById(R.id.editTextTravelDate)) {
             travelDatePicker.show();
         }
     }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        if(!hasFocus){
-            InputMethodManager iMM = (InputMethodManager)getActivity()
+        if (!hasFocus) {
+            InputMethodManager iMM = (InputMethodManager) getActivity()
                     .getSystemService(Context.INPUT_METHOD_SERVICE);
             iMM.hideSoftInputFromWindow(this.getView().getWindowToken(), 0);
         }

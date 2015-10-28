@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 /**
- *
  * @author Linnea
  * @version 1.0
  */

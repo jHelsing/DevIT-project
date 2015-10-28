@@ -19,6 +19,7 @@ import se.chalmers.student.devit.resekompanjon.R;
  * to handle interaction events.
  * Use the {@link BetweenBusStopCurrentFragment#newInstance} factory method to
  * create an instance of this fragment.7
+ *
  * @author Amar.
  * @version 0.1
  */
@@ -51,7 +52,6 @@ public class BetweenBusStopCurrentFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
 
 
     public BetweenBusStopCurrentFragment() {

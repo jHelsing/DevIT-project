@@ -36,14 +36,15 @@ public class SearchResultListActivity extends AppCompatActivity implements
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    public SearchResultListActivity() {}
+    public SearchResultListActivity() {
+    }
 
     public static void setTrips(ArrayList<SearchResultTripSummary> trips) {
         searchResultTrips = trips;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result_list_layout);
 
@@ -61,9 +62,9 @@ public class SearchResultListActivity extends AppCompatActivity implements
         initSearchInfo();
     }
 
-    private void initSearchInfo(){
+    private void initSearchInfo() {
         String startLocation = searchResultTrips.get(0).getOriginName();
-        String endLocation = searchResultTrips.get(searchResultTrips.size()-1).getDestinationName();
+        String endLocation = searchResultTrips.get(searchResultTrips.size() - 1).getDestinationName();
         String time = searchResultTrips.get(0).getDepartureDate() + ", " + searchResultTrips.get(0)
                 .getDepartureTime();
         View fragment = findViewById(R.id.fragment);
@@ -83,14 +84,14 @@ public class SearchResultListActivity extends AppCompatActivity implements
         favObj.addProperty("originName", originName);
         favObj.addProperty("endName", endName);
 
-        if(favHandler.isFavorite(favObj)){
+        if (favHandler.isFavorite(favObj)) {
             isFavourite = true;
             favouriteButton.setImageResource(R.drawable.favourite_toggled);
         }
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             startActivity(new Intent(SearchResultListActivity.this, ResekompanjonActivity.class));
             finish();
@@ -102,17 +103,17 @@ public class SearchResultListActivity extends AppCompatActivity implements
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        if(position == 0) {
+        if (position == 0) {
             // return to start
-        } else if(position == 1) {
+        } else if (position == 1) {
             // Go to planned trips
-        } else if(position == 2) {
+        } else if (position == 2) {
             // Go to favourites
-        } else if(position == 3) {
+        } else if (position == 3) {
             // Go to detailed trip
-        } else if(position == 4) {
+        } else if (position == 4) {
             // Go to settings
-        } else if(position == 5) {
+        } else if (position == 5) {
             // Go to about
         }
     }
@@ -129,18 +130,18 @@ public class SearchResultListActivity extends AppCompatActivity implements
     public void onClick(View v) {
         favHandler = new FavoriteHandler(this);
         String originName = searchResultTrips.get(0).getOriginName();
-        String endName = searchResultTrips.get(searchResultTrips.size()-1).getDestinationName();
+        String endName = searchResultTrips.get(searchResultTrips.size() - 1).getDestinationName();
         String originID = searchResultTrips.get(0).getOriginID();
-        String endID = searchResultTrips.get(searchResultTrips.size()-1).getDestinationId();
+        String endID = searchResultTrips.get(searchResultTrips.size() - 1).getDestinationId();
         JsonObject favObj = new JsonObject();
         favObj.addProperty("originName", originName);
         favObj.addProperty("endName", endName);
 
-        if(!isFavourite){
+        if (!isFavourite) {
             favHandler.addToFavoriteTrips(originName, originID, endName, endID);
             favouriteButton.setImageResource(R.drawable.favourite_toggled);
             isFavourite = true;
-        } else{
+        } else {
             int i = favHandler.getFavoriteIndex(favObj);
             favHandler.removeFavorite(i);
             favouriteButton.setImageResource(R.drawable.favourite_untoggled);

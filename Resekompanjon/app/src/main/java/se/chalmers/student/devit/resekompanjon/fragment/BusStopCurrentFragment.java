@@ -23,7 +23,7 @@ import se.chalmers.student.devit.resekompanjon.R;
  * Use the {@link BusStopCurrentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BusStopCurrentFragment extends Fragment implements View.OnClickListener{
+public class BusStopCurrentFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String BUS_STOP = "busStop";
@@ -80,18 +80,18 @@ public class BusStopCurrentFragment extends Fragment implements View.OnClickList
     public void onStart() {
         super.onStart();
         TextView busStopTextView = (TextView) getView().findViewById(R.id.busStopName);
-        switch (mBusStop){
+        switch (mBusStop) {
             case "G�taplatsen":
                 mBusStop = "Götaplatsen";
                 break;
             case "Kungsportsplatsn":
                 mBusStop = "Kungsportsplatsen";
                 break;
-            }
+        }
         busStopTextView.setText(mBusStop);
         stopButton = (ImageButton) getView().findViewById(R.id.stopButton);
         stopButton.setOnClickListener(this);
-        }
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -115,12 +115,12 @@ public class BusStopCurrentFragment extends Fragment implements View.OnClickList
 
         CurrentTripActivity currentTripActivity = (CurrentTripActivity) getActivity();
 
-        LinearLayout ll= (LinearLayout) stopButton.getParent().getParent();
+        LinearLayout ll = (LinearLayout) stopButton.getParent().getParent();
         TextView stopTextView = (TextView) ll.findViewById(R.id.busStopName);
         String stopToStopAt = stopTextView.getText().toString();
 
         //Sends to activity
-        if(!isPressed && !currentTripActivity.isPassed(stopToStopAt)) {
+        if (!isPressed && !currentTripActivity.isPassed(stopToStopAt)) {
             stopButton.setImageResource(R.drawable.stop_toggled);
             ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction(Uri.parse(stopToStopAt));
             isPressed = true;
@@ -129,17 +129,19 @@ public class BusStopCurrentFragment extends Fragment implements View.OnClickList
 
     /**
      * Sets the static variable isPressed, which is false at start.
+     *
      * @param isPressed is the new boolean to set isPressed.
      */
-    public static void setIsPressed(boolean isPressed){
+    public static void setIsPressed(boolean isPressed) {
         BusStopCurrentFragment.isPressed = isPressed;
     }
 
     /**
      * Gets the boolean value of the static variable isPressed;
+     *
      * @return Returns true if a stopButton is pressed.
      */
-    public static boolean getIsPressed(){
+    public static boolean getIsPressed() {
         return BusStopCurrentFragment.isPressed;
     }
 

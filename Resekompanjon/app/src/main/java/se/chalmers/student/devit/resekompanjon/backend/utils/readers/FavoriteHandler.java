@@ -28,11 +28,11 @@ public class FavoriteHandler {
     private String filePath;
     private static final String FILE_NAME = "favorites.txt";
 
-    public FavoriteHandler (Context context){
+    public FavoriteHandler(Context context) {
         cont = context;
         filePath = cont.getFilesDir().getPath().toString() + "/" + FILE_NAME;
-            File file = new File(filePath);
-            if (!file.exists()){
+        File file = new File(filePath);
+        if (!file.exists()) {
             try {
                 file.createNewFile();
                 Log.d("File not found", "Creating file for saving favorites");
@@ -48,21 +48,20 @@ public class FavoriteHandler {
         try {
             InputStream inputStream = cont.openFileInput(FILE_NAME);
 
-            if ( inputStream != null ) {
+            if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                while ((receiveString = bufferedReader.readLine()) != null) {
                     stringBuilder.append(receiveString).append("\n");
                 }
 
                 inputStream.close();
                 result = stringBuilder.toString();
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             Log.e("login activity", "File not found: " + e.toString());
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
@@ -76,7 +75,8 @@ public class FavoriteHandler {
         }
 
     }
-    public void addToFavoriteTrips(String originName, String originID, String endName, String endID){
+
+    public void addToFavoriteTrips(String originName, String originID, String endName, String endID) {
         readFavoriteTrips();
 
         JsonObject newTripObj = new JsonObject();
@@ -90,30 +90,30 @@ public class FavoriteHandler {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput(FILE_NAME, Context.MODE_PRIVATE));
             outputStreamWriter.write(tripArray.toString());
             outputStreamWriter.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 
     /**
      * Used to remove a single Favorite
+     *
      * @param i int that determines what favorite to remove, index in array to remove
      */
-    public void removeFavorite(int i){
+    public void removeFavorite(int i) {
         readFavoriteTrips();
         tripArray.remove(i); //Maybe i-1 depending on how what i is sent
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput(FILE_NAME, Context.MODE_PRIVATE));
             outputStreamWriter.write(tripArray.toString());
             outputStreamWriter.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
+
     //Mostly added for testing but might be useful
-    public void clearFavorites(){
+    public void clearFavorites() {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cont.openFileOutput(FILE_NAME, Context.MODE_PRIVATE));
             outputStreamWriter.close();
@@ -125,18 +125,21 @@ public class FavoriteHandler {
             e.printStackTrace();
         }
     }
-    public int getNumbOfFavorites(){ return tripArray.size(); }
 
-    public JsonArray getTripArrayAsJson(){
+    public int getNumbOfFavorites() {
+        return tripArray.size();
+    }
+
+    public JsonArray getTripArrayAsJson() {
         readFavoriteTrips();
         return tripArray;
     }
 
-    public ArrayList<ArrayList> getTripArrayAsStrings(){
+    public ArrayList<ArrayList> getTripArrayAsStrings() {
         readFavoriteTrips();
         ArrayList<String> stringTrip = new ArrayList<>();
         ArrayList<ArrayList> stringTripArray = new ArrayList<>();
-        for (int i = 0; i < tripArray.size(); i++){
+        for (int i = 0; i < tripArray.size(); i++) {
 
             JsonObject tempObj = tripArray.get(i).getAsJsonObject();
             stringTrip.add(tempObj.get("originName").toString());
@@ -152,19 +155,20 @@ public class FavoriteHandler {
 
     /**
      * Checks if the parameter is a favorite.
+     *
      * @param jsObj is the JsonObject we want to search for in the tripArray.
      * @return Returns true if the parameters is a favorite.
      */
-    public boolean isFavorite(JsonObject jsObj){
+    public boolean isFavorite(JsonObject jsObj) {
         JsonArray arr = getTripArrayAsJson();
-        if(arr.size() == 0){
+        if (arr.size() == 0) {
             return false;
-        } else{
-            int i=0;
+        } else {
+            int i = 0;
             JsonObject objectToCompare = arr.get(i).getAsJsonObject();
             objectToCompare.remove("originID");
             objectToCompare.remove("endID");
-            while(i<arr.size()-1 && !jsObj.equals(objectToCompare)) {
+            while (i < arr.size() - 1 && !jsObj.equals(objectToCompare)) {
                 i++;
                 objectToCompare = arr.get(i).getAsJsonObject();
                 objectToCompare.remove("originID");
@@ -176,20 +180,21 @@ public class FavoriteHandler {
 
     /**
      * Checks which index the parameter is in the tripArray.
+     *
      * @param jsObj is the JsonObject we want to search for in the tripArray.
      * @return Returns the index of the tripArray. If the parameter is not in the
      * tripArray, then it returns -1.
      */
-    public int getFavoriteIndex(JsonObject jsObj){
-        if(!isFavorite(jsObj)){
+    public int getFavoriteIndex(JsonObject jsObj) {
+        if (!isFavorite(jsObj)) {
             return -1;
         }
         JsonArray arr = getTripArrayAsJson();
-        int i=0;
+        int i = 0;
         JsonObject objectToCompare = arr.get(i).getAsJsonObject();
         objectToCompare.remove("originID");
         objectToCompare.remove("endID");
-        while(i<arr.size() && !jsObj.equals(objectToCompare)) {
+        while (i < arr.size() && !jsObj.equals(objectToCompare)) {
             i++;
             objectToCompare = arr.get(i).getAsJsonObject();
             objectToCompare.remove("originID");

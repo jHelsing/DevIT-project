@@ -32,12 +32,12 @@ import se.chalmers.student.devit.resekompanjon.fragment.BusStopCurrentFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 
 /**
- * @author  Jonathan. Revisited by Amar.
- * @version  0.6
+ * @author Jonathan. Revisited by Amar.
+ * @version 0.6
  */
 public class CurrentTripActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted
-        ,BusStopCurrentFragment.OnFragmentInteractionListener, BetweenBusStopCurrentFragment.OnFragmentInteractionListener{
+        , BusStopCurrentFragment.OnFragmentInteractionListener, BetweenBusStopCurrentFragment.OnFragmentInteractionListener {
 
     private InfoState infoState;
     private BackendCommunicator bComm;
@@ -56,7 +56,8 @@ public class CurrentTripActivity extends AppCompatActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private NavigationDrawerFragment m2NavigationDrawerFragment;
 
-    public CurrentTripActivity() {}
+    public CurrentTripActivity() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class CurrentTripActivity extends AppCompatActivity
 
         bComm = new BackendCommunicator(this, this);
 
-        if(isOnBus()) {
+        if (isOnBus()) {
             setContentView(R.layout.current_trip_layout);
             mNavigationDrawerFragment = (NavigationDrawerFragment)
                     getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -73,7 +74,7 @@ public class CurrentTripActivity extends AppCompatActivity
                     R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.detailed_trip_drawer_layout));
 
-        }else {
+        } else {
             setContentView(R.layout.current_trip_warning_layout);
             m2NavigationDrawerFragment = (NavigationDrawerFragment)
                     getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -82,22 +83,21 @@ public class CurrentTripActivity extends AppCompatActivity
                     R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.current_trip_drawer_layout));
         }
-        }
+    }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        if(isOnBus()){
+        if (isOnBus()) {
             infoState = InfoState.JOURNEY;
-            try{
+            try {
                 bComm = new BackendCommunicator(this, this);
                 bComm.getElectricityJourneyInfo();
 
-                if(BusStopCurrentFragment.getIsPressed() == true){
+                if (BusStopCurrentFragment.getIsPressed() == true) {
                     BusStopCurrentFragment.setIsPressed(false);
                 }
-            }
-            catch(NoConnectionException e){
+            } catch (NoConnectionException e) {
                 Toast noConectionMessage = Toast.makeText(this
                         , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
                 noConectionMessage.show();
@@ -107,13 +107,14 @@ public class CurrentTripActivity extends AppCompatActivity
 
     /**
      * This method checks if the user's phone is connected to a SSID that belongs to a bus.
+     *
      * @return Returns true if the user is on a bus.
      */
-    private boolean isOnBus(){
+    private boolean isOnBus() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
-        if(netInfo != null && netInfo.isConnected()){
+        if (netInfo != null && netInfo.isConnected()) {
             WifiManager wifiMngr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifiMngr.getConnectionInfo();
             return info.getSSID().equals("eduroam");
@@ -128,9 +129,9 @@ public class CurrentTripActivity extends AppCompatActivity
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                if(!(start > 0)) {
+                if (!(start > 0)) {
                     Intent myIntent = new Intent(this, ResekompanjonActivity.class);
                     startActivity(myIntent);
                     finish();
@@ -168,7 +169,7 @@ public class CurrentTripActivity extends AppCompatActivity
      */
     @Override
     public void onTaskCompleted() {
-        if(!this.isFinishing()) {
+        if (!this.isFinishing()) {
             try {
                 JsonArray jsArray = bComm.getApiData().getAsJsonArray();
                 JsonObject jsObj = null;
@@ -202,7 +203,7 @@ public class CurrentTripActivity extends AppCompatActivity
                     case UN_UPDATED_NEXT_STOP:
                         jsObj = jsArray.get(i).getAsJsonObject();
                         nextStop = jsObj.get("value").getAsString();
-                        if(nextStop.equals("Lindholmen") && oldNextStop.equals("")){
+                        if (nextStop.equals("Lindholmen") && oldNextStop.equals("")) {
                             nextStop = "Frihamnen";
                         }
                         firstNextStop = nextStop;
@@ -220,10 +221,10 @@ public class CurrentTripActivity extends AppCompatActivity
                                             String busStop = stopToLindholmen[k];
                                             FragmentManager fragmentManager = getFragmentManager();
                                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            if (k==j) {
+                                            if (k == j) {
                                                 BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop);
                                                 fragmentTransaction.add(R.id.currentStops, busStopFragement, busStop);
-                                            } else{
+                                            } else {
                                                 BetweenBusStopCurrentFragment betweenBusStopFragment = BetweenBusStopCurrentFragment.newInstance("", "");
                                                 fragmentTransaction.add(R.id.currentStops, betweenBusStopFragment, busStop + "1");
                                                 BusStopCurrentFragment busStopFragement = BusStopCurrentFragment.newInstance(busStop);
@@ -232,7 +233,7 @@ public class CurrentTripActivity extends AppCompatActivity
                                             fragmentTransaction.commit();
                                         }
                                         condition = false;
-                                    } else if (j < stopToLindholmen.length-1) {
+                                    } else if (j < stopToLindholmen.length - 1) {
                                         j++;
                                     } else {
                                         condition = false;
@@ -256,11 +257,11 @@ public class CurrentTripActivity extends AppCompatActivity
                         nextStop = jsObj.get("value").getAsString();
                         if (!nextStop.equals(oldNextStop)) {
                             FragmentManager fragmentManager = getFragmentManager();
-                            if(oldNextStop.equals(firstNextStop)){
+                            if (oldNextStop.equals(firstNextStop)) {
                                 View nextStopFragment = fragmentManager.findFragmentByTag(firstNextStop).getView();
                                 ImageView busStopIcon = (ImageView) nextStopFragment.findViewById(R.id.busStopIcon);
                                 busStopIcon.setImageResource(R.drawable.visited_stop);
-                            } else{
+                            } else {
                                 View previousStopLineFragment = fragmentManager.findFragmentByTag(oldNextStop + "1").getView();
                                 ImageView tripIcon = (ImageView) previousStopLineFragment.findViewById(R.id.tripIcon);
                                 tripIcon.setImageResource(R.drawable.completed_trip);
@@ -306,7 +307,7 @@ public class CurrentTripActivity extends AppCompatActivity
      * Finishes this activity and starts ResekompanjonActivity.
      */
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         Intent i = new Intent(CurrentTripActivity.this, ResekompanjonActivity.class);
         startActivity(i);
@@ -315,25 +316,27 @@ public class CurrentTripActivity extends AppCompatActivity
 
     /**
      * Is called by busStopCurrentFragment when stop button is pressed in there.
+     *
      * @param uri is the parameter where the bus has to stop.
      */
     @Override
     public void onFragmentInteraction(Uri uri) {
-            Toast stopPressedMessage = Toast.makeText(this
-                    , "Du har valt att stanna på: " + uri.toString(), Toast.LENGTH_LONG);
-            stopPressedMessage.show();
+        Toast stopPressedMessage = Toast.makeText(this
+                , "Du har valt att stanna på: " + uri.toString(), Toast.LENGTH_LONG);
+        stopPressedMessage.show();
     }
 
     /**
      * Checks if the stop to stop at is passed.
+     *
      * @param stopToStopAt is the stop to check if it has passed.
      * @return Returns true if the stop to stop at has been passed.
      */
-    public boolean isPassed(String stopToStopAt){
-        String [] tempStopToLindholmen = this.stopToLindholmen.clone();
+    public boolean isPassed(String stopToStopAt) {
+        String[] tempStopToLindholmen = this.stopToLindholmen.clone();
 
-        for(int i = 0; i<tempStopToLindholmen.length; i++){
-            switch (tempStopToLindholmen[i]){
+        for (int i = 0; i < tempStopToLindholmen.length; i++) {
+            switch (tempStopToLindholmen[i]) {
                 case "G�taplatsen":
                     tempStopToLindholmen[i] = "Götaplatsen";
                     break;
@@ -344,15 +347,15 @@ public class CurrentTripActivity extends AppCompatActivity
         }
 
         int indexNextStop = -1;
-        for(int i = 0; i<tempStopToLindholmen.length; i++){
-            if(tempStopToLindholmen[i].equals(nextStop)){
+        for (int i = 0; i < tempStopToLindholmen.length; i++) {
+            if (tempStopToLindholmen[i].equals(nextStop)) {
                 indexNextStop = i;
                 break;
             }
         }
         int indexStopToStopAt = -1;
-        for(int i = 0; i<tempStopToLindholmen.length; i++){
-            if(tempStopToLindholmen[i].equals(stopToStopAt)){
+        for (int i = 0; i < tempStopToLindholmen.length; i++) {
+            if (tempStopToLindholmen[i].equals(stopToStopAt)) {
                 indexStopToStopAt = i;
                 break;
             }
@@ -362,9 +365,10 @@ public class CurrentTripActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBetweenFragmentInteraction(Uri uri) {}
+    public void onBetweenFragmentInteraction(Uri uri) {
+    }
 
-    public enum InfoState{
+    public enum InfoState {
         JOURNEY,
         UN_UPDATED_NEXT_STOP,
         UPDATED_NEXT_STOP
