@@ -137,6 +137,14 @@ public class BusStopCurrentFragment extends Fragment implements View.OnClickList
     }
 
     /**
+     * Gets the boolean value of the static variable isPressed;
+     * @return Returns true if a stopButton is pressed.
+     */
+    public static boolean getIsPressed(){
+        return BusStopCurrentFragment.isPressed;
+    }
+
+    /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that

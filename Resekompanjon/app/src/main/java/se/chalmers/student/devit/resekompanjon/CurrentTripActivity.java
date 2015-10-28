@@ -93,6 +93,10 @@ public class CurrentTripActivity extends AppCompatActivity
             try{
                 bComm = new BackendCommunicator(this, this);
                 bComm.getElectricityJourneyInfo();
+
+                if(BusStopCurrentFragment.getIsPressed() == true){
+                    BusStopCurrentFragment.setIsPressed(false);
+                }
             }
             catch(NoConnectionException e){
                 Toast noConectionMessage = Toast.makeText(this
