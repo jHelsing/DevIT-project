@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.InputType;
@@ -26,7 +25,7 @@ import se.chalmers.student.devit.resekompanjon.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SearchBoxFragment.OnSearchFragmentInteractionListener} interface
+ * {@link OnSearchButtonClick} interface
  * to handle interaction events.
  * Use the {@link SearchBoxFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -45,7 +44,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
     private String mParam1;
     private String mParam2;
 
-    private OnSearchFragmentInteractionListener mListener;
+    private OnSearchButtonClick mListener;
 
     private Calendar newDate;
     private DatePickerDialog travelDatePicker;
@@ -104,7 +103,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
     public void onStart() {
         super.onStart();
         try {
-            mListener = (OnSearchFragmentInteractionListener) getActivity();
+            mListener = (OnSearchButtonClick) getActivity();
             initDatePicker();
             initTimePicker();
             initDefaultValues();
@@ -261,7 +260,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnSearchFragmentInteractionListener {
+    public interface OnSearchButtonClick {
         public void onSearchButtonClick(String startLocation, String endLocation, String date, String time);
     }
 

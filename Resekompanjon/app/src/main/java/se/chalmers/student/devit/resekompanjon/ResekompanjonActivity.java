@@ -25,7 +25,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
 import se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment;
 
 public class ResekompanjonActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnSearchFragmentInteractionListener
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnSearchButtonClick
         , OnTaskCompleted {
 
     /**
