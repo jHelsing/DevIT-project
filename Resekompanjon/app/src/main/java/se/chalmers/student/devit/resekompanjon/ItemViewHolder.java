@@ -3,9 +3,10 @@ package se.chalmers.student.devit.resekompanjon;
 import android.view.View;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 
 /**
+ * A Holder for ItemViews. Used to avoid using findViewById multiple times for the same view.
+ *
  * @author Jonathan
  * @version 1.0
  */

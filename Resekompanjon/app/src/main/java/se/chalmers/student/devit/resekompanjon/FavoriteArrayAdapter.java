@@ -6,17 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 
 /**
+ * A specialised implementation of ArrayAdapter for favorites.
+ *
  * @author Jonathan
  * @version 1.0
  */
 public class FavoriteArrayAdapter extends ArrayAdapter {
 
     private ArrayList<JsonObject> list;
-
     private Context context;
 
     public FavoriteArrayAdapter(Context context, ArrayList<JsonObject> values) {
@@ -36,6 +39,5 @@ public class FavoriteArrayAdapter extends ArrayAdapter {
         tv.setText(objToShow.get("endName").getAsString());
         return rowView;
     }
-
 
 }

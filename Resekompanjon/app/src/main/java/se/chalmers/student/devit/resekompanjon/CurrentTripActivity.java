@@ -12,7 +12,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -103,9 +102,6 @@ public class CurrentTripActivity extends AppCompatActivity
                         , "OBS! Internetanslutning krävs!", Toast.LENGTH_LONG);
                 noConectionMessage.show();
             }
-        } else{
-
-
         }
     }
 
@@ -121,9 +117,8 @@ public class CurrentTripActivity extends AppCompatActivity
             WifiManager wifiMngr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifiMngr.getConnectionInfo();
             return info.getSSID().equals("eduroam");
-        } else{
-            return false;
         }
+        return false;
     }
 
     /**
@@ -306,11 +301,6 @@ public class CurrentTripActivity extends AppCompatActivity
             }
         }
     }
-
-    /**
-     * This method is called by busStopCurrentFragment when a stop button is pressed in there.
-     * @param stop is the paramter where the bus has to stay.
-     */
 
     /**
      * Finishes this activity and starts ResekompanjonActivity.

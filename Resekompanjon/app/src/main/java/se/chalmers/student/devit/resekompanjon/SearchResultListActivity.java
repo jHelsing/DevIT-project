@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -29,15 +28,8 @@ public class SearchResultListActivity extends AppCompatActivity implements
         SearchInfoFragment.OnFragmentInteractionListener, KeyEvent.Callback, View.OnClickListener {
 
     private static ArrayList<SearchResultTripSummary> searchResultTrips;
-
-    private ListView listView;
-
-    private SearchResultTripArrayAdapter adapter;
-
     private ImageButton favouriteButton;
-
     private FavoriteHandler favHandler;
-
     private boolean isFavourite = false;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -55,8 +47,8 @@ public class SearchResultListActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result_list_layout);
 
-        listView = (ListView) findViewById(R.id.list);
-        adapter = new SearchResultTripArrayAdapter(this, searchResultTrips, listView);
+        ListView listView = (ListView) findViewById(R.id.list);
+        SearchResultTripArrayAdapter adapter = new SearchResultTripArrayAdapter(this, searchResultTrips, listView);
         listView.setAdapter(adapter);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -108,11 +100,6 @@ public class SearchResultListActivity extends AppCompatActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * Called when an item in the navigation drawer is selected.
-     *
-     * @param position
-     */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         if(position == 0) {

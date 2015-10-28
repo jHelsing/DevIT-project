@@ -41,8 +41,6 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private FavoriteArrayAdapter adapter;
-    private ListView listView;
     private ArrayList<JsonObject> list;
 
     public FavoritesActivity() {}
@@ -64,8 +62,8 @@ public class FavoritesActivity extends AppCompatActivity implements AdapterView.
         }
 
         setContentView(R.layout.favorite_layout);
-        listView = (ListView) findViewById(R.id.list);
-        adapter = new FavoriteArrayAdapter(this, list);
+        ListView listView = (ListView) findViewById(R.id.list);
+        FavoriteArrayAdapter adapter = new FavoriteArrayAdapter(this, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 

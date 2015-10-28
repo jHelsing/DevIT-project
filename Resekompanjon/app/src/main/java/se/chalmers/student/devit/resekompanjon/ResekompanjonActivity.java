@@ -1,25 +1,22 @@
 package se.chalmers.student.devit.resekompanjon;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.google.gson.JsonObject;
 
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripFoundException;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripsForDateException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment;
@@ -201,40 +198,6 @@ public class ResekompanjonActivity extends AppCompatActivity
                     , "Tyvärr så finns inga resor tillgängliga för det datumet", Toast.LENGTH_LONG);
             noConectionMessage.show();
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((ResekompanjonActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
 }

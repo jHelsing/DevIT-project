@@ -1,20 +1,13 @@
 package se.chalmers.student.devit.resekompanjon;
 
-import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -24,10 +17,10 @@ import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment
 
 /**
  * @author Linnea
+ * @version 1.0
  */
 public class PlannedTripsActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private PrenumHandler fileHandler;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private ExpandableListView expListView;
     private ExpandableListAdapter adapter;
@@ -39,7 +32,7 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         arrayList = new ArrayList<>();
-        fileHandler = new PrenumHandler(getApplicationContext());
+        PrenumHandler fileHandler = new PrenumHandler(getApplicationContext());
         if(fileHandler.getNumbOfPrenums() > 0) {
             JsonArray tempArr = fileHandler.getTripArrayAsJson();
             for(int i=0; i<tempArr.size(); i++) {
@@ -71,22 +64,8 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
             };
             thread.start();
         }
-
-        // Setting navigation
-        /** mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.planned_trip_drawer_layout));
-         **/
     }
 
-    /**
-     * Called when an item in the navigation drawer is selected.
-     *
-     * @param position
-     */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position){

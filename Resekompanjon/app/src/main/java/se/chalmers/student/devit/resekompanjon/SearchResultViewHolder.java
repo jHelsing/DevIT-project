@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
 import se.chalmers.student.devit.resekompanjon.backend.utils.readers.PrenumHandler;
@@ -116,7 +115,6 @@ public class SearchResultViewHolder {
             delayMin = delayMin * -1;
 
         }
-        Log.d("res", delayHour + " "+ delayMin + " " + trip.getDepartureTime() + " "+ trip.getRealDepartureTime());
         cal.set(Calendar.HOUR_OF_DAY, delayHour);
         cal.set(Calendar.MINUTE, delayMin);
         String totalDelayTime = timeFormatter.format(cal.getTime());
@@ -139,31 +137,11 @@ public class SearchResultViewHolder {
                 tripAsJson.addProperty("date", trip2.getDepartureDate());
                 tripAsJson.addProperty("time", trip2.getDepartureTime());
                 Log.d("ARR:SIZE", arr.size() + "");
-                /*if(arr.size() != 0) {
-                    int i = 0;
-                    JsonObject tempObj = arr.get(i).getAsJsonObject();
-                    while (i < arr.size() && !tripAsJson.equals(tempObj)) {
-                        i++;
-                        tempObj = arr.get(i).getAsJsonObject();
-                    }
-                    if (tripAsJson.equals(tempObj)) {
-                        //Trip is already a planned trip
-                        handler.removePrenum(i);
-                        button.setImageResource(R.drawable.checkbox_untoggled);
-                    } else {
-                        //Trip is not a planned trip, add it as one
-                        handler.addToPrenumTrips(trip2.getOriginName(), trip2.getOriginId(),
-                                trip2.getDestinationName(), trip2.getDestinationId(), trip2.getRef(),
-                                trip2.getDepartureDate(), trip2.getDepartureTime());
-                        button.setImageResource(R.drawable.checkbox_toggled);
-                    }
-                } else {*/
+
                 handler.addToPrenumTrips(trip2.getOriginName(), trip2.getOriginID(),
                         trip2.getDestinationName(), trip2.getDestinationId(),
                         trip2.getDepartureDate(), trip2.getDepartureTime());
                 button.setImageResource(R.drawable.checkbox_toggled);
-                //}
-                Log.d("HEJ", "KOM HIT1");
             }
         });
     }

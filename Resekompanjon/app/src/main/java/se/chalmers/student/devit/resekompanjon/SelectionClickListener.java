@@ -2,14 +2,15 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
@@ -43,7 +44,6 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("HEJ", "KOM HIT1");
         switch (view.getId()) {
             case R.id.checkboxButton:
                 SearchResultBoxFragment box = (SearchResultBoxFragment) listView.getItemAtPosition(position);
@@ -75,7 +75,6 @@ public class SelectionClickListener implements AdapterView.OnItemClickListener {
                             trip.getDepartureDate(), trip.getDepartureTime());
                     button.setImageResource(R.drawable.checkbox_toggled);
                 }
-                Log.d("HEJ", "KOM HIT1");
                 break;
         }
     }
