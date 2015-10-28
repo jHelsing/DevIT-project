@@ -64,16 +64,26 @@ public class CurrentTripActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.current_trip_layout);
-
         bComm = new BackendCommunicator(this, this);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.detailed_trip_drawer_layout));
+        if(isOnBus()) {
+            setContentView(R.layout.current_trip_layout);
+            mNavigationDrawerFragment = (NavigationDrawerFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+            // Set up the drawer.
+            mNavigationDrawerFragment.setUp(
+                    R.id.navigation_drawer,
+                    (DrawerLayout) findViewById(R.id.detailed_trip_drawer_layout));
+
+        }else {
+            setContentView(R.layout.current_trip_warning_layout);
+            m2NavigationDrawerFragment = (NavigationDrawerFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+            // Set up the drawer.
+            m2NavigationDrawerFragment.setUp(
+                    R.id.navigation_drawer,
+                    (DrawerLayout) findViewById(R.id.current_trip_drawer_layout));
+        }
         }
 
     @Override
@@ -91,13 +101,7 @@ public class CurrentTripActivity extends AppCompatActivity
                 noConectionMessage.show();
             }
         } else{
-            setContentView(R.layout.current_trip_warning_layout);
-            m2NavigationDrawerFragment = (NavigationDrawerFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-            // Set up the drawer.
-            m2NavigationDrawerFragment.setUp(
-                    R.id.navigation_drawer,
-                    (DrawerLayout) findViewById(R.id.current_trip_drawer_layout));
+
 
         }
     }
