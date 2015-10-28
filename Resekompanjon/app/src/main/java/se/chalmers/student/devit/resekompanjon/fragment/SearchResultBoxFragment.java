@@ -1,16 +1,15 @@
 package se.chalmers.student.devit.resekompanjon.fragment;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import se.chalmers.student.devit.resekompanjon.R;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 
 
 /**

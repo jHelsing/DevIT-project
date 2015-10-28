@@ -1,12 +1,12 @@
 package se.chalmers.student.devit.resekompanjon.fragment;
 
 import android.app.DatePickerDialog;
+import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;

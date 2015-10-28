@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTripSummary;

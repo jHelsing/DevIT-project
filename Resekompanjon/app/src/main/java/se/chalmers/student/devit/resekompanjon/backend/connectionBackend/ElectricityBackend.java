@@ -18,8 +18,8 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import se.chalmers.student.devit.resekompanjon.backend.utils.readers.AssetsPropertyReader;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
+import se.chalmers.student.devit.resekompanjon.backend.utils.readers.AssetsPropertyReader;
 
 /**
  * @author Jonathan

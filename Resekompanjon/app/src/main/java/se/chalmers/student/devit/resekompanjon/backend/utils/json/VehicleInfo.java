@@ -1,7 +1,5 @@
 package se.chalmers.student.devit.resekompanjon.backend.utils.json;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+
 import com.google.gson.JsonObject;
 /**
  * Created by emmafahlen on 2015-10-06.

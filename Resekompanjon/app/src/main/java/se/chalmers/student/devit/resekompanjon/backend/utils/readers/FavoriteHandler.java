@@ -1,14 +1,12 @@
 package se.chalmers.student.devit.resekompanjon.backend.utils.readers;
 
 import android.content.Context;
-
 import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 
 import java.io.BufferedReader;
 import java.io.File;
