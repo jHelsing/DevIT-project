@@ -2,12 +2,10 @@ package se.chalmers.student.devit.resekompanjon;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
@@ -16,31 +14,24 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
-
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.BackendCommunicator;
-import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.ElectricityBackend;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoJsonAvailableException;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripFoundException;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripsForDateException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.JsonInfoExtract;
 import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoConnectionException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.OnTaskCompleted;
-import se.chalmers.student.devit.resekompanjon.backend.utils.json.SearchResultTrips;
 import se.chalmers.student.devit.resekompanjon.fragment.NavigationDrawerFragment;
 import se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment;
-import se.chalmers.student.devit.resekompanjon.fragment.VehicleStopFragment;
 
 public class ResekompanjonActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnSearchFragmentInteractionListener,
-                    VehicleStopFragment.OnFragmentInteractionListener, OnTaskCompleted {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnSearchFragmentInteractionListener
+        , OnTaskCompleted {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
-    private ElectricityBackend eb;
 
     private final static String STATE_START_LOCATION = "startLocation";
     private final static String STATE_END_LOCATION = "endLocation";
@@ -84,8 +75,6 @@ public class ResekompanjonActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.main_drawer_layout));
-
-        eb = new ElectricityBackend(getApplicationContext(), this);
 
         bComm = new BackendCommunicator(getApplicationContext(), this);
 
@@ -184,10 +173,6 @@ public class ResekompanjonActivity extends AppCompatActivity
             noConectionMessage.show();
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void OnVehicleStopFragmentInteraction(Uri uri) {
     }
 
     /**

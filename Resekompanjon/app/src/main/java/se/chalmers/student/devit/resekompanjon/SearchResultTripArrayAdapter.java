@@ -25,8 +25,6 @@ public class SearchResultTripArrayAdapter extends ArrayAdapter<SearchResultTripS
     private SelectionClickListener listener;
     private int valuePosition = 0;
 
-    private final SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
-
     public SearchResultTripArrayAdapter(Context context, ArrayList<SearchResultTripSummary> values, ListView view) {
         super(context, -1, values);
         this.context = context;

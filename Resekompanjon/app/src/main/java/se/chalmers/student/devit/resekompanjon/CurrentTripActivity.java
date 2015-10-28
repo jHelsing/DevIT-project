@@ -40,7 +40,6 @@ public class CurrentTripActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted
         ,BusStopCurrentFragment.OnFragmentInteractionListener, BetweenBusStopCurrentFragment.OnFragmentInteractionListener{
 
-    private JsonObject trip;
     private InfoState infoState;
     private BackendCommunicator bComm;
     private String oldNextStop = "";
@@ -104,10 +103,6 @@ public class CurrentTripActivity extends AppCompatActivity
 
 
         }
-    }
-
-    private void initBasicTripInfo() {
-        //TODO initialise all the views with the right content
     }
 
     /**
