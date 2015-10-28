@@ -261,7 +261,7 @@ public class SearchBoxFragment extends Fragment implements View.OnClickListener,
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnSearchButtonClick {
-        public void onSearchButtonClick(String startLocation, String endLocation, String date, String time);
+        void onSearchButtonClick(String startLocation, String endLocation, String date, String time);
     }
 
 }

@@ -368,10 +368,7 @@ public class CurrentTripActivity extends AppCompatActivity
             }
         }
 
-        if(indexStopToStopAt < indexNextStop){
-            return true;
-        }
-        return false;
+        return indexStopToStopAt < indexNextStop;
     }
 
     @Override
@@ -380,6 +377,6 @@ public class CurrentTripActivity extends AppCompatActivity
     public enum InfoState{
         JOURNEY,
         UN_UPDATED_NEXT_STOP,
-        UPDATED_NEXT_STOP;
+        UPDATED_NEXT_STOP
     }
 }

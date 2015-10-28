@@ -103,7 +103,7 @@ public class plannedTripExtendedView extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 }

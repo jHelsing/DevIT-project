@@ -110,7 +110,7 @@ public class BetweenBusStopCurrentFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onBetweenFragmentInteraction(Uri uri);
+        void onBetweenFragmentInteraction(Uri uri);
     }
 
 }

@@ -90,7 +90,7 @@ public class SearchInfoFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        public void onSearchInfoInteraction();
+        void onSearchInfoInteraction();
     }
 
 }

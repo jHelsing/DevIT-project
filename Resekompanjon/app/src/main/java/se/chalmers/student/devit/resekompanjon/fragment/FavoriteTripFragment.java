@@ -226,7 +226,7 @@ public class FavoriteTripFragment extends Fragment implements View.OnClickListen
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 }

@@ -105,7 +105,7 @@ public class VehicleStopFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void OnVehicleStopFragmentInteraction(Uri uri);
+        void OnVehicleStopFragmentInteraction(Uri uri);
     }
 
 }
