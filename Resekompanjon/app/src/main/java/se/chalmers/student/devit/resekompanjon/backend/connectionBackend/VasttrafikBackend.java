@@ -96,14 +96,25 @@ public class VasttrafikBackend {
 
             if (jsonResponse.getAsJsonObject().has("TripList")) {
                 if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().has("errorText")) {
-                    if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString().equals("No connections found")) {
+                    if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString()
+                            .equals("No connections found")) {
+
                         JsonObject tempObj = new JsonObject();
                         tempObj.addProperty("Fail", "No connection found");
                         Log.d("Throwing", tempObj.get("Fail").getAsString());
                         apiData = tempObj.getAsJsonObject();
-                    } else if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString().equals("Error in date field")) {
+                    } else if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString()
+                            .equals("Error in date field")) {
+
                         JsonObject tempObj = new JsonObject();
                         tempObj.addProperty("Fail", "Error in date field");
+                        Log.d("Throwing", tempObj.get("Fail").getAsString());
+                        apiData = tempObj.getAsJsonObject();
+                    } else if (jsonResponse.getAsJsonObject().get("TripList").getAsJsonObject().get("errorText").getAsString()
+                            .equals("Dep./Arr./Intermed. or equivalent stations defined more than once")){
+
+                        JsonObject tempObj = new JsonObject();
+                        tempObj.addProperty("Fail",  "Dep./Arr./Intermed. or equivalent stations defined more than once");
                         Log.d("Throwing", tempObj.get("Fail").getAsString());
                         apiData = tempObj.getAsJsonObject();
                     } else {

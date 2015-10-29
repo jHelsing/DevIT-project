@@ -151,6 +151,9 @@ public class BackendCommunicator implements OnTaskCompleted {
                     throw new NoTripFoundException();
                 } else if (apiData.getAsJsonObject().get("Fail").getAsString().equals("Error in date field")) {
                     throw new NoTripsForDateException();
+                } else if (apiData.getAsJsonObject().get("Fail").getAsString()
+                        .equals("Dep./Arr./Intermed. or equivalent stations defined more than once")){
+                    throw new NoTripFoundException();
                 }
             }
         }

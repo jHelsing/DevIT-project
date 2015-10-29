@@ -56,32 +56,23 @@ public class JsonInfoExtract {
     // All the info about the vehicles can be found in the getters in StopsFromString.
     public ArrayList<StopsFromString> getStopsFromSearchString() {
         Gson gson = new Gson();
+        String locListString = "";
         if (this.json.get("LocationList").getAsJsonObject().has("StopLocation")) {
-            if (this.json.get("LocationList").getAsJsonObject().get("StopLocation").isJsonArray()) {
-                JsonArray array = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonArray();
-                if (array == null) {
-                    System.out.println("Wrong URL for this method");
-                }
-                for (int i = 0; i < array.size(); i++) {
-                    sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
-                }
-            } else if (this.json.get("LocationList").getAsJsonObject().get("StopLocation").isJsonObject()) {
-                JsonObject obj = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonObject();
-                sfsArrayList.add(gson.fromJson(obj, StopsFromString.class));
-            }
+            locListString = "StopLocation";
         } else if (this.json.get("LocationList").getAsJsonObject().has("CoordLocation")){
-            if (this.json.get("LocationList").getAsJsonObject().get("CoordLocation").isJsonArray()) {
-                JsonArray array = this.json.get("LocationList").getAsJsonObject().get("CoordLocation").getAsJsonArray();
-                if (array == null) {
-                    System.out.println("Wrong URL for this method");
-                }
-                for (int i = 0; i < array.size(); i++) {
-                    sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
-                }
-            } else if (this.json.get("LocationList").getAsJsonObject().get("CoordLocation").isJsonObject()) {
-                JsonObject obj = this.json.get("LocationList").getAsJsonObject().get("CoordLocation").getAsJsonObject();
-                sfsArrayList.add(gson.fromJson(obj, StopsFromString.class));
+            locListString = "CoordLocation";
+        }
+        if (this.json.get("LocationList").getAsJsonObject().get(locListString).isJsonArray()) {
+           JsonArray array = this.json.get("LocationList").getAsJsonObject().get(locListString).getAsJsonArray();
+           if (array == null) {
+               System.out.println("Wrong URL for this method");
+           }
+            for (int i = 0; i < array.size(); i++) {
+                sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
             }
+        } else if (this.json.get("LocationList").getAsJsonObject().get(locListString).isJsonObject()) {
+            JsonObject obj = this.json.get("LocationList").getAsJsonObject().get(locListString).getAsJsonObject();
+            sfsArrayList.add(gson.fromJson(obj, StopsFromString.class));
         }
         return sfsArrayList;
     }
