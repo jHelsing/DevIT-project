@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ import se.chalmers.student.devit.resekompanjon.fragment.SearchBoxFragment;
 
 public class ResekompanjonActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, SearchBoxFragment.OnSearchButtonClick
-        , OnTaskCompleted {
+        , OnTaskCompleted, View.OnClickListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -75,6 +76,12 @@ public class ResekompanjonActivity extends AppCompatActivity
 
         bComm = new BackendCommunicator(getApplicationContext(), this);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        findViewById(R.id.buttonTouristInfo).setOnClickListener(this);
     }
 
     @Override
@@ -190,6 +197,15 @@ public class ResekompanjonActivity extends AppCompatActivity
                     , "Tyvärr så finns inga resor tillgängliga för det datumet", Toast.LENGTH_LONG);
             noConectionMessage.show();
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == findViewById(R.id.buttonTouristInfo)) {
+            Toast touristInfoToast = Toast.makeText(this,"Funktionen \"Turist Information\"" +
+                    " är ej implementerad än.", Toast.LENGTH_LONG);
+            touristInfoToast.show();
         }
     }
 }
