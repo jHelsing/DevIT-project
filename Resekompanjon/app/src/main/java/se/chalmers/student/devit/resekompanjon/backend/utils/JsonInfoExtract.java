@@ -254,9 +254,6 @@ public class JsonInfoExtract {
             SearchResultTripSummary tempTrip = gson.fromJson(tempArray.get(i), SearchResultTripSummary.class);
             tempTrip.setResultTripArrayList(getSingleTripAdvice(i));
             tripSummaries.add(tempTrip);
-            for (int j = 0; j <tripSummaries.get(i).getLineNumbers().size(); j++){
-                Log.d("dawd", tripSummaries.get(i).getLineNumbers().get(j));
-            }
         }
         return tripSummaries;
     }
