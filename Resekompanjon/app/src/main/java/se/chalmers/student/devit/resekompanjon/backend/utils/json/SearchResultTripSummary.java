@@ -19,7 +19,7 @@ public class SearchResultTripSummary {
     private String endTime;
     private String realEndTime;
     private String realEndDate;
-    private ArrayList<SearchResultTrips> resaultTripsArrayList = new ArrayList<>();
+    private ArrayList<SearchResultTrips> resultTripsArrayList = new ArrayList<>();
 
     public SearchResultTripSummary(String originName, String originID, String startTime, String originDate, String realStartTime,
                                    String realOriginDate, String endName, String endID, String endTime, String endDate,
@@ -36,7 +36,7 @@ public class SearchResultTripSummary {
         this.endDate = endDate;
         this.realEndTime = realEndTime;
         this.realEndDate = realEndDate;
-        resaultTripsArrayList = array;
+        resultTripsArrayList = array;
     }
 
     public String getOriginName() {
@@ -88,10 +88,10 @@ public class SearchResultTripSummary {
     }
 
     public ArrayList<SearchResultTrips> getResultTripsArrayList() {
-        return resaultTripsArrayList;
+        return resultTripsArrayList;
     }
 
     public void setResultTripArrayList(ArrayList<SearchResultTrips> arrayList) {
-        this.resaultTripsArrayList = arrayList;
+        this.resultTripsArrayList = arrayList;
     }
 }
