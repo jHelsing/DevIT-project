@@ -24,7 +24,8 @@ public class SearchResultTripSummary {
 
     public SearchResultTripSummary(String originName, String originID, String startTime, String originDate, String realStartTime,
                                    String realOriginDate, String endName, String endID, String endTime, String endDate,
-                                   String realEndTime, String realEndDate, ArrayList<String> lineNumbers, ArrayList<SearchResultTrips> array) {
+                                   String realEndTime, String realEndDate, ArrayList<String> lineNumbers,
+                                   ArrayList<SearchResultTrips> array) {
         this.originName = originName;
         this.originID = originID;
         this.startTime = startTime;
