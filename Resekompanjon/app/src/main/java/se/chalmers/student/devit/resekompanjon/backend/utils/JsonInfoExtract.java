@@ -235,7 +235,6 @@ public class JsonInfoExtract {
         tripSummary.add("lineNumbers", tempJArray);
         return tripSummary;
     }
-
     public JsonArray getAllTripSummaryAsJson() {
         JsonArray allTripSummarys = new JsonArray();
         for (int i = 0; i < getAllTripAdvice().size(); i++) {
@@ -255,10 +254,8 @@ public class JsonInfoExtract {
             SearchResultTripSummary tempTrip = gson.fromJson(tempArray.get(i), SearchResultTripSummary.class);
             tempTrip.setResultTripArrayList(getSingleTripAdvice(i));
             tripSummaries.add(tempTrip);
-                        for (int j = 0 ; j >tripSummaries.get(i).getLineNumbers().size(); j++){
-                if (tripSummaries.get(i).getLineNumbers().get(j) != null) {
-                    Log.d("dawd", tripSummaries.get(i).getLineNumbers().get(0));
-                }
+            for (int j = 0; j <tripSummaries.get(i).getLineNumbers().size(); j++){
+                Log.d("dawd", tripSummaries.get(i).getLineNumbers().get(j));
             }
         }
         return tripSummaries;

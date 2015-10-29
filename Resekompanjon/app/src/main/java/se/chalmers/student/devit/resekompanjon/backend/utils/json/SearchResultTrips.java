@@ -74,6 +74,9 @@ public class SearchResultTrips {
     }
 
     public String getSname() {
+        if (sname == null){
+            return "Walk";
+        }
         return sname;
     }
 
