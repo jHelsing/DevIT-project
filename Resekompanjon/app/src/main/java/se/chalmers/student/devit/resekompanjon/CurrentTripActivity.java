@@ -116,7 +116,8 @@ public class CurrentTripActivity extends AppCompatActivity
         if (netInfo != null && netInfo.isConnected()) {
             WifiManager wifiMngr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifiMngr.getConnectionInfo();
-            return info.getSSID().equals("eduroam");
+            return true;
+            //return info.getSSID().equals("eduroam");
         }
         return false;
     }

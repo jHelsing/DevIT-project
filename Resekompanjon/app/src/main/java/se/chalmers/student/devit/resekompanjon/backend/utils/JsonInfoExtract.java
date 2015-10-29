@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
+import se.chalmers.student.devit.resekompanjon.backend.connectionBackend.NoTripFoundException;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.AdditionalInfoRoute;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.AdressNearby;
 import se.chalmers.student.devit.resekompanjon.backend.utils.json.EntireTripRoute;
@@ -54,13 +55,15 @@ public class JsonInfoExtract {
 
     //Gets all the stops that match a specific string, converts into StopsFromString objects, puts them in an arrayList.
     // All the info about the vehicles can be found in the getters in StopsFromString.
-    public ArrayList<StopsFromString> getStopsFromSearchString() {
+    public ArrayList<StopsFromString> getStopsFromSearchString() throws NoTripFoundException {
         Gson gson = new Gson();
         String locListString = "";
         if (this.json.get("LocationList").getAsJsonObject().has("StopLocation")) {
             locListString = "StopLocation";
         } else if (this.json.get("LocationList").getAsJsonObject().has("CoordLocation")){
             locListString = "CoordLocation";
+        } else {
+            throw new NoTripFoundException();
         }
         if (this.json.get("LocationList").getAsJsonObject().get(locListString).isJsonArray()) {
            JsonArray array = this.json.get("LocationList").getAsJsonObject().get(locListString).getAsJsonArray();

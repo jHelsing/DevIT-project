@@ -2,6 +2,7 @@ package se.chalmers.student.devit.resekompanjon.backend.connectionBackend;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -28,11 +29,13 @@ public class BackendCommunicator implements OnTaskCompleted {
     private ArrayList<String> tempStrings = new ArrayList<>();
     private JsonInfoExtract jsonInfoExtract;
     private String ORIGIN;
+    private Context context;
 
     public BackendCommunicator(Context context, OnTaskCompleted listener) {
         vBackend = new VasttrafikBackend(context.getApplicationContext(), this);
         eBackend = new ElectricityBackend(context.getApplicationContext(), this);
         this.listener = listener;
+        this.context = context;
     }
 
     public void getAllVehiclesFromStop(int id) throws NoConnectionException {
@@ -110,6 +113,11 @@ public class BackendCommunicator implements OnTaskCompleted {
                 handleTripByNameSearch();
             } catch (NoConnectionException e) {
                 e.printStackTrace();
+            } catch (NoTripFoundException e) {
+                e.printStackTrace();
+                Toast noConectionMessage = Toast.makeText(context, "Tyvärr så går det inte att söka med det innehållet!", Toast.LENGTH_LONG);
+                noConectionMessage.show();
+                e.printStackTrace();
             }
         }
 
@@ -118,7 +126,7 @@ public class BackendCommunicator implements OnTaskCompleted {
     /**
      * Only used to keep logic out of onTaskCompleted
      */
-    private void handleTripByNameSearch() throws NoConnectionException {
+    private void handleTripByNameSearch() throws NoConnectionException, NoTripFoundException {
         if (apiTempOrigin == null) {
             apiTempOrigin = vBackend.getApiData();
         } else if (apiTempDest == null) {

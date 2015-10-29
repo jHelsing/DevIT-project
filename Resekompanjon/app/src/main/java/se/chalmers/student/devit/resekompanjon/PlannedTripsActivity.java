@@ -48,7 +48,7 @@ public class PlannedTripsActivity extends AppCompatActivity implements Navigatio
             mNavigationDrawerFragment.setUp(
                     R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.planned_trip_drawer_layout));
-            
+
             expListView = (ExpandableListView) findViewById(R.id.expandableListView);
             adapter = new PlannedTripExpandableListAdapter(this, arrayList);
             expListView.setAdapter(adapter);
