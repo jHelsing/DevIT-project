@@ -1,5 +1,7 @@
 package se.chalmers.student.devit.resekompanjon.backend.utils;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -54,17 +56,32 @@ public class JsonInfoExtract {
     // All the info about the vehicles can be found in the getters in StopsFromString.
     public ArrayList<StopsFromString> getStopsFromSearchString() {
         Gson gson = new Gson();
-        if (this.json.get("LocationList").getAsJsonObject().get("StopLocation").isJsonArray()) {
-            JsonArray array = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonArray();
-            if (array == null) {
-                System.out.println("Wrong URL for this method");
+        if (this.json.get("LocationList").getAsJsonObject().has("StopLocation")) {
+            if (this.json.get("LocationList").getAsJsonObject().get("StopLocation").isJsonArray()) {
+                JsonArray array = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonArray();
+                if (array == null) {
+                    System.out.println("Wrong URL for this method");
+                }
+                for (int i = 0; i < array.size(); i++) {
+                    sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
+                }
+            } else if (this.json.get("LocationList").getAsJsonObject().get("StopLocation").isJsonObject()) {
+                JsonObject obj = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonObject();
+                sfsArrayList.add(gson.fromJson(obj, StopsFromString.class));
             }
-            for (int i = 0; i < array.size(); i++) {
-                sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
+        } else if (this.json.get("LocationList").getAsJsonObject().has("CoordLocation")){
+            if (this.json.get("LocationList").getAsJsonObject().get("CoordLocation").isJsonArray()) {
+                JsonArray array = this.json.get("LocationList").getAsJsonObject().get("CoordLocation").getAsJsonArray();
+                if (array == null) {
+                    System.out.println("Wrong URL for this method");
+                }
+                for (int i = 0; i < array.size(); i++) {
+                    sfsArrayList.add(gson.fromJson(array.get(i), StopsFromString.class));
+                }
+            } else if (this.json.get("LocationList").getAsJsonObject().get("CoordLocation").isJsonObject()) {
+                JsonObject obj = this.json.get("LocationList").getAsJsonObject().get("CoordLocation").getAsJsonObject();
+                sfsArrayList.add(gson.fromJson(obj, StopsFromString.class));
             }
-        } else if (this.json.get("LocationList").getAsJsonObject().get("StopLocation").isJsonObject()) {
-            JsonObject obj = this.json.get("LocationList").getAsJsonObject().get("StopLocation").getAsJsonObject();
-            sfsArrayList.add(gson.fromJson(obj, StopsFromString.class));
         }
         return sfsArrayList;
     }
@@ -247,9 +264,13 @@ public class JsonInfoExtract {
             SearchResultTripSummary tempTrip = gson.fromJson(tempArray.get(i), SearchResultTripSummary.class);
             tempTrip.setResultTripArrayList(getSingleTripAdvice(i));
             tripSummaries.add(tempTrip);
+                        for (int j = 0 ; j >tripSummaries.get(i).getLineNumbers().size(); j++){
+                if (tripSummaries.get(i).getLineNumbers().get(j) != null) {
+                    Log.d("dawd", tripSummaries.get(i).getLineNumbers().get(0));
+                }
+            }
         }
         return tripSummaries;
-
     }
 
     public JsonObject getStops() {

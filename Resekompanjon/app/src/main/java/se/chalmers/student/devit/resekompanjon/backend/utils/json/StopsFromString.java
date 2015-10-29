@@ -9,14 +9,16 @@ public class StopsFromString {
     private final String lat;
     private final String id;
     private final String idx;
+    private final String type;
 
-    public StopsFromString(String name, String lon, String lat, String id, String idx) {
+    public StopsFromString(String name, String lon, String lat, String id, String idx, String type) {
 
         this.name = name;
         this.lon = lon;
         this.lat = lat;
         this.id = id;
         this.idx = idx;
+        this.type = type;
     }
 
     public String getName() {
@@ -38,4 +40,6 @@ public class StopsFromString {
     public String getIdx() {
         return idx;
     }
+
+    public String getType(){ return type; }
 }
