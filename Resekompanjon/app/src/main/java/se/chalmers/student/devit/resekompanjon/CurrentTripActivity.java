@@ -44,7 +44,7 @@ public class CurrentTripActivity extends AppCompatActivity
     private String oldNextStop = "";
     private String nextStop;
     private String firstNextStop;
-    private int start = 2; //Needed to stop program from going back to start right away
+    private boolean start = false; //Needed to stop program from going back to start right away
     private String busDirection;
 
     private final String[] stopToLindholmen = {"G�taplatsen", "Kungsportsplatsn", "NisseTerminalen"
@@ -54,7 +54,6 @@ public class CurrentTripActivity extends AppCompatActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private NavigationDrawerFragment m2NavigationDrawerFragment;
 
     public CurrentTripActivity() {
     }
@@ -76,10 +75,10 @@ public class CurrentTripActivity extends AppCompatActivity
 
         } else {
             setContentView(R.layout.current_trip_warning_layout);
-            m2NavigationDrawerFragment = (NavigationDrawerFragment)
+            mNavigationDrawerFragment = (NavigationDrawerFragment)
                     getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
             // Set up the drawer.
-            m2NavigationDrawerFragment.setUp(
+            mNavigationDrawerFragment.setUp(
                     R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.current_trip_drawer_layout));
         }
@@ -131,12 +130,12 @@ public class CurrentTripActivity extends AppCompatActivity
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
             case 0:
-                if (!(start > 0)) {
+                if (start) {
                     Intent myIntent = new Intent(this, ResekompanjonActivity.class);
                     startActivity(myIntent);
                     finish();
                 } else {
-                    start--;
+                    start = true;
                 }
                 break;
             case 1:
