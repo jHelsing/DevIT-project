@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
@@ -131,9 +132,15 @@ public class SearchResultListActivity extends AppCompatActivity implements
                 break;
             case 4:
                 //No settings to go to
+                Toast settingsToast = Toast.makeText(this,"Funktionen \"Inställningar\" är ej" +
+                        " implementerad än.", Toast.LENGTH_LONG);
+                settingsToast.show();
                 break;
             case 5:
                 //No about to go to
+                Toast aboutApplicationToast = Toast.makeText(this,"Funktionen \"Om Applikationen\"" +
+                        " är ej implementerad än.", Toast.LENGTH_LONG);
+                aboutApplicationToast.show();
                 break;
         }
         }

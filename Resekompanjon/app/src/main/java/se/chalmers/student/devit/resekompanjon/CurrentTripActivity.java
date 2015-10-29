@@ -153,9 +153,15 @@ public class CurrentTripActivity extends AppCompatActivity
                 break;
             case 4:
                 //No settings to go to
+                Toast settingsToast = Toast.makeText(this,"Funktionen \"Inställningar\" är ej" +
+                        " implementerad än.", Toast.LENGTH_LONG);
+                settingsToast.show();
                 break;
             case 5:
                 //No about to go to
+                Toast aboutApplicationToast = Toast.makeText(this,"Funktionen \"Om Applikationen\"" +
+                        " är ej implementerad än.", Toast.LENGTH_LONG);
+                aboutApplicationToast.show();
                 break;
         }
     }
